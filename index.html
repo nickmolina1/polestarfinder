@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vehicle Dashboard</title>
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar with Filters -->
+      <div class="col-md-3 p-3 border-end">
+        <h4>Filters</h4>
+        <!-- Model dropdown -->
+        <div class="mb-3">
+            <label for="modelFilter" class="form-label">Model</label>
+            <select id="modelFilter" class="form-select">
+                <option value="">All</option>
+                <option value="Polestar 2">Polestar 2</option>
+                <!-- Add more model options as needed -->
+            </select>
+        </div>
+        <!-- State dropdown -->
+        <div class="mb-3">
+            <label for="stateFilter" class="form-label">State</label>
+            <select id="stateFilter" class="form-select">
+                <option value="">All</option>
+                <option value="PreOwned">PreOwned</option>
+                <option value="Certified PreOwned">Certified PreOwned</option>
+                <option value="New">New</option>
+            </select>
+        </div>
+        <!-- Exterior dropdown -->
+        <div class="mb-3">
+          <label for="exteriorFilter" class="form-label">Exterior Color</label>
+          <select id="exteriorFilter" class="form-select">
+            <option value="">All</option>
+            <option value="Jupiter">Jupiter</option>
+            <option value="Magnesium">Magnesium</option>
+            <option value="Midnight">Midnight</option>
+            <option value="Moon">Moon</option>
+            <option value="Snow">Snow</option>
+            <option value="Space">Space</option>
+            <option value="Thunder">Thunder</option>
+            <option value="Void">Void</option>
+          </select>
+        </div>
+        <!-- Partner Location dropdown -->
+        <div class="mb-3">
+            <label for="partnerLocationFilter" class="form-label">Partner Location</label>
+            <select id="partnerLocationFilter" class="form-select">
+            <option value="">All</option>
+            <option value="Polestar Austin">Polestar Austin</option>
+            <option value="Polestar Atlanta">Polestar Atlanta</option>
+            <option value="Polestar Boston">Polestar Boston</option>
+            <option value="Polestar Charlotte">Polestar Charlotte</option>
+            <option value="Polestar Denver">Polestar Denver</option>
+            <option value="Polestar Detroit">Polestar Detroit</option>
+            <option value="Polestar Houston">Polestar Houston</option>
+            <option value="Polestar Lisle">Polestar Lisle</option>
+            <option value="Polestar Manhattan">Polestar Manhattan</option>
+            <option value="Polestar Marin">Polestar Marin</option>
+            <option value="Polestar Minneapolis">Polestar Minneapolis</option>
+            <option value="Polestar Nashville">Polestar Nashville</option>
+            <option value="Polestar New Canaan">Polestar New Canaan</option>
+            <option value="Polestar Portland">Polestar Portland</option>
+            <option value="Polestar Princeton">Polestar Princeton</option>
+            <option value="Polestar Short Hills">Polestar Short Hills</option>
+            <option value="Polestar San Jose">Polestar San Jose</option>
+            <option value="Polestar Scottsdale">Polestar Scottsdale</option>
+            <option value="Polestar Tampa">Polestar Tampa</option>
+            <option value="Polestar Washington DC">Polestar Washington DC</option>
+            </select>
+        </div>
+        
+        <!-- Interior dropdown -->
+        <div class="mb-3">
+            <label for="interiorFilter" class="form-label">Interior</label>
+            <select id="interiorFilter" class="form-select">
+            <option value="">All</option>
+            <option value="Charcoal Embossed Textile with 3D Etched deco">Charcoal Embossed Textile with 3D Etched deco</option>
+            <option value="Charcoal MicroSuede textile with Black ash deco">Charcoal MicroSuede textile with Black ash deco</option>
+            <option value="Charcoal WeaveTech with Black Ash deco">Charcoal WeaveTech with Black Ash deco</option>
+            <option value="Ventilated Nappa leather Barley with reconstructed wood deco">Ventilated Nappa leather Barley with reconstructed wood deco</option>
+            <option value="Ventilated Nappa leather Zinc with Light Ash deco">Ventilated Nappa leather Zinc with Light Ash deco</option>
+            <option value="Slate WeaveTech with Black Ash deco">Slate WeaveTech with Black Ash deco</option>
+            <option value="Zinc Embossed Textile with 3D Etched deco">Zinc Embossed Textile with 3D Etched deco</option>
+            </select>
+        </div>
+        
+        <!-- Wheels dropdown -->
+        <div class="mb-3">
+            <label for="wheelsFilter" class="form-label">Wheels</label>
+            <select id="wheelsFilter" class="form-select">
+            <option value="">All</option>
+            <option value="19'' 5-Double Spoke Black Diamond Cut Alloy Wheel">19'' 5-Double Spoke Black Diamond Cut Alloy Wheel</option>
+            <option value="19&quot; 5-V Spoke Black Diamond Cut Alloy Wheels - Summer Tires">19" 5-V Spoke Black Diamond Cut Alloy Wheels - Summer Tires</option>
+            <option value="20&quot; 4-Y Spoke Black Polished Forged Alloy Wheels - Summer Tires">20" 4-Y Spoke Black Polished Forged Alloy Wheels - Summer Tires</option>
+            <option value="20&quot; 4-V Spoke Black Diamond Cut Alloy Wheels">20" 4-V Spoke Black Diamond Cut Alloy Wheels</option>
+            <option value="20&quot; Pro - All-Season Tires">20" Pro - All-Season Tires</option>
+            <option value="21'' Gloss Black Diamond Cut Alloy Wheel BST edition">21'' Gloss Black Diamond Cut Alloy Wheel BST edition</option>
+            </select>
+        </div>
+        
+        <!-- Motor dropdown -->
+        <div class="mb-3">
+            <label for="motorFilter" class="form-label">Motor</label>
+            <select id="motorFilter" class="form-select">
+            <option value="">All</option>
+            <option value="Long range Single motor">Long range Single motor</option>
+            <option value="Long range Single motor - Rear Wheel Drive (RWD)">Long range Single motor - Rear Wheel Drive (RWD)</option>
+            <option value="Long range Dual motor - AWD">Long range Dual motor - AWD</option>
+            <option value="Long range Dual motor - All Wheel Drive (AWD)">Long range Dual motor - All Wheel Drive (AWD)</option>
+            <option value="Long range Dual motor with Performance pack - AWD">Long range Dual motor with Performance pack - AWD</option>
+            </select>
+        </div>
+  
+        <!-- Edition dropdown -->
+        <div class="mb-3">
+          <label for="editionFilter" class="form-label">Edition</label>
+          <select id="editionFilter" class="form-select">
+            <option value="">All</option>
+            <option value="BST Edition 230">BST Edition 230</option>
+            <option value="BST Edition 270">BST Edition 270</option>
+          </select>
+        </div>
+
+        <!-- Price Filters -->
+        <div class="mb-3">
+        <label for="minPriceFilter" class="form-label">Min Price ($)</label>
+        <input type="number" id="minPriceFilter" class="form-control" placeholder="Enter min price">
+        </div>
+        <div class="mb-3">
+            <label for="maxPriceFilter" class="form-label">Max Price ($)</label>
+            <input type="number" id="maxPriceFilter" class="form-control" placeholder="Enter max price">
+        </div>
+        
+        <!-- Mileage Filters -->
+        <div class="mb-3">
+            <label for="minMileageFilter" class="form-label">Min Mileage</label>
+            <input type="number" id="minMileageFilter" class="form-control" placeholder="Enter min mileage">
+        </div>
+        <div class="mb-3">
+            <label for="maxMileageFilter" class="form-label">Max Mileage</label>
+            <input type="number" id="maxMileageFilter" class="form-control" placeholder="Enter max mileage">
+        </div>
+
+        <!-- Packs Filter -->
+        <div class="mb-3">
+            <label class="form-label">Packs</label>
+            <div class="form-check">
+            <input type="checkbox" id="performancePack" class="form-check-input">
+            <label class="form-check-label" for="performancePack">Performance Pack</label>
+            </div>
+            <div class="form-check">
+            <input type="checkbox" id="pilotPack" class="form-check-input">
+            <label class="form-check-label" for="pilotPack">Pilot Pack</label>
+            </div>
+            <div class="form-check">
+            <input type="checkbox" id="plusPack" class="form-check-input">
+            <label class="form-check-label" for="plusPack">Plus Pack</label>
+            </div>
+        </div>
+  
+        <!--End of Filters-->
+      </div>
+
+
+  
+
+      <!-- Main Content: Vehicles Table -->
+      <div class="col-md-9 p-3">
+        <h4>Vehicles</h4>
+        <table class="table table-striped table-bordered" id="vehiclesTable">
+          <thead>
+            <tr>
+              <th data-type="string">Model <span class="sort-arrow"></span></th>
+              <th data-type="number">Year <span class="sort-arrow"></span></th>
+              <th data-type="string">Partner Location <span class="sort-arrow"></span></th>
+              <th data-type="number">Retail Price <span class="sort-arrow"></span></th>
+              <th data-type="string">VIN <span class="sort-arrow"></span></th>
+              <th data-type="string">Exterior <span class="sort-arrow"></span></th>
+              <th data-type="string">Interior <span class="sort-arrow"></span></th>
+              <th data-type="string">Wheels <span class="sort-arrow"></span></th>
+              <th data-type="string">Motor <span class="sort-arrow"></span></th>
+              <th data-type="string">State <span class="sort-arrow"></span></th>
+              <th data-type="string">Edition <span class="sort-arrow"></span></th>
+              <th data-type="string">Packs <span class="sort-arrow"></span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Table rows will be injected here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Link to external JavaScript -->
+  <script src="app.js"></script>
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

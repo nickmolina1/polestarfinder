@@ -304,11 +304,3 @@ if __name__ == "__main__":
     #     deep_scan_loop()
     # else:
     #     print("No new PS1 vehicles; skipping deep scans.")
-
-    # Full scan for PS3
-
-    ps3_payload = get_payload("PS3")
-    ps3_data = fetch_scan(deepcopy(ps3_payload))
-    print(f"Fetched {len(ps3_data)} PS3 vehicles.")
-    new_count_ps3 = update_inventory(ps3_data)
-    print(f"New PS3 vehicles inserted: {new_count_ps3}")

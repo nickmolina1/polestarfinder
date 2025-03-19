@@ -42,7 +42,7 @@ class Vehicle(Base):
 
 # Initialize SQLite (switch to PostgreSQL later)
 DATABASE_URL = "sqlite:///vehicles.db"
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_engine(DATABASE_URL, echo=False)
 SessionLocal = sessionmaker(bind=engine)
 
 # Create tables

@@ -105,17 +105,23 @@ function filterInventory() {
   });
 }
 
+// Function to format price as USD currency with thousands separator
+function formatPrice(price) {
+  if (!price) return ""; // Handle null/undefined cases
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(price);
+}
+
 // Function to update the table with vehicle data
 function updateTable(data) {
-  const tbody = document.querySelector('#vehiclesTable tbody');
-  tbody.innerHTML = ''; // Clear existing table rows
+  const tbody = document.querySelector("#vehiclesTable tbody");
+  tbody.innerHTML = ""; // Clear existing table rows
 
   if (data.length === 0) {
     tbody.innerHTML = '<tr><td colspan="12" class="text-center">No vehicles found</td></tr>';
     return;
   }
 
-  data.forEach(vehicle => {
+  data.forEach((vehicle) => {
     const packs = [];
     if (vehicle.performance) packs.push("Performance");
     if (vehicle.pilot) packs.push("Pilot");
@@ -123,19 +129,23 @@ function updateTable(data) {
     const packsDisplay = packs.join(", ");
     const vehicleUrl = `https://www.polestar.com/us/preowned-cars/product/polestar-${vehicle.model.toLowerCase().slice(-1)}/${vehicle.id}`;
 
-    const row = document.createElement('tr');
+    // Ensure price is a valid number, else default to 0
+    const rawPrice = vehicle.retail_price ? parseFloat(vehicle.retail_price) : 0;
+    const formattedPrice = rawPrice > 0 ? formatPrice(rawPrice) : "";
+
+    const row = document.createElement("tr");
     row.innerHTML = `
       <td><a href="${vehicleUrl}" target="_blank">${vehicle.model}</a></td>
       <td>${vehicle.year}</td>
-      <td>${vehicle.partner_location || ''}</td>
-      <td>${vehicle.retail_price || ''}</td>
-      <td>${vehicle.vin || ''}</td>
-      <td>${vehicle.exterior || ''}</td>
-      <td>${vehicle.interior || ''}</td>
-      <td>${vehicle.wheels || ''}</td>
-      <td>${vehicle.motor || ''}</td>
-      <td>${vehicle.state || ''}</td>
-      <td>${vehicle.edition || ''}</td>
+      <td>${vehicle.partner_location || ""}</td>
+      <td data-price="${rawPrice}">${formattedPrice}</td> 
+      <td>${vehicle.vin || ""}</td>
+      <td>${vehicle.exterior || ""}</td>
+      <td>${vehicle.interior || ""}</td>
+      <td>${vehicle.wheels || ""}</td>
+      <td>${vehicle.motor || ""}</td>
+      <td>${vehicle.state || ""}</td>
+      <td>${vehicle.edition || ""}</td>
       <td>${packsDisplay}</td>
     `;
     row.style.cursor = "pointer";
@@ -144,6 +154,8 @@ function updateTable(data) {
     });
     tbody.appendChild(row);
   });
+
+  // Reattach sorting after updating the table
   attachSortingEvents();
 }
 
@@ -189,55 +201,37 @@ function attachSortingEvents() {
     header.addEventListener('click', sortHandler);
   });
 }
-
-function sortHandler(event) {
-  const header = event.target.closest('th');
-  if (!header) return;
-  const table = document.getElementById('vehiclesTable');
-  const headers = table.querySelectorAll('th');
-  const columnIndex = Array.from(headers).indexOf(header);
-  const type = header.getAttribute('data-type') || 'string';
-  const currentOrder = header.getAttribute('data-order') || 'asc';
-  const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
-  header.setAttribute('data-order', newOrder);
-
-  headers.forEach(h => {
-    const arrowSpan = h.querySelector('.sort-arrow');
-    if (arrowSpan) arrowSpan.textContent = '';
-  });
-
-  const arrowSpan = header.querySelector('.sort-arrow');
-  if (arrowSpan) {
-    arrowSpan.textContent = newOrder === 'asc' ? ' ▲' : ' ▼';
-  }
-
-  sortTableByColumn(columnIndex, newOrder, type);
-}
-
-function sortTableByColumn(columnIndex, order = 'asc', type = 'string') {
-  const table = document.getElementById('vehiclesTable');
-  const tbody = table.querySelector('tbody');
-  const rows = Array.from(tbody.querySelectorAll('tr'));
+// Sorting function with support for currency
+function sortTableByColumn(columnIndex, order = "asc", type = "string") {
+  const table = document.getElementById("vehiclesTable");
+  const tbody = table.querySelector("tbody");
+  const rows = Array.from(tbody.querySelectorAll("tr"));
 
   rows.sort((a, b) => {
-    const aText = a.children[columnIndex].textContent.trim();
-    const bText = b.children[columnIndex].textContent.trim();
+    let aText = a.children[columnIndex].textContent.trim();
+    let bText = b.children[columnIndex].textContent.trim();
     let aValue = aText;
     let bValue = bText;
 
-    if (type === 'number') {
-      aValue = parseFloat(aText) || 0;
-      bValue = parseFloat(bText) || 0;
+    if (type === "number") {
+      // Special handling for the price column (assuming it's column index 3)
+      if (columnIndex === 3) {
+        aValue = parseFloat(a.children[columnIndex].getAttribute("data-price")) || 0;
+        bValue = parseFloat(b.children[columnIndex].getAttribute("data-price")) || 0;
+      } else {
+        aValue = parseFloat(aText.replace(/[^0-9.-]+/g, "")) || 0;
+        bValue = parseFloat(bText.replace(/[^0-9.-]+/g, "")) || 0;
+      }
     } else {
       aValue = aText.toLowerCase();
       bValue = bText.toLowerCase();
     }
 
     if (aValue < bValue) {
-      return order === 'asc' ? -1 : 1;
+      return order === "asc" ? -1 : 1;
     }
     if (aValue > bValue) {
-      return order === 'asc' ? 1 : -1;
+      return order === "asc" ? 1 : -1;
     }
     return 0;
   });
@@ -245,7 +239,45 @@ function sortTableByColumn(columnIndex, order = 'asc', type = 'string') {
   while (tbody.firstChild) {
     tbody.removeChild(tbody.firstChild);
   }
-  rows.forEach(row => tbody.appendChild(row));
+  rows.forEach((row) => tbody.appendChild(row));
+}
+
+// Ensure sorting is reattached after table updates
+function attachSortingEvents() {
+  const table = document.getElementById("vehiclesTable");
+  const headers = table.querySelectorAll("th");
+
+  headers.forEach((header, index) => {
+    header.style.cursor = "pointer";
+    header.removeEventListener("click", sortHandler);
+    header.addEventListener("click", sortHandler);
+  });
+}
+
+function sortHandler(event) {
+  const header = event.target.closest("th");
+  if (!header) return;
+
+  const table = document.getElementById("vehiclesTable");
+  const headers = table.querySelectorAll("th");
+  const columnIndex = Array.from(headers).indexOf(header);
+  const type = header.getAttribute("data-type") || "string";
+
+  const currentOrder = header.getAttribute("data-order") || "asc";
+  const newOrder = currentOrder === "asc" ? "desc" : "asc";
+  header.setAttribute("data-order", newOrder);
+
+  headers.forEach((h) => {
+    const arrowSpan = h.querySelector(".sort-arrow");
+    if (arrowSpan) arrowSpan.textContent = "";
+  });
+
+  const arrowSpan = header.querySelector(".sort-arrow");
+  if (arrowSpan) {
+    arrowSpan.textContent = newOrder === "asc" ? " ▲" : " ▼";
+  }
+
+  sortTableByColumn(columnIndex, newOrder, type);
 }
 
 // Attach event listeners to all filter controls

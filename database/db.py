@@ -1,5 +1,10 @@
 import os, psycopg2
 from contextlib import contextmanager
+from dotenv import load_dotenv
+from psycopg2.extras import DictCursor
+
+load_dotenv()
+
 
 DSN = os.getenv("PG_DSN")
 
@@ -13,13 +18,13 @@ def conn():
 
 
 def fetch_all(sql, params=None):
-    with conn() as c, c.cursor(row_factory=psycopg2.rows.dict_row) as cur:
+    with conn() as c, c.cursor(cursor_factory=DictCursor) as cur:
         cur.execute(sql, params or {})
         return cur.fetchall()
 
 
 def fetch_one(sql, params=None):
-    with conn() as c, c.cursor(row_factory=psycopg2.rows.dict_row) as cur:
+    with conn() as c, c.cursor(cursor_factory=DictCursor) as cur:
         cur.execute(sql, params or {})
         return cur.fetchone()
 

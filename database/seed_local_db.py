@@ -1,6 +1,13 @@
 import json, os, uuid
 from datetime import datetime, timezone
-from db import execute, fetch_one
+from database.db import execute, fetch_one
+from dotenv import load_dotenv
+
+load_dotenv()
+
+dsn = os.getenv("PG_DSN")
+if not dsn:
+    raise RuntimeError("PG_DSN not set! Did you create .env?")
 
 VEH_JSON = "public/data/vehicles.json"
 

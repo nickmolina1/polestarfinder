@@ -1,9 +1,13 @@
 import os, glob, re, sys
 import psycopg2 as psycopg
+from psycopg2.extras import DictCursor
 from dotenv import load_dotenv
 
 load_dotenv()
 DSN = os.getenv("PG_DSN")
+
+if not DSN:
+    raise RuntimeError("PG_DSN not set! Did you create .env?")
 
 
 def read_sql_statements(path: str):
@@ -67,7 +71,7 @@ def main():
         print("PG_DSN not set", file=sys.stderr)
         sys.exit(1)
 
-    files = sorted(glob.glob("sql/migrations/*.sql"))
+    files = sorted(glob.glob("database/sql/migrations/*.sql"))
     if not files:
         print("No migration files found in sql/migrations")
         sys.exit(1)

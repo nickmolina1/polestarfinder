@@ -1,3 +1,8 @@
+import os
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
 import json
 import datetime
 import requests
@@ -7,7 +12,9 @@ import time
 from copy import deepcopy
 
 from filters import filters  # Your filters dictionary for deep scan
-from db import Vehicle, SessionLocal
+from backend.db import Vehicle, SessionLocal
+import logging
+
 
 # Define the API endpoint and headers (common to both models)
 url = "https://pc-api.polestar.com/eu-north-1/partner-rm-tool/public/"
@@ -27,18 +34,19 @@ headers = {
 
 
 def get_payload(
-    model: str, limit: int = 200, equalFilters: list = None, excludeFilters: list = None
+    model: str,
+    limit: int = 200,
+    equalFilters: list = None,
+    excludeFilters: list = [{"filterType": "CycleState", "value": "New"}],
 ) -> dict:
     """
     Returns a payload for searching vehicles for a given model.
-
-    :param model: The model string to use in the payload (e.g., "PS1" or "PS2").
-    :param limit: The number of results to return.
-    :param equalFilters: Optional list of filters to include.
-    :return: A dictionary representing the payload.
     """
     if equalFilters is None:
-        equalFilters = []  # default: no extra filters
+        equalFilters = []
+    else:
+        key, value = list(equalFilters[0].items())[0]
+        equalFilters = [{"filterType": key, "value": value}]
 
     payload = {
         "operationName": "SearchVehicleAds",
@@ -53,66 +61,64 @@ def get_payload(
             "excludeFilters": excludeFilters,
         },
         "query": """
-        query SearchVehicleAds($carModel: CarModel!, $market: String!, $region: String, $offset: Int!,
-                                $limit: Int!, $sortOrder: SortOrder2!, $sortProperty: SortProperty!,
-                                $equalFilters: [EqualFilter!], $excludeFilters: [ExcludeFilter!]) {
-            searchVehicleAds(
-                carModel: $carModel
-                market: $market
-                region: $region
-                offset: $offset
-                limit: $limit
-                sortOrder: $sortOrder
-                sortProperty: $sortProperty
-                equalFilters: $equalFilters
-                excludeFilters: $excludeFilters
-            ) {
-                metadata {
-                    limit
-                    offset
-                    resultCount
-                    totalCount
-                }
-                vehicleAds {
-                    id
-                    firstTimeRegistration
-                    price {
-                        retail
-                        dealer
-                        currency
+            query SearchVehicleAds($carModel: CarModel!, $market: String!, $region: String, $offset: Int!,
+                                    $limit: Int!, $sortOrder: SortOrder2!, $sortProperty: SortProperty!,
+                                    $equalFilters: [EqualFilter!], $excludeFilters: [ExcludeFilter!]) {
+                searchVehicleAds(
+                    carModel: $carModel
+                    market: $market
+                    region: $region
+                    offset: $offset
+                    limit: $limit
+                    sortOrder: $sortOrder
+                    sortProperty: $sortProperty
+                    equalFilters: $equalFilters
+                    excludeFilters: $excludeFilters
+                ) {
+                    metadata {
+                        limit
+                        offset
+                        resultCount
+                        totalCount
                     }
-                    partnerLocation {
-                        city
-                        name
-                    }
-                    mileageInfo {
-                        distance
-                        metric
-                    }
-                    vehicleDetails {
-                        vin
-                        modelDetails {
-                            displayName
-                            modelYear
+                    vehicleAds {
+                        id
+                        firstTimeRegistration
+                        price {
+                            retail
+                            dealer
+                            currency
                         }
-                        stockImages
-                        cycleState
+                        partnerLocation {
+                            city
+                            name
+                        }
+                        mileageInfo {
+                            distance
+                            metric
+                        }
+                        vehicleDetails {
+                            vin
+                            modelDetails {
+                                displayName
+                                modelYear
+                            }
+                            stockImages
+                            cycleState
+                        }
                     }
                 }
             }
-        }
-        """,
+            """,
     }
     return payload
 
 
 def fetch_scan(payload: dict) -> list:
-    """
-    Executes a scan using the given payload and returns a list of vehicle data dictionaries.
-    """
     try:
         response = requests.post(url, headers=headers, json=payload, timeout=10)
         print(f"Scan Response Status Code: {response.status_code}")
+
         # Handle compression if necessary
         content_encoding = response.headers.get("Content-Encoding", "")
         if content_encoding == "br":
@@ -149,6 +155,9 @@ def fetch_scan(payload: dict) -> list:
                     "mileage": vehicle_ad.get("mileageInfo", {}).get("distance"),
                     "vin": vehicle_details.get("vin"),
                     "state": vehicle_details.get("cycleState"),
+                    "first_time_registration": vehicle_ad.get(
+                        "firstTimeRegistration"
+                    ),  # new field
                     "scrape_date": datetime.datetime.now().strftime(
                         "%Y-%m-%d %H:%M:%S"
                     ),
@@ -160,15 +169,15 @@ def fetch_scan(payload: dict) -> list:
         return []
 
 
-def update_inventory(vehicles_data: list) -> int:
+def update_inventory(vehicles_data: list, model: str) -> int:
     """
-    Inserts or updates vehicles in the database.
+    Inserts or updates vehicles in the database for a specific model.
     Returns the number of new vehicles inserted.
-    This function is used for both PS1 and PS2 vehicles.
     """
     new_count = 0
     session = SessionLocal()
     try:
+        scanned_ids = [car["vehicle_id"] for car in vehicles_data]
         for car in vehicles_data:
             existing_vehicle = (
                 session.query(Vehicle).filter_by(id=car["vehicle_id"]).first()
@@ -182,7 +191,11 @@ def update_inventory(vehicles_data: list) -> int:
                 existing_vehicle.mileage = car.get("mileage")
                 existing_vehicle.vin = car.get("vin")
                 existing_vehicle.state = car.get("state")
+                existing_vehicle.first_time_registration = car.get(
+                    "first_time_registration"
+                )  # added field
                 existing_vehicle.last_scan = datetime.datetime.now()
+                existing_vehicle.available = True  # mark as available
                 print(f"Updated vehicle {existing_vehicle.id}")
             else:
                 # Insert new vehicle
@@ -195,12 +208,20 @@ def update_inventory(vehicles_data: list) -> int:
                     mileage=car.get("mileage"),
                     vin=car.get("vin"),
                     state=car.get("state"),
+                    first_time_registration=car.get(
+                        "first_time_registration"
+                    ),  # added field
                     date_added=datetime.datetime.now(),
                     last_scan=datetime.datetime.now(),
+                    available=True,  # new vehicles are available
                 )
                 session.add(new_vehicle)
                 new_count += 1
                 print(f"Added new vehicle {new_vehicle.id}")
+        # Mark vehicles not included in this scan (for this model) as unavailable
+        session.query(Vehicle).filter(
+            Vehicle.model == model, ~Vehicle.id.in_(scanned_ids)
+        ).update({"available": False}, synchronize_session=False)
         session.commit()
     except Exception as e:
         session.rollback()
@@ -216,6 +237,7 @@ def deep_scan_loop(carModel: str):
     Uses the global 'filters' imported from filters.py.
     """
     for feature_name, filter_mapping in filters.items():
+        print(f"Deep scan for {feature_name}...")
         time.sleep(1)  # Delay to avoid rate limits
         deep_data = fetch_scan(
             deepcopy(get_payload(carModel, equalFilters=[filter_mapping]))
@@ -274,33 +296,46 @@ def update_feature_scan(feature_key: str, feature_name: str, deep_vehicles_data:
 
 
 if __name__ == "__main__":
-    # --- Full Scan for PS2 ---
-    ps2_payload = get_payload("PS2")
-    ps2_data = fetch_scan(deepcopy(ps2_payload))
-    print(f"Fetched {len(ps2_data)} PS2 vehicles.")
-    new_count_ps2 = update_inventory(ps2_data)
-    print(f"New PS2 vehicles inserted: {new_count_ps2}")
 
-    # --- Deep Scan for PS2 Only If New Vehicles Were Added ---
-    if new_count_ps2 > 0:
-        print("Performing deep scans for PS2...")
-        deep_scan_loop("PS2")
-    else:
-        print("No new PS2 vehicles; skipping deep scans.")
+    if __name__ == "__main__":
 
-    # --- Full Scan for PS1 ---
-    ps1_payload = get_payload("PS1")
-    ps1_data = fetch_scan(deepcopy(ps1_payload))
-    print(f"Fetched {len(ps1_data)} PS1 vehicles.")
-    new_count_ps1 = update_inventory(ps1_data)
-    print(f"New PS1 vehicles inserted: {new_count_ps1}")
+        # Configure logging: timestamp, log level and message
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s %(levelname)s: %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+            filemode="w",
+            filename="scraper.log",
+        )
 
-    # # --- Deep Scan for PS1 Only If New Vehicles Were Added ---
-    # if new_count_ps1 > 0:
-    #     # Optionally, if you have a separate set of filters for PS1, use them.
-    #     # For now, we re-use the same deep scan loop.
-    #     print("Performing deep scans for PS1...")
-    #     # You can define a separate deep_scan_loop_ps1 if necessary.
-    #     deep_scan_loop()
-    # else:
-    #     print("No new PS1 vehicles; skipping deep scans.")
+        args = sys.argv[1:]
+        deep_scan_arg = "deep" in args
+
+        logging.info("Starting fetch of PS2 vehicles...")
+        ps2_payload = get_payload("PS2")
+        ps2_data = fetch_scan(deepcopy(ps2_payload))
+        logging.info("Fetched %d PS2 vehicles.", len(ps2_data))
+        for vehicle in ps2_data:
+            logging.info(
+                "PS2 Vehicle ID: %s, Model: %s, Year: %s, Price: %s",
+                vehicle["vehicle_id"],
+                vehicle["model"],
+                vehicle["year"],
+                vehicle["retail_price"],
+            )
+
+        logging.info("Starting fetch of PS1 vehicles...")
+        ps1_payload = get_payload("PS1")
+        ps1_data = fetch_scan(deepcopy(ps1_payload))
+        logging.info("Fetched %d PS1 vehicles.", len(ps1_data))
+        for vehicle in ps1_data:
+            logging.info(
+                "PS1 Vehicle ID: %s, Model: %s, Year: %s, Price: %s",
+                vehicle["vehicle_id"],
+                vehicle["model"],
+                vehicle["year"],
+                vehicle["retail_price"],
+            )
+        logging.info("Writing to inventory.json...")
+        with open("inventory.json", "w") as f:
+            json.dump({"PS2": ps2_data, "PS1": ps1_data}, f, indent=4)

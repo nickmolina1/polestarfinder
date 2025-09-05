@@ -1,0 +1,889 @@
+{
+    "Midnight": {
+      "featureCode": "72300",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1602607482-72300.svg",
+      "exteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1673267826-02-4-polestar-2-exterior-colours-midnight-d.jpg",
+        "https://www.polestar.com/dato-assets/11286/1701078984-03-4-polestar-3-exterior-colours-midnight-d.png"
+      ],
+      "oldExteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1659095881-midnight.png"
+      ],
+      "exteriorVideos": [
+        "https://www.polestar.com/dato-assets/11286/1670426682-02-4-polestar-2-exterior-colours-midnight-video-d.mp4",
+        "https://www.polestar.com/dato-assets/11286/1701078609-03-4-polestar-3-exterior-colours-midnight-video-d.mp4"
+      ],
+      "galleryImages": []
+    },
+    "Moon": {
+      "featureCode": "72700",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1602607270-72700.svg",
+      "exteriorImages": [],
+      "oldExteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1709154626-ps2-exterior-moon.jpg"
+      ],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "19\" 5-V Spoke Black Diamond Cut Alloy Wheel - Summer Tire": {
+      "featureCode": "R14B",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1699001332-19-launch-edition.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1645699898-polestar2_side_rim_19inch_dummy-tyrev001_32147831_32333727_32333775.jpg"
+      ]
+    },
+    "Jupiter": {
+      "featureCode": "73600",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1677155959-73600.svg",
+      "exteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1673267747-02-2-polestar-2-exterior-colours-jupiter-d.jpg",
+        "https://www.polestar.com/dato-assets/11286/1701078133-03-3-polestar-3-exterior-colours-jupiter-d.png"
+      ],
+      "oldExteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1709155529-ps2-exterior-jupiter.jpg"
+      ],
+      "exteriorVideos": [
+        "https://www.polestar.com/dato-assets/11286/1670426221-02-2-polestar-2-exterior-colours-jupiter-video-d.mp4",
+        "https://www.polestar.com/dato-assets/11286/1701078768-03-3-polestar-3-exterior-colours-jupiter-video-d.mp4"
+      ],
+      "galleryImages": []
+    },
+    "Performance": {
+      "featureCode": "220001",
+      "featureType": "Packages",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1692777986-220001.webp",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1713796671-ps4_gotland_05_9498_v2-2.jpg"
+      ]
+    },
+    "Thunder": {
+      "featureCode": "72800",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1616061638-72800.svg",
+      "exteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1673267713-02-1-polestar-2-exterior-colours-thunder-d.jpg",
+        "https://www.polestar.com/dato-assets/11286/1701079775-03-5-polestar-3-exterior-colours-thunder-d.png"
+      ],
+      "oldExteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1659095830-thunder.png"
+      ],
+      "exteriorVideos": [
+        "https://www.polestar.com/dato-assets/11286/1670425489-02-1-polestar-2-exterior-colours-thunder-video-d.mp4",
+        "https://www.polestar.com/dato-assets/11286/1701079994-03-5-polestar-3-exterior-colours-thunder-video-d.mp4"
+      ],
+      "galleryImages": []
+    },
+    "Ventilated Nappa leather Zinc with Light Ash deco": {
+      "featureCode": "RCZ300",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1649402879-zinc_light_ash_320x320.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1683890426-02-1-polestar-2-interior-options-zinc-nappa-fallback-d.jpg",
+        "https://www.polestar.com/dato-assets/11286/1683890433-02-1-polestar-2-interior-options-zinc-nappa-d.mp4"
+      ]
+    },
+    "19'' 5-Double Spoke Black Diamond Cut Alloy Wheel - Summer Tire": {
+      "featureCode": "R184",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1699001406-19-wheels.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1653981056-polestar_p622_2022_winterwheels_my23_2022_19_inch_2000x1000px.jpg"
+      ]
+    },
+    "20'' 5-V Spoke Black Silver Alloy Wheel": {
+      "featureCode": "001257",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1699001473-20-wheels.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1653981153-polestar_my23_20_inch_2000x1000px.jpg"
+      ]
+    },
+    "Snow": {
+      "featureCode": "70700",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1602607446-70700.svg",
+      "exteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1673267860-02-5-polestar-2-exterior-colours-snow-d.jpg",
+        "https://www.polestar.com/dato-assets/11286/1701077224-03-1-polestar-3-exterior-colours-snow-d.png",
+        "https://www.polestar.com/dato-assets/11286/1713446519-snow.png"
+      ],
+      "oldExteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1659096084-snow.png"
+      ],
+      "exteriorVideos": [
+        "https://www.polestar.com/dato-assets/11286/1670424545-02-5-polestar-2-exterior-colours-snow-video-d.mp4",
+        "https://www.polestar.com/dato-assets/11286/1701076850-03-1-polestar-3-exterior-colours-snow-video-d.mp4"
+      ],
+      "galleryImages": []
+    },
+    "Magnesium": {
+      "featureCode": "72900",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1602607357-72900.svg",
+      "exteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1673267780-02-3-polestar-2-exterior-colours-magnesium-d.jpg",
+        "https://www.polestar.com/dato-assets/11286/1701077808-03-2-polestar-3-exterior-colours-magnesium-d.png",
+        "https://www.polestar.com/dato-assets/11286/1713446430-magnesium.png"
+      ],
+      "oldExteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1659095800-magnesium.png"
+      ],
+      "exteriorVideos": [
+        "https://www.polestar.com/dato-assets/11286/1670423980-02-3-polestar-2-exterior-colours-magnesium-video-d.mp4",
+        "https://www.polestar.com/dato-assets/11286/1701077878-03-2-polestar-3-exterior-colours-magnesium-video-d.mp4"
+      ],
+      "galleryImages": []
+    },
+    "Space": {
+      "featureCode": "71700",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1610016294-71700.svg",
+      "exteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1673267965-02-6-polestar-2-exterior-colours-space-d.jpg",
+        "https://www.polestar.com/dato-assets/11286/1698674763-03-6-polestar-3-exterior-colours-space-d.png",
+        "https://www.polestar.com/dato-assets/11286/1713446560-space.png"
+      ],
+      "oldExteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1659096429-space.png"
+      ],
+      "exteriorVideos": [
+        "https://www.polestar.com/dato-assets/11286/1670427655-02-6-polestar-2-exterior-colours-space-video-d.mp4",
+        "https://www.polestar.com/dato-assets/11286/1701080812-03-6-polestar-3-exterior-colours-space-video-d.mp4"
+      ],
+      "galleryImages": []
+    },
+    "Charcoal Embossed Textile with 3D Etched deco": {
+      "featureCode": "R60000",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1629198518-charcoalw-3d.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1655112990-charcoal-3detched-d-ww.jpg",
+        "https://www.polestar.com/dato-assets/11286/1700235349-01-charcoal-embossed-textile-with-3d-etched-deco.webp"
+      ]
+    },
+    "Embossed textile in Zinc with 3D etched deco": {
+      "featureCode": "R6B000",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1629198445-zinkw-3d.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1695047451-polestar-210309-6055_75_v002-2.jpg"
+      ]
+    },
+    "Slate WeaveTech with Black Ash deco": {
+      "featureCode": "RFA000",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1600682965-slate.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1610439893-rfa000.jpg"
+      ]
+    },
+    "Charcoal WeaveTech with Black Ash deco": {
+      "featureCode": "RF8000",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1600682934-charcoal.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1610439741-rf8000.jpg"
+      ]
+    },
+    "Pilot": {
+      "featureCode": "001162",
+      "featureType": "Packages",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1692275956-xpilot.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1701963867-5-5-polestar-3-upgrades-park-assist-pilot-d-1.png"
+      ]
+    },
+    "Pilot lite": {
+      "featureCode": "001276",
+      "featureType": "Packages",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1618234591-pilot-assist-2x.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1618234591-pilot-assist-2x.jpg"
+      ]
+    },
+    "Plus": {
+      "featureCode": "220004",
+      "featureType": "Packages",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1692778147-220004.webp",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1713796816-1702991678-09-3-polestar-4-interior-rear-display-d.webp"
+      ]
+    },
+    "Void": {
+      "featureCode": "01900",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1602607398-01900.svg",
+      "exteriorImages": [],
+      "oldExteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1709154966-ps2-exterior-void.jpg"
+      ],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Ventilated Nappa leather Barley with reconstructed wood deco": {
+      "featureCode": "RCC000",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1600682901-barley.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1617182197-seatanddoorbarleyblackbelts20190219.jpg"
+      ]
+    },
+    "Charcoal": {
+      "featureCode": "RB0300",
+      "featureType": "Interior",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1610016465-rb0300.svg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1696592581-seats-hero_black_final1.png"
+      ]
+    },
+    "20\" 4-V Spoke Black Diamond Cut Alloy Wheel": {
+      "featureCode": "001147",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1697790591-20-launch-edition.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1645105011-20-v4-001.jpeg"
+      ]
+    },
+    "Charcoal with Zinc Seats": {
+      "featureCode": "RB7300",
+      "featureType": "Interior",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1610016558-rb7300.svg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1696593534-seats-hero_white_final1.png"
+      ]
+    },
+    "20\" 4-Y Spoke Black Polished Forged Alloy Wheel - Summer Tire": {
+      "featureCode": "XPFWHE",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1697790940-20-performance-launch-edition.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1629378604-alloywheels.jpg"
+      ]
+    },
+    "Pilot pack with LiDAR": {
+      "featureCode": "001180",
+      "featureType": "Packages",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1668161681-12-pilot-pack-with-lidar-m.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1709135703-09-1-polestar-3-upgrades-pilot-lidar-luminar-m.png"
+      ]
+    },
+    "Matte": {
+      "featureCode": "XMATTE",
+      "featureType": "ExteriorDetails",
+      "thumbnail": null,
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Plug-in hybrid Dual motor": {
+      "featureCode": "BD",
+      "featureType": "Engine",
+      "thumbnail": null,
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Snow Matte": {
+      "featureCode": "80700",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1602607446-70700.svg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "21'' Gloss Black Diamond Cut Alloy Wheel BST edition": {
+      "featureCode": "XPEWHE",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1655364425-21-bst-wheels-thumb-new.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "21\" Diamond Cut Alloy Wheel": {
+      "featureCode": "R13A",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1610016722-r13a.svg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Midnight Matte": {
+      "featureCode": "82300",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1602607482-72300.svg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "21\" Glossy Black Diamond Cut Alloy Wheel": {
+      "featureCode": "001112",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1610016650-001112.svg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "21\" Matte Black Diamond Cut Alloy Wheel": {
+      "featureCode": "001113",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1610016650-001112.svg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Osmium Matte": {
+      "featureCode": "81400",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1610016191-71400.svg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Space Matte": {
+      "featureCode": "81700",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1610016294-71700.svg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Magnesium Matte": {
+      "featureCode": "82900",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1602607357-72900.svg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Animal welfare Nappa leather in Zinc with Black ash deco": {
+      "featureCode": "RCG000",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1710338063-rcg000-icons-interior-nappa-zink-black-ash_1000x1000.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Animal welfare Nappa leather in Zinc with Light ash deco": {
+      "featureCode": "RCZ300",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1649402879-zinc_light_ash_320x320.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1683890426-02-1-polestar-2-interior-options-zinc-nappa-fallback-d.jpg",
+        "https://www.polestar.com/dato-assets/11286/1683890433-02-1-polestar-2-interior-options-zinc-nappa-d.mp4"
+      ]
+    },
+    "Matte black stripe": {
+      "featureCode": "XSTRIP",
+      "featureType": "",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1678433249-stripe.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Nebula": {
+      "featureCode": "73300",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1701097403-nebula-tile.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1709160359-nebula-exterior.jpg"
+      ],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "20\" Pro - All-Season Tires": {
+      "featureCode": "001257",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1653981153-polestar_my23_20_inch_2000x1000px.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1653981153-polestar_my23_20_inch_2000x1000px.jpg"
+      ]
+    },
+    "20\u2033 Performance": {
+      "featureCode": "XPFWHE",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1673278872-05-polestar-2-performance-wheel-m.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1700811528-b2f18043-6729-45d4-95e5-3df8f0b33e87.jpeg"
+      ]
+    },
+    "19\" Aero - All-Season Tires": {
+      "featureCode": "R184",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1653981056-polestar_p622_2022_winterwheels_my23_2022_19_inch_2000x1000px.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1653981056-polestar_p622_2022_winterwheels_my23_2022_19_inch_2000x1000px.jpg"
+      ]
+    },
+    "22\" Performance": {
+      "featureCode": "XPFWHE",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1692275783-xpfwhe_2x.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1709839798-performance-wheel.png"
+      ]
+    },
+    "22\" Sport": {
+      "featureCode": "001249",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1692275641-001249_2x.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1709839804-upgarde-wheel.png"
+      ]
+    },
+    "20\" Aero": {
+      "featureCode": "R101",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1710249992-00-r101_2x.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1710249992-00-r101_2x.jpg"
+      ]
+    },
+    "Pro": {
+      "featureCode": "001336",
+      "featureType": "Packages",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1714402324-11-1-polestar-2-upgrades-pro-pack-seatbelt-swedish-gold-stripe-d.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1714402324-11-1-polestar-2-upgrades-pro-pack-seatbelt-swedish-gold-stripe-d.png"
+      ]
+    },
+    "Climate": {
+      "featureCode": "001334",
+      "featureType": "Packages",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1711547100-12-polestar-2-upgrades-climate-pack-energy-saving-heatpump-m.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1733818456-car-details-polestar-2-25-upgrades-climate-pack-heated-wiper-nozzles.png"
+      ]
+    },
+    "Bio-attributed MicroTech in Charcoal with Zinc deco": {
+      "featureCode": "P04300",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1706618958-p04300_2x.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Bio-attributed MicroTech in Charcoal with Charcoal deco": {
+      "featureCode": "P01300",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1692261091-p01300_320x320.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Bio-attributed MicroTech in Charcoal with aluminium deco": {
+      "featureCode": "RN0000",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1710338181-rn0000-icons-interior-microtech_alum_1000x1000.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "AC-charging cable for public/home wallbox": {
+      "featureCode": "001248",
+      "featureType": "Option",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1705571165-14-polestar-3-upgrades-single-ac-charging-cable-d.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1705571157-14-polestar-3-upgrades-single-ac-charging-cable-m.png"
+      ]
+    },
+    "20\" Pro graphite": {
+      "featureCode": "001335",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1712846487-04-2-polestar-2-specs-wheels-pro-graphite.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "20\" Performance": {
+      "featureCode": "XPFWHE",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1673278872-05-polestar-2-performance-wheel-m.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1700811528-b2f18043-6729-45d4-95e5-3df8f0b33e87.jpeg"
+      ]
+    },
+    "20\" Pro": {
+      "featureCode": "XPRWHE",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1673903329-10-polestar-2-upgrades-wheels-m.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1673903329-10-polestar-2-upgrades-wheels-m.jpg"
+      ]
+    },
+    "Electron": {
+      "featureCode": "36900",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1692262878-36900.svg",
+      "exteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1713446479-mask-group.png"
+      ],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "21\u201d Sport": {
+      "featureCode": "221001",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1692195022-221001_2x.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1692195022-221001_2x.jpg"
+      ]
+    },
+    "21\u201d Pro": {
+      "featureCode": "XPRWHE",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1713251723-xprwhe_2x.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1706542613-03-ps4-my24-wheel-propackage.webp"
+      ]
+    },
+    "22\u201d Performance": {
+      "featureCode": "XPFWHE",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1690550404-xpfwhe_2x.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1706542928-01-ps4-my24-wheels-performance.webp"
+      ]
+    },
+    "20\u201d Aero": {
+      "featureCode": "JG17",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1690291635-jg17_2x.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1690291635-jg17_2x.jpg"
+      ]
+    },
+    "Privacy glass on rear side windows": {
+      "featureCode": "221010",
+      "featureType": "Option",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1705935134-15-polestar-4-upgrades-privacy-glass-d.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1713796866-polestar-230908-3535_kampanj_v003.png"
+      ]
+    },
+    "Gold": {
+      "featureCode": "37000",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1692262935-37000.svg",
+      "exteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1713446026-gold.png"
+      ],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "AC charging cable": {
+      "featureCode": "A01302",
+      "featureType": "Option",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1702558537-high_power_3p16a_roll_eu_update_p_n_32257304.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1702558537-high_power_3p16a_roll_eu_update_p_n_32257304.png"
+      ]
+    },
+    "Electrochromic glass roof": {
+      "featureCode": "221003",
+      "featureType": "Option",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1704266816-13-polestar-4-upgrades-panoramic-roof-d.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1704266816-13-polestar-4-upgrades-panoramic-roof-d.png"
+      ]
+    },
+    "Color-matched mouldings": {
+      "featureCode": "221014",
+      "featureType": "Option",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1705935081-14-1-polestar-4-upgrades-colour-mouldings-d.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1705935081-14-1-polestar-4-upgrades-colour-mouldings-d.png"
+      ]
+    },
+    "Animal welfare wool in Charcoal with repurposed aluminium deco": {
+      "featureCode": "R80000",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1710337636-r80000-icons-interior-wool-alum_1000x1000.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Bio-attributed WeaveTech in Charcoal with Tectonic deco": {
+      "featureCode": "RP0000",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1710338378-rn0000-icons-interior-microtech_alum_1000x1000.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Animal welfare Nappa leather in Jupiter with Black ash deco": {
+      "featureCode": "RCJ000",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1710338123-rcj000-icons-interior-nappa-jupiter-black-ash_1000x1000.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Animal welfare Nappa leather in Charcoal with Black ash deco": {
+      "featureCode": "RC0000",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1710337922-rc0000-icons-interior-nappa-carcoal-black-ash_1000x1000.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Ventilated Nappa leather Charcoal with Light Ash deco": {
+      "featureCode": "RC8300",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1719474784-rc8300_2x.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Vapour": {
+      "featureCode": "74000",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1719234907-thumb-vapour.svg",
+      "exteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1718630615-cut_vapour_ps2.jpg"
+      ],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Storm": {
+      "featureCode": "36800",
+      "featureType": "Color",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1703759913-05-1-polestar-4-overview-config-body-thumb-storm.svg",
+      "exteriorImages": [
+        "https://www.polestar.com/dato-assets/11286/1713446609-storm.png"
+      ],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    },
+    "Certified for towbar": {
+      "featureCode": "A0XXXX",
+      "featureType": "Towbar",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1643328284-polestar2towbarnotfittedtemp.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1643328284-polestar2towbarnotfittedtemp.png"
+      ]
+    },
+    "Privacy glass on rear windows": {
+      "featureCode": "000179",
+      "featureType": "Option",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1702905687-11-4-polestar-3-upgrades-single-exterior-rear-privacy-glass-d.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1702905687-11-4-polestar-3-upgrades-single-exterior-rear-privacy-glass-d.png"
+      ]
+    },
+    "21\" Plus": {
+      "featureCode": "R102",
+      "featureType": "Rims",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1692275713-r102_2x.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1709839791-base-wheel.png"
+      ]
+    },
+    "Pixel LED headlights": {
+      "featureCode": "001170",
+      "featureType": "Option",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1653993453-2-pixel-headlights-d.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1653993453-2-pixel-headlights-d.jpg"
+      ]
+    },
+    "Harman Kardon premium sound": {
+      "featureCode": "001033",
+      "featureType": "Option",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1711004747-14-polestar-2-upgrades-audio-upgrade-harmankardon-d.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1711528872-05-1-polestar-2-interior-audio-upgrade-harmankardon-m.png"
+      ]
+    },
+    "Tinted rear window": {
+      "featureCode": "000179",
+      "featureType": "Option",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1724151021-15-3-polestar-2-upgrades-exterior-tinted-rear-window-m.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1724151005-15-3-polestar-2-upgrades-exterior-tinted-rear-window-d.png"
+      ]
+    },
+    "Clear laminated acoustic rear windows": {
+      "featureCode": "001283",
+      "featureType": "Option",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1709728899-clear-laminated-acoustic-rear-windows.png",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": [
+        "https://www.polestar.com/dato-assets/11286/1709734719-clear-laminated-acoustic-rear-windows.png"
+      ]
+    },
+    "Animal welfare Nappa leather in Charcoal with Charcoal deco": {
+      "featureCode": "P01100",
+      "featureType": "Upholstery",
+      "thumbnail": "https://www.polestar.com/dato-assets/11286/1692260849-p01100_320x320.jpg",
+      "exteriorImages": [],
+      "oldExteriorImages": [],
+      "exteriorVideos": [],
+      "galleryImages": []
+    }
+  }

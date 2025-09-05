@@ -1,16 +1,25 @@
+// --- Globals ---
 let fullInventory = null;  // Global variable to hold the full dataset
+let defaultSortApplied = false;  // Flag to apply default sort only once
 
-// Function to build the API URL with query parameters based on filters (for initial fetch)
+// --- Utility Functions ---
 function buildApiUrl() {
-  const baseUrl = 'http://127.0.0.1:8000/vehicles/';
+  const baseUrl = 'data/vehicles.json'; // Adjust this to your actual API endpoint
+
   const params = new URLSearchParams();
   // (Assume similar logic as before for dropdowns, number inputs, and checkboxes)
   // ...
+  params.append('available', 'true'); // Fetch only available vehicles
   console.log("Constructed API URL:", baseUrl + "?" + params.toString());
   return params.toString() ? `${baseUrl}?${params.toString()}` : baseUrl;
 }
 
-// Function to fetch full inventory and cache it
+function formatPrice(price) {
+  if (!price) return ""; // Handle null/undefined cases
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(price);
+}
+
+// --- API Functions ---
 function fetchFullInventory() {
   const cacheKey = "fullVehicleInventory";
   const cacheTimestampKey = "fullVehicleInventoryTimestamp";
@@ -41,126 +50,6 @@ function fetchFullInventory() {
     });
 }
 
-// Function to filter the fullInventory based on current controls
-function filterInventory() {
-  if (!fullInventory) return [];
-
-  // Get filter values from controls
-  const partnerLocation = document.getElementById('partnerLocationFilter').value.toLowerCase();
-  const model = document.getElementById('modelFilter').value.toLowerCase();
-  const state = document.getElementById('stateFilter').value.toLowerCase();
-  const exterior = document.getElementById('exteriorFilter').value.toLowerCase();
-  const interior = document.getElementById('interiorFilter').value.toLowerCase();
-  const wheels = document.getElementById('wheelsFilter').value.toLowerCase();
-  const motor = document.getElementById('motorFilter').value.toLowerCase();
-  const edition = document.getElementById('editionFilter').value.toLowerCase();
-  
-  const minPrice = parseFloat(document.getElementById('minPriceFilter')?.value) || null;
-  const maxPrice = parseFloat(document.getElementById('maxPriceFilter')?.value) || null;
-  const minMileage = parseFloat(document.getElementById('minMileageFilter')?.value) || null;
-  const maxMileage = parseFloat(document.getElementById('maxMileageFilter')?.value) || null;
-
-  const performance = document.getElementById('performancePack').checked;
-  const pilot = document.getElementById('pilotPack').checked;
-  const plus = document.getElementById('plusPack').checked;
-
-  // Filter the fullInventory array
-  return fullInventory.filter(vehicle => {
-    // Check each filter; if control is empty/unchecked, ignore it.
-    // Use case-insensitive comparison for text fields.
-    if (partnerLocation && (!vehicle.partner_location || vehicle.partner_location.toLowerCase() !== partnerLocation))
-      return false;
-    if (model && (!vehicle.model || vehicle.model.toLowerCase() !== model))
-      return false;
-    if (state && (!vehicle.state || vehicle.state.toLowerCase() !== state))
-      return false;
-    if (exterior && (!vehicle.exterior || vehicle.exterior.toLowerCase() !== exterior))
-      return false;
-    if (interior && (!vehicle.interior || vehicle.interior.toLowerCase() !== interior))
-      return false;
-    if (wheels && (!vehicle.wheels || vehicle.wheels.toLowerCase() !== wheels))
-      return false;
-    if (motor && (!vehicle.motor || vehicle.motor.toLowerCase() !== motor))
-      return false;
-    if (edition && (!vehicle.edition || vehicle.edition.toLowerCase() !== edition))
-      return false;
-    if (minPrice !== null && (!vehicle.retail_price || parseFloat(vehicle.retail_price) < minPrice))
-      return false;
-    if (maxPrice !== null && (!vehicle.retail_price || parseFloat(vehicle.retail_price) > maxPrice))
-      return false;
-    if (minMileage !== null && (!vehicle.mileage || parseFloat(vehicle.mileage) < minMileage))
-      return false;
-    if (maxMileage !== null && (!vehicle.mileage || parseFloat(vehicle.mileage) > maxMileage))
-      return false;
-    
-    // For pack checkboxes, assume if unchecked, don't filter; if checked, vehicle must have that pack true.
-    if (performance && !vehicle.performance)
-      return false;
-    if (pilot && !vehicle.pilot)
-      return false;
-    if (plus && !vehicle.plus)
-      return false;
-
-    return true;
-  });
-}
-
-// Function to format price as USD currency with thousands separator
-function formatPrice(price) {
-  if (!price) return ""; // Handle null/undefined cases
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(price);
-}
-
-// Function to update the table with vehicle data
-function updateTable(data) {
-  const tbody = document.querySelector("#vehiclesTable tbody");
-  tbody.innerHTML = ""; // Clear existing table rows
-
-  if (data.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="12" class="text-center">No vehicles found</td></tr>';
-    return;
-  }
-
-  data.forEach((vehicle) => {
-    const packs = [];
-    if (vehicle.performance) packs.push("Performance");
-    if (vehicle.pilot) packs.push("Pilot");
-    if (vehicle.plus) packs.push("Plus");
-    const packsDisplay = packs.join(", ");
-    const vehicleUrl = `https://www.polestar.com/us/preowned-cars/product/polestar-${vehicle.model.toLowerCase().slice(-1)}/${vehicle.id}`;
-
-    // Ensure price is a valid number, else default to 0
-    const rawPrice = vehicle.retail_price ? parseFloat(vehicle.retail_price) : 0;
-    const formattedPrice = rawPrice > 0 ? formatPrice(rawPrice) : "";
-
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td><a href="${vehicleUrl}" target="_blank">${vehicle.model}</a></td>
-      <td>${vehicle.year}</td>
-      <td>${vehicle.partner_location || ""}</td>
-      <td data-price="${rawPrice}">${formattedPrice}</td> 
-      <td>${vehicle.mileage ? vehicle.mileage.toLocaleString() : ""}</td>
-      <td>${vehicle.vin || ""}</td>
-      <td>${vehicle.exterior || ""}</td>
-      <td>${vehicle.interior || ""}</td>
-      <td>${vehicle.wheels || ""}</td>
-      <td>${vehicle.motor || ""}</td>
-      <td>${vehicle.state || ""}</td>
-      <td>${vehicle.edition || ""}</td>
-      <td>${packsDisplay}</td>
-    `;
-    row.style.cursor = "pointer";
-    row.addEventListener("click", () => {
-      window.open(vehicleUrl, "_blank");
-    });
-    tbody.appendChild(row);
-  });
-
-  // Reattach sorting after updating the table
-  attachSortingEvents();
-}
-
-// Modified loadVehicles() to use caching and client-side filtering
 function loadVehicles() {
   const cacheKey = "fullVehicleInventory";
   const cacheTimestampKey = "fullVehicleInventoryTimestamp";
@@ -191,7 +80,146 @@ function loadVehicles() {
     });
 }
 
-// --- SORTING FUNCTIONALITY WITH ARROW INDICATORS ---
+// --- Filtering & Table Update ---
+function filterInventory() {
+  if (!fullInventory) return [];
+
+  // Get filter values from controls
+  const partnerLocation = document.getElementById('partnerLocationFilter').value.toLowerCase();
+  const model = document.getElementById('modelFilter').value.toLowerCase();
+  const state = document.getElementById('stateFilter').value.toLowerCase();
+  const swatches = document.querySelectorAll('#exteriorColorSwatches .color-swatch.selected');
+  const exteriorColors = Array.from(swatches).map(el => el.getAttribute('data-color').toLowerCase());
+  
+  // Use the new interior options (multiple selection)
+  const interiorOptions = document.querySelectorAll('#interiorOptions .interior-option.selected');
+  const selectedInteriors = Array.from(interiorOptions).map(el => el.getAttribute('data-interior').toLowerCase());
+  
+  const wheelElements = document.querySelectorAll('#wheelThumbnails a.selected');
+  const selectedWheels = Array.from(wheelElements).map(el => el.getAttribute('data-wheel').toLowerCase());
+  const motor = document.getElementById('motorFilter').value.toLowerCase();
+  const edition = document.getElementById('editionFilter').value.toLowerCase();
+  
+  const minPrice = parseFloat(document.getElementById('minPriceFilter')?.value) || null;
+  const maxPrice = parseFloat(document.getElementById('maxPriceFilter')?.value) || null;
+  const minMileage = parseFloat(document.getElementById('minMileageFilter')?.value) || null;
+  const maxMileage = parseFloat(document.getElementById('maxMileageFilter')?.value) || null;
+
+  // NEW: Get selected packs from anchors
+  const packAnchors = document.querySelectorAll('#packOptions .pack-option.selected');
+  const selectedPacks = Array.from(packAnchors).map(el => el.getAttribute('data-pack').toLowerCase());
+
+  // Filter the fullInventory array
+  return fullInventory.filter(vehicle => {
+    // Check each filter; if control is empty/unchecked, ignore it.
+    // Use case-insensitive comparison for text fields.
+    if (partnerLocation && (!vehicle.partner_location || vehicle.partner_location.toLowerCase() !== partnerLocation))
+      return false;
+    if (model && (!vehicle.model || vehicle.model.toLowerCase() !== model))
+      return false;
+    if (state && (!vehicle.state || vehicle.state.toLowerCase() !== state))
+      return false;
+    if (exteriorColors.length > 0 && (!vehicle.exterior || !exteriorColors.includes(vehicle.exterior.toLowerCase())))
+      return false;
+    if (selectedInteriors.length > 0 && (!vehicle.interior || !selectedInteriors.includes(vehicle.interior.toLowerCase())))
+      return false;
+    if (selectedWheels.length > 0 && (!vehicle.wheels || !selectedWheels.includes(vehicle.wheels.toLowerCase())))
+      return false;
+    if (motor && (!vehicle.motor || vehicle.motor.toLowerCase() !== motor))
+      return false;
+    if (edition && (!vehicle.edition || vehicle.edition.toLowerCase() !== edition))
+      return false;
+    if (minPrice !== null && (!vehicle.retail_price || parseFloat(vehicle.retail_price) < minPrice))
+      return false;
+    if (maxPrice !== null && (!vehicle.retail_price || parseFloat(vehicle.retail_price) > maxPrice))
+      return false;
+    if (minMileage !== null && (!vehicle.mileage || parseFloat(vehicle.mileage) < minMileage))
+      return false;
+    if (maxMileage !== null && (!vehicle.mileage || parseFloat(vehicle.mileage) > maxMileage))
+      return false;
+      
+    // NEW: Pack filters based on selected anchors.
+    if (selectedPacks.length > 0) {
+      // For each selected pack, vehicle must have the corresponding flag true.
+      if (selectedPacks.includes("performance") && !vehicle.performance)
+        return false;
+      if (selectedPacks.includes("pilot") && !vehicle.pilot)
+        return false;
+      if (selectedPacks.includes("plus") && !vehicle.plus)
+        return false;
+    }
+
+    return true;
+  });
+}
+
+function updateTable(data) {
+  const tbody = document.querySelector("#vehiclesTable tbody");
+  tbody.innerHTML = ""; // Clear existing table rows
+
+  if (data.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="12" class="text-center">No vehicles found</td></tr>';
+    return;
+  }
+
+  data.forEach((vehicle) => {
+    const packs = [];
+    if (vehicle.performance) packs.push("Performance");
+    if (vehicle.pilot) packs.push("Pilot");
+    if (vehicle.plus) packs.push("Plus");
+    const packsDisplay = packs.join(", ");
+    const vehicleUrl = `https://www.polestar.com/us/preowned-cars/product/polestar-${vehicle.model.toLowerCase().slice(-1)}/${vehicle.id}`;
+
+    // Ensure price is a valid number, else default to 0
+    const rawPrice = vehicle.retail_price ? parseFloat(vehicle.retail_price) : 0;
+    const formattedPrice = rawPrice > 0 ? formatPrice(rawPrice) : "";
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td><a href="${vehicleUrl}" target="_blank">${vehicle.model}</a></td>
+      <td>${vehicle.year}</td>
+      <td>${vehicle.partner_location || ""}</td>
+      <td data-price="${rawPrice}">${formattedPrice}</td> 
+      <td>${vehicle.mileage ? vehicle.mileage.toLocaleString() : ""}</td>
+      <td>${vehicle.exterior || ""}</td>
+      <td>${vehicle.interior || ""}</td>
+      <td>${vehicle.wheels || ""}</td>
+      <td>${vehicle.motor || ""}</td>
+      <td>${vehicle.state || ""}</td>
+      <td>${vehicle.edition || ""}</td>
+      <td>${packsDisplay}</td>
+      <td>${vehicle.date_added ? new Date(vehicle.date_added).toLocaleDateString("en-US") : ""}</td>
+      <td>${vehicle.first_time_registration ? new Date(vehicle.first_time_registration).toLocaleDateString("en-US") : ""}</td>
+    `;
+    row.style.cursor = "pointer";
+    row.addEventListener("click", () => {
+      window.open(vehicleUrl, "_blank");
+    });
+    tbody.appendChild(row);
+  });
+
+  // Reattach sorting after updating the table
+  attachSortingEvents();
+
+  // Apply default sort only on the first load
+  if (!defaultSortApplied) {
+    // Default sort by price (column index 3, type number)
+    sortTableByColumn(3, "asc", "number");
+    // Set default sorting arrow on Retail Price header (column index 3)
+    const table = document.getElementById("vehiclesTable");
+    const headers = table.querySelectorAll("th");
+    if (headers[3]) {
+      headers[3].setAttribute("data-order", "asc");
+      const arrowSpan = headers[3].querySelector(".sort-arrow");
+      if (arrowSpan) {
+        arrowSpan.textContent = " ▲";
+      }
+    }
+    defaultSortApplied = true;
+  }
+}
+
+// --- Sorting Functions ---
 function attachSortingEvents() {
   const table = document.getElementById('vehiclesTable');
   const headers = table.querySelectorAll('th');
@@ -202,7 +230,7 @@ function attachSortingEvents() {
     header.addEventListener('click', sortHandler);
   });
 }
-// Sorting function with support for currency
+
 function sortTableByColumn(columnIndex, order = "asc", type = "string") {
   const table = document.getElementById("vehiclesTable");
   const tbody = table.querySelector("tbody");
@@ -243,18 +271,6 @@ function sortTableByColumn(columnIndex, order = "asc", type = "string") {
   rows.forEach((row) => tbody.appendChild(row));
 }
 
-// Ensure sorting is reattached after table updates
-function attachSortingEvents() {
-  const table = document.getElementById("vehiclesTable");
-  const headers = table.querySelectorAll("th");
-
-  headers.forEach((header, index) => {
-    header.style.cursor = "pointer";
-    header.removeEventListener("click", sortHandler);
-    header.addEventListener("click", sortHandler);
-  });
-}
-
 function sortHandler(event) {
   const header = event.target.closest("th");
   if (!header) return;
@@ -281,7 +297,7 @@ function sortHandler(event) {
   sortTableByColumn(columnIndex, newOrder, type);
 }
 
-// Attach event listeners to all filter controls
+// --- Event Bindings ---
 document.querySelectorAll('.form-select, input[type="number"], input[type="checkbox"]').forEach(input => {
   input.addEventListener('input', () => {
     // On any filter change, update table using cached fullInventory
@@ -289,7 +305,40 @@ document.querySelectorAll('.form-select, input[type="number"], input[type="check
   });
 });
 
-// Load vehicles on page load
+document.querySelectorAll('#exteriorColorSwatches .color-swatch').forEach(swatch => {
+  swatch.addEventListener('click', () => {
+    swatch.classList.toggle('selected');
+    updateTable(filterInventory());
+  });
+});
+
+document.querySelectorAll('#wheelThumbnails a').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    this.classList.toggle('selected');
+    updateTable(filterInventory());
+  });
+});
+
+document.querySelectorAll('#interiorOptions .interior-option').forEach(option => {
+  option.addEventListener('click', function(e) {
+    e.preventDefault();
+    this.classList.toggle('selected');
+    updateTable(filterInventory());
+  });
+});
+
+
+document.querySelectorAll('#packOptions .pack-option').forEach(option => {
+    option.addEventListener('click', function(e) {
+      e.preventDefault();
+      this.classList.toggle('selected');
+      updateTable(filterInventory());
+    });
+  });
+
+
+// --- Initialization ---
 window.addEventListener('load', () => {
     // Check if this navigation was a page reload
     const navEntries = performance.getEntriesByType("navigation");
@@ -300,4 +349,3 @@ window.addEventListener('load', () => {
     }
     loadVehicles();
   });
-  

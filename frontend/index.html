@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vehicle Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="my-container">
+      <!-- Sidebar -->
+      <div class="my-sidebar"> 
+        <div class="filter-container">
+          <h2>Filters</h2>
+
+          <!-- Model dropdown -->
+          <div class="filter-section">
+            <label for="modelFilter" class="form-label">Model</label>
+            <select id="modelFilter" class="form-select">
+                <option value="">All</option>
+                <option value="Polestar 2">Polestar 2</option>
+                <option value="Polestar 1">Polestar 1</option>
+            </select>
+          </div>
+  
+          <!-- State dropdown -->
+          <div class="filter-section">
+            <label for="stateFilter" class="form-label">Condition</label>
+            <select id="stateFilter" class="form-select">
+              <option value="">All</option>
+              <option value="PreOwned">PreOwned</option>
+              <option value="Certified PreOwned">Certified PreOwned</option>
+              <option value="New">New</option>
+            </select>
+          </div>
+  
+            <!-- Partner Location dropdown -->
+          <div class="filter-section">
+            <label for="partnerLocationFilter" class="form-label">Location</label>
+            <select id="partnerLocationFilter" class="form-select">
+              <option value="">All</option>
+              <option value="Polestar Austin">Polestar Austin</option>
+              <option value="Polestar Atlanta">Polestar Atlanta</option>
+              <option value="Polestar Boston">Polestar Boston</option>
+              <option value="Polestar Charlotte">Polestar Charlotte</option>
+              <option value="Polestar Denver">Polestar Denver</option>
+              <option value="Polestar Detroit">Polestar Detroit</option>
+              <option value="Polestar Houston">Polestar Houston</option>
+              <option value="Polestar Lisle">Polestar Lisle</option>
+              <option value="Polestar Manhattan">Polestar Manhattan</option>
+              <option value="Polestar Marin">Polestar Marin</option>
+              <option value="Polestar Minneapolis">Polestar Minneapolis</option>
+              <option value="Polestar Nashville">Polestar Nashville</option>
+              <option value="Polestar New Canaan">Polestar New Canaan</option>
+              <option value="Polestar Portland">Polestar Portland</option>
+              <option value="Polestar Princeton">Polestar Princeton</option>
+              <option value="Polestar Short Hills">Polestar Short Hills</option>
+              <option value="Polestar San Jose">Polestar San Jose</option>
+              <option value="Polestar Scottsdale">Polestar Scottsdale</option>
+              <option value="Polestar Tampa">Polestar Tampa</option>
+              <option value="Polestar Washington DC">Polestar Washington DC</option>
+            </select>
+          </div>
+  
+          <!-- Exterior color swatches -->
+          <div class="filter-section">
+            <label class="form-label">Exterior</label>
+            <div id="exteriorColorSwatches" class="thumbnail-container">
+              <div class="color-swatch thumbnail" data-color="Magnesium"></div>
+              <div class="color-swatch thumbnail" data-color="Jupiter"></div>
+              <div class="color-swatch thumbnail" data-color="Moon"></div>
+              <div class="color-swatch thumbnail" data-color="Snow"></div>
+              <div class="color-swatch thumbnail" data-color="Thunder"></div>
+              <div class="color-swatch thumbnail" data-color="Midnight"></div>
+              <div class="color-swatch thumbnail" data-color="Space"></div>
+              <div class="color-swatch thumbnail" data-color="Void"></div>
+            </div>
+          </div>
+          
+          <!-- Interior options -->
+          <div id="interiorOptions" class="filter-section">
+            <label class="form-label">Interior</label>
+            <div class="filter-subsection">
+              <label class="form-label sub-label">Textile</label>
+              <div class="thumbnail-container">
+                <a href="#" data-interior="Charcoal Embossed Textile with 3D Etched deco" class="interior-option">
+                  <img src="https://www.polestar.com/dato-assets/11286/1629198518-charcoalw-3d.png" alt="Charcoal Embossed Textile with 3D Etched deco" class="thumbnail">
+                </a>
+                <a href="#" data-interior="Zinc Embossed Textile with 3D Etched deco" class="interior-option">
+                  <img src="https://www.polestar.com/dato-assets/11286/1629198445-zinkw-3d.png" alt="Zinc Embossed Textile with 3D Etched deco" class="thumbnail">
+                </a>
+              </div>
+            </div>
+            <div class="filter-subsection">
+              <label class="form-label sub-label">WeaveTech</label>
+              <div> 
+                <div class="thumbnail-container">
+                  <a href="#" data-interior="Charcoal WeaveTech with Black Ash deco" class="interior-option">
+                    <img src="https://www.polestar.com/dato-assets/11286/1600682934-charcoal.jpg" alt="Charcoal WeaveTech with Black Ash deco" class="thumbnail">
+                  </a>
+                  <a href="#" data-interior="Slate WeaveTech with Black Ash deco" class="interior-option">
+                    <img src="https://www.polestar.com/dato-assets/11286/1600682965-slate.jpg" alt="Slate WeaveTech with Black Ash deco" class="thumbnail">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="filter-subsection">
+                <label class="form-label sub-label">Leather</label>
+                <div class="thumbnail-container">
+                  <a href="#" data-interior="Ventilated Nappa leather Barley with reconstructed wood deco" class="interior-option">
+                    <img src="https://www.polestar.com/dato-assets/11286/1600682901-barley.jpg" alt="Ventilated Nappa leather Barley with reconstructed wood deco" class="thumbnail">
+                  </a>
+                  <a href="#" data-interior="Ventilated Nappa leather Zinc with Light Ash deco" class="interior-option">
+                    <img src="https://www.polestar.com/dato-assets/11286/1649402879-zinc_light_ash_320x320.jpg" alt="Ventilated Nappa leather Zinc with Light Ash deco" class="thumbnail">
+                  </a>
+                  <a href="#" data-interior="Charcoal MicroSuede textile with Black ash deco" class="interior-option">
+                    <img src="https://www.polestar.com/dato-assets/11286/1678433488-interior.png" alt="Charcoal MicroSuede textile with Black ash deco" class="thumbnail">
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+          <!-- Wheels dropdown -->
+          <div id="wheelThumbnails" class="filter-section">
+            <label class="form-label">Wheels</label>
+            <div class="filter-subsection">
+              <label class="form-label sub-label">19"</label>
+              <div class="thumbnail-container">
+                <a href="#" data-wheel="19'' 5-Double Spoke Black Diamond Cut Alloy Wheel">
+                  <img src="https://www.polestar.com/dato-assets/11286/1699001406-19-wheels.png" alt="19'' 5-Double Spoke Black Diamond Cut Alloy Wheel" class="thumbnail">
+                </a>
+                <a href="#" data-wheel="19&quot; 5-V Spoke Black Diamond Cut Alloy Wheels - Summer Tire">
+                  <img src="https://www.polestar.com/dato-assets/11286/1699001332-19-launch-edition.png" alt="19&quot; 5-V Spoke Black Diamond Cut Alloy Wheels - Summer Tires" class="thumbnail">
+                </a>
+              </div>
+            </div>
+            <div class="filter-subsection">
+              <label class="form-label sub-label">20"</label>
+              <div class="thumbnail-container">
+                <a href="#" data-wheel="20&quot; 4-Y Spoke Black Polished Forged Alloy Wheels - Summer Tire">
+                  <img src="https://www.polestar.com/dato-assets/11286/1697790940-20-performance-launch-edition.png" alt="20&quot; 4-Y Spoke Black Polished Forged Alloy Wheels - Summer Tires" class="thumbnail">
+                </a>
+                <a href="#" data-wheel="20&quot; 4-V Spoke Black Diamond Cut Alloy Wheels">
+                  <img src="https://www.polestar.com/dato-assets/11286/1697790591-20-launch-edition.png" alt="20&quot; 4-V Spoke Black Diamond Cut Alloy Wheels" class="thumbnail">
+                </a>
+                <a href="#" data-wheel="20&quot; Pro - All-Season Tires">
+                  <img src="https://www.polestar.com/dato-assets/11286/1699001473-20-wheels.png" alt="20&quot; Pro - All-Season Tires" class="thumbnail cover">
+                </a>
+              </div>
+            </div>
+            <div class="filter-subsection">
+              <label class="form-label sub-label">21"</label>
+                <div class="thumbnail-container">
+                  <a href="#" data-wheel="21'' Gloss Black Diamond Cut Alloy Wheel BST edition">
+                    <img src="https://www.polestar.com/dato-assets/11286/1655364425-21-bst-wheels-thumb-new.jpg" alt="21'' Gloss Black Diamond Cut Alloy Wheel BST edition" class="thumbnail">
+                  </a>
+                </div>
+            </div>
+          </div>
+  
+        <!-- Packs Filter -->
+        <div class="filter-section">
+          <label class="form-label">Packs</label>
+          <div id="packOptions" class="">
+            <a href="#" data-pack="Performance" class="pack-option">
+              <img src="https://www.polestar.com/dato-assets/11286/1600680279-performance-pack.jpg" alt="Performance Pack" class="thumbnail cover">
+            </a>
+            <a href="#" data-pack="Pilot" class="pack-option">
+              <img src="https://www.polestar.com/dato-assets/11286/1600679965-pilot.jpg" alt="Pilot Pack" class="thumbnail cover">
+            </a>
+            <a href="#" data-pack="Plus" class="pack-option">
+              <img src="https://www.polestar.com/dato-assets/11286/1635955173-polestar-2-harman-kardon-plus.jpg" alt="Plus Pack" class="thumbnail cover">
+            </a>
+          </div>
+        </div>
+        
+        <!-- Motor dropdown -->
+        <div class="filter-section">
+          <label for="motorFilter" class="form-label">Motor</label>
+          <select id="motorFilter" class="form-select">
+            <option value="">All</option>
+            <option value="Long range Single motor">Long range Single motor</option>
+            <option value="Long range Single motor - Rear Wheel Drive (RWD)">Long range Single motor - Rear Wheel Drive (RWD)</option>
+            <option value="Long range Dual motor - AWD">Long range Dual motor - AWD</option>
+            <option value="Long range Dual motor - All Wheel Drive (AWD)">Long range Dual motor - All Wheel Drive (AWD)</option>
+            <option value="Long range Dual motor with Performance pack - AWD">Long range Dual motor with Performance pack - AWD</option>
+          </select>
+        </div>
+        
+        <!-- Edition dropdown -->
+        <div class="filter-section">
+          <label for="editionFilter" class="form-label">Edition</label>
+          <select id="editionFilter" class="form-select">
+            <option value="">All</option>
+            <option value="BST Edition 230">BST Edition 230</option>
+            <option value="BST Edition 270">BST Edition 270</option>
+          </select>
+        </div>
+        
+        <!-- Price Filters -->
+        <div class="filter-section">
+          <label for="minPriceFilter" class="form-label">Min Price ($)</label>
+          <input type="number" id="minPriceFilter" class="form-control" placeholder="Enter min price">
+        </div>
+        <div class="filter-section">
+          <label for="maxPriceFilter" class="form-label">Max Price ($)</label>
+          <input type="number" id="maxPriceFilter" class="form-control" placeholder="Enter max price">
+        </div>
+        
+        <!-- Mileage Filters -->
+        <div class="filter-section">
+          <label for="minMileageFilter" class="form-label">Min Mileage</label>
+          <input type="number" id="minMileageFilter" class="form-control" placeholder="Enter min mileage">
+        </div>
+        <div class="filter-section">
+          <label for="maxMileageFilter" class="form-label">Max Mileage</label>
+          <input type="number" id="maxMileageFilter" class="form-control" placeholder="Enter max mileage">
+        </div>
+        
+        
+        <!--End of Filters-->
+  
+      </div>  
+    </div>
+
+
+    <!-- Main Content: Vehicles Table -->
+    <div class="my-main">
+      <div class="statistics-panel">
+        <div class="statistic">
+          <h3>Total Vehicles</h3>
+          <p id="totalVehicles">0</p>
+        </div>
+        <div class="statistic">
+          <h3>Average Retail Price</h3>
+          <p id="averageRetailPrice">$0</p>
+        </div>
+        <div class="statistic">
+          <h3>Average Mileage</h3>
+          <p id="averageMileage">0</p>
+        </div>
+      </div>
+      <div class="inventory-table">
+        <h2>Vehicles</h2>
+        <table id="vehiclesTable">
+          <thead>
+            <tr>
+              <th data-type="string">Model<span class="sort-arrow"></span></th>
+              <th data-type="number">Year<span class="sort-arrow"></span></th>
+              <th data-type="string">Location<span class="sort-arrow"></span></th>
+              <th data-type="number">Price<span class="sort-arrow"></span></th>
+              <th data-type="number">Mileage<span class="sort-arrow"></span></th>
+              <th data-type="string">Ext<span class="sort-arrow"></span></th>
+              <th data-type="string">Int<span class="sort-arrow"></span></th>
+              <th data-type="string">Wheels <span class="sort-arrow"></span></th>
+              <th data-type="string">Motor <span class="sort-arrow"></span></th>
+              <th data-type="string">Condition<span class="sort-arrow"></span></th>
+              <th data-type="string">Edition<span class="sort-arrow"></span></th>
+              <th data-type="string">Packs<span class="sort-arrow"></span></th>
+              <th data-type="string">Added<span class="sort-arrow"></span></th>
+              <th data-type="string">First Reg<span class="sort-arrow"></span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Table rows will be injected here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

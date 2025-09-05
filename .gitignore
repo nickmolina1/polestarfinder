@@ -1,4 +1,11 @@
-__pycache__/api.cpython-312.pyc
-__pycache__/db.cpython-312.pyc
-__pycache__/filters.cpython-312.pyc
+*__pycache__/
 
+
+env/
+.env
+*.log
+*.DS_Store
+*.db
+
+
+todo.txt

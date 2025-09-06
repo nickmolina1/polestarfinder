@@ -1,341 +1,413 @@
+# import json
+# import datetime
+# import requests
+# import brotli
+# import gzip
+# import time
+# from copy import deepcopy
+
+# from scraper.filters import filters  # Your filters dictionary for deep scan
+
+# import logging
+
+
+# # Define the API endpoint and headers (common to both models)
+# url = "https://pc-api.polestar.com/eu-north-1/partner-rm-tool/public/"
+# headers = {
+#     "authority": "pc-api.polestar.com",
+#     "method": "POST",
+#     "path": "/eu-north-1/partner-rm-tool/public/",
+#     "scheme": "https",
+#     "Accept": "*/*",
+#     "Accept-Encoding": "gzip, deflate, br, zstd",
+#     "Accept-Language": "en-US,en;q=0.9",
+#     "Content-Type": "application/json",
+#     "Origin": "https://www.polestar.com",
+#     "Referer": "https://www.polestar.com/",
+#     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
+# }
+
+
+# def get_payload(
+#     model: str,
+#     limit: int = 200,
+#     equalFilters: list = None,
+#     excludeFilters: list = [{"filterType": "CycleState", "value": "New"}],
+# ) -> dict:
+#     """
+#     Returns a payload for searching vehicles for a given model.
+#     """
+#     if equalFilters is None:
+#         equalFilters = []
+#     else:
+#         key, value = list(equalFilters[0].items())[0]
+#         equalFilters = [{"filterType": key, "value": value}]
+
+#     payload = {
+#         "operationName": "SearchVehicleAds",
+#         "variables": {
+#             "carModel": f"{model}",
+#             "market": "us",
+#             "offset": 0,
+#             "limit": limit,
+#             "sortOrder": "Ascending",
+#             "sortProperty": "Price",
+#             "equalFilters": equalFilters,
+#             "excludeFilters": excludeFilters,
+#         },
+#         "query": """
+#             query SearchVehicleAds($carModel: CarModel!, $market: String!, $region: String, $offset: Int!,
+#                                     $limit: Int!, $sortOrder: SortOrder2!, $sortProperty: SortProperty!,
+#                                     $equalFilters: [EqualFilter!], $excludeFilters: [ExcludeFilter!]) {
+#                 searchVehicleAds(
+#                     carModel: $carModel
+#                     market: $market
+#                     region: $region
+#                     offset: $offset
+#                     limit: $limit
+#                     sortOrder: $sortOrder
+#                     sortProperty: $sortProperty
+#                     equalFilters: $equalFilters
+#                     excludeFilters: $excludeFilters
+#                 ) {
+#                     metadata {
+#                         limit
+#                         offset
+#                         resultCount
+#                         totalCount
+#                     }
+#                     vehicleAds {
+#                         id
+#                         firstTimeRegistration
+#                         price {
+#                             retail
+#                             dealer
+#                             currency
+#                         }
+#                         partnerLocation {
+#                             city
+#                             name
+#                         }
+#                         mileageInfo {
+#                             distance
+#                             metric
+#                         }
+#                         vehicleDetails {
+#                             vin
+#                             modelDetails {
+#                                 displayName
+#                                 modelYear
+#                             }
+#                             stockImages
+#                             cycleState
+#                         }
+#                     }
+#                 }
+#             }
+#             """,
+#     }
+#     return payload
+
+
+# def fetch_scan(payload: dict) -> list:
+#     try:
+#         response = requests.post(url, headers=headers, json=payload, timeout=10)
+#         print(f"Scan Response Status Code: {response.status_code}")
+
+#         # Handle compression if necessary
+#         content_encoding = response.headers.get("Content-Encoding", "")
+#         if content_encoding == "br":
+#             try:
+#                 decompressed_text = brotli.decompress(response.content).decode("utf-8")
+#             except brotli.error:
+#                 decompressed_text = response.content.decode("utf-8", errors="ignore")
+#         elif content_encoding == "gzip":
+#             try:
+#                 decompressed_text = gzip.decompress(response.content).decode("utf-8")
+#             except Exception:
+#                 decompressed_text = response.content.decode("utf-8", errors="ignore")
+#         else:
+#             decompressed_text = response.text
+
+#         data = json.loads(decompressed_text)
+#         vehicle_ads = (
+#             data.get("data", {}).get("searchVehicleAds", {}).get("vehicleAds", [])
+#         )
+
+#         vehicles_data = []
+#         for vehicle_ad in vehicle_ads:
+#             vehicle_details = vehicle_ad.get("vehicleDetails", {})
+#             model_details = vehicle_details.get("modelDetails", {})
+#             partner_location = vehicle_ad.get("partnerLocation", {})
+
+#             vehicles_data.append(
+#                 {
+#                     "vehicle_id": vehicle_ad.get("id"),
+#                     "model": model_details.get("displayName"),
+#                     "year": model_details.get("modelYear"),
+#                     "partner_location": partner_location.get("name"),
+#                     "retail_price": vehicle_ad.get("price", {}).get("retail"),
+#                     "mileage": vehicle_ad.get("mileageInfo", {}).get("distance"),
+#                     "vin": vehicle_details.get("vin"),
+#                     "state": vehicle_details.get("cycleState"),
+#                     "first_time_registration": vehicle_ad.get(
+#                         "firstTimeRegistration"
+#                     ),  # new field
+#                     "scrape_date": datetime.datetime.now().strftime(
+#                         "%Y-%m-%d %H:%M:%S"
+#                     ),
+#                 }
+#             )
+#         return vehicles_data
+#     except Exception as e:
+#         print(f"Error during scan: {e}")
+#         return []
+
+# def fetch_raw(model: str) -> list:
+#     """
+#     Fetch vehicles for a given model using the API.
+#     """
+#     payload = get_payload(model=model)
+#     return fetch_scan(payload)
+
+
+
+
+# if __name__ == "__main__":     # Example usage: Fetch vehicles for model "PS2"
+
+#     cars = fetch_scan(get_payload(model="PS2"))
+
+#     for car in cars:
+#         print(car)  # Print each car's details
+
+
+
+# scraper.py
+from __future__ import annotations
+
 import os
-import sys
-
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-
 import json
-import datetime
+import datetime as dt
+from typing import List, Dict, Optional
+
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 import brotli
 import gzip
-import time
-from copy import deepcopy
 
-from filters import filters  # Your filters dictionary for deep scan
-from backend.db import Vehicle, SessionLocal
-import logging
+# ---------- Config (env-tunable) ----------
+API_URL = "https://pc-api.polestar.com/eu-north-1/partner-rm-tool/public/"
 
+DEFAULT_MODELS = [m.strip() for m in os.getenv("MODELS", "PS2").split(",") if m.strip()]
+DEFAULT_MARKET = os.getenv("MARKET", "us")
+DEFAULT_LIMIT = int(os.getenv("PAGE_LIMIT", "200"))
 
-# Define the API endpoint and headers (common to both models)
-url = "https://pc-api.polestar.com/eu-north-1/partner-rm-tool/public/"
-headers = {
-    "authority": "pc-api.polestar.com",
-    "method": "POST",
-    "path": "/eu-north-1/partner-rm-tool/public/",
-    "scheme": "https",
+HEADERS = {
     "Accept": "*/*",
     "Accept-Encoding": "gzip, deflate, br, zstd",
-    "Accept-Language": "en-US,en;q=0.9",
     "Content-Type": "application/json",
     "Origin": "https://www.polestar.com",
     "Referer": "https://www.polestar.com/",
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
 }
 
+# ---------- HTTP session with retries ----------
+def _session() -> requests.Session:
+    s = requests.Session()
+    s.headers.update(HEADERS)
+    retry = Retry(
+        total=5,
+        backoff_factor=0.5,
+        status_forcelist=(429, 500, 502, 503, 504),
+        allowed_methods=("POST",),
+        raise_on_status=False,
+    )
+    s.mount("https://", HTTPAdapter(max_retries=retry))
+    return s
 
-def get_payload(
+# ---------- GraphQL payload ----------
+def _payload(
     model: str,
-    limit: int = 200,
-    equalFilters: list = None,
-    excludeFilters: list = [{"filterType": "CycleState", "value": "New"}],
+    market: str,
+    offset: int,
+    limit: int,
+    equal_filters: Optional[List[Dict]] = None,
+    exclude_filters: Optional[List[Dict]] = None,
 ) -> dict:
-    """
-    Returns a payload for searching vehicles for a given model.
-    """
-    if equalFilters is None:
-        equalFilters = []
-    else:
-        key, value = list(equalFilters[0].items())[0]
-        equalFilters = [{"filterType": key, "value": value}]
+    if equal_filters is None:
+        equal_filters = []
+    if exclude_filters is None:
+        # Exclude "New" cycle state by default (used/CPO focus)
+        exclude_filters = [{"filterType": "CycleState", "value": "New"}]
 
-    payload = {
+    return {
         "operationName": "SearchVehicleAds",
         "variables": {
-            "carModel": f"{model}",
-            "market": "us",
-            "offset": 0,
+            "carModel": model,
+            "market": market,
+            "region": None,
+            "offset": offset,
             "limit": limit,
             "sortOrder": "Ascending",
             "sortProperty": "Price",
-            "equalFilters": equalFilters,
-            "excludeFilters": excludeFilters,
+            "equalFilters": equal_filters,
+            "excludeFilters": exclude_filters,
         },
         "query": """
-            query SearchVehicleAds($carModel: CarModel!, $market: String!, $region: String, $offset: Int!,
-                                    $limit: Int!, $sortOrder: SortOrder2!, $sortProperty: SortProperty!,
-                                    $equalFilters: [EqualFilter!], $excludeFilters: [ExcludeFilter!]) {
-                searchVehicleAds(
-                    carModel: $carModel
-                    market: $market
-                    region: $region
-                    offset: $offset
-                    limit: $limit
-                    sortOrder: $sortOrder
-                    sortProperty: $sortProperty
-                    equalFilters: $equalFilters
-                    excludeFilters: $excludeFilters
-                ) {
-                    metadata {
-                        limit
-                        offset
-                        resultCount
-                        totalCount
-                    }
-                    vehicleAds {
-                        id
-                        firstTimeRegistration
-                        price {
-                            retail
-                            dealer
-                            currency
-                        }
-                        partnerLocation {
-                            city
-                            name
-                        }
-                        mileageInfo {
-                            distance
-                            metric
-                        }
-                        vehicleDetails {
-                            vin
-                            modelDetails {
-                                displayName
-                                modelYear
-                            }
-                            stockImages
-                            cycleState
-                        }
-                    }
-                }
+        query SearchVehicleAds($carModel: CarModel!, $market: String!, $region: String, $offset: Int!,
+                               $limit: Int!, $sortOrder: SortOrder2!, $sortProperty: SortProperty!,
+                               $equalFilters: [EqualFilter!], $excludeFilters: [ExcludeFilter!]) {
+          searchVehicleAds(
+            carModel: $carModel
+            market: $market
+            region: $region
+            offset: $offset
+            limit: $limit
+            sortOrder: $sortOrder
+            sortProperty: $sortProperty
+            equalFilters: $equalFilters
+            excludeFilters: $excludeFilters
+          ) {
+            metadata { limit offset resultCount totalCount }
+            vehicleAds {
+              id
+              firstTimeRegistration
+              price { retail dealer currency }
+              partnerLocation { city name }
+              mileageInfo { distance metric }  # metric may be KM
+              vehicleDetails {
+                vin
+                modelDetails { displayName modelYear }
+                stockImages
+                cycleState
+              }
             }
-            """,
+          }
+        }
+        """,
     }
-    return payload
 
+# ---------- Response decoding (brotli/gzip safe) ----------
+def _decode_json(resp: requests.Response) -> dict:
+    enc = resp.headers.get("Content-Encoding", "")
+    if enc == "br":
+        try:
+            text = brotli.decompress(resp.content).decode("utf-8")
+        except Exception:
+            text = resp.text
+    elif enc == "gzip":
+        try:
+            text = gzip.decompress(resp.content).decode("utf-8")
+        except Exception:
+            text = resp.text
+    else:
+        text = resp.text
+    return json.loads(text)
 
-def fetch_scan(payload: dict) -> list:
+# ---------- Helpers ----------
+def _km_to_miles(value, metric) -> Optional[int]:
+    if value is None:
+        return None
     try:
-        response = requests.post(url, headers=headers, json=payload, timeout=10)
-        print(f"Scan Response Status Code: {response.status_code}")
+        dist = float(value)
+    except Exception:
+        return None
+    m = (metric or "").lower()
+    if "km" in m:
+        dist *= 0.621371
+    return int(round(dist))
 
-        # Handle compression if necessary
-        content_encoding = response.headers.get("Content-Encoding", "")
-        if content_encoding == "br":
-            try:
-                decompressed_text = brotli.decompress(response.content).decode("utf-8")
-            except brotli.error:
-                decompressed_text = response.content.decode("utf-8", errors="ignore")
-        elif content_encoding == "gzip":
-            try:
-                decompressed_text = gzip.decompress(response.content).decode("utf-8")
-            except Exception:
-                decompressed_text = response.content.decode("utf-8", errors="ignore")
-        else:
-            decompressed_text = response.text
+def _normalize_vehicle(ad: dict, model_family: str) -> dict:
+    vd = ad.get("vehicleDetails") or {}
+    md = vd.get("modelDetails") or {}
+    pl = ad.get("partnerLocation") or {}
+    mi = ad.get("mileageInfo") or {}
+    price = ad.get("price") or {}
 
-        data = json.loads(decompressed_text)
-        vehicle_ads = (
-            data.get("data", {}).get("searchVehicleAds", {}).get("vehicleAds", [])
-        )
+    return {
+        "id": str(ad.get("id")),
+        "vin": vd.get("vin"),
+        "model": md.get("displayName") or model_family,
+        "year": md.get("modelYear"),
+        "partner_location": pl.get("name") or pl.get("city"),
+        "state": vd.get("cycleState"),
+        "mileage": _km_to_miles(mi.get("distance"), mi.get("metric")),
+        "first_time_registration": ad.get("firstTimeRegistration"),
+        "retail_price": price.get("retail"),
+        "dealer_price": price.get("dealer"),
+        "currency": price.get("currency"),
+        "stock_images": vd.get("stockImages") or [],
+        "model_family": model_family,
+        "scrape_date": dt.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+    }
 
-        vehicles_data = []
-        for vehicle_ad in vehicle_ads:
-            vehicle_details = vehicle_ad.get("vehicleDetails", {})
-            model_details = vehicle_details.get("modelDetails", {})
-            partner_location = vehicle_ad.get("partnerLocation", {})
+def _fetch_page(sess: requests.Session, model: str, market: str, offset: int, limit: int) -> dict:
+    resp = sess.post(API_URL, json=_payload(model, market, offset, limit), timeout=20)
+    resp.raise_for_status()
+    return _decode_json(resp)
 
-            vehicles_data.append(
-                {
-                    "vehicle_id": vehicle_ad.get("id"),
-                    "model": model_details.get("displayName"),
-                    "year": model_details.get("modelYear"),
-                    "partner_location": partner_location.get("name"),
-                    "retail_price": vehicle_ad.get("price", {}).get("retail"),
-                    "mileage": vehicle_ad.get("mileageInfo", {}).get("distance"),
-                    "vin": vehicle_details.get("vin"),
-                    "state": vehicle_details.get("cycleState"),
-                    "first_time_registration": vehicle_ad.get(
-                        "firstTimeRegistration"
-                    ),  # new field
-                    "scrape_date": datetime.datetime.now().strftime(
-                        "%Y-%m-%d %H:%M:%S"
-                    ),
-                }
-            )
-        return vehicles_data
-    except Exception as e:
-        print(f"Error during scan: {e}")
-        return []
-
-
-def update_inventory(vehicles_data: list, model: str) -> int:
+# ---------- (Optional) deep details hook ----------
+def fetch_details(vehicle_id: str) -> dict:
     """
-    Inserts or updates vehicles in the database for a specific model.
-    Returns the number of new vehicles inserted.
+    Placeholder for per-vehicle deep scan if you decide to enrich each car.
+    Return {} for now; keep this function to wire in later without changing callers.
     """
-    new_count = 0
-    session = SessionLocal()
-    try:
-        scanned_ids = [car["vehicle_id"] for car in vehicles_data]
-        for car in vehicles_data:
-            existing_vehicle = (
-                session.query(Vehicle).filter_by(id=car["vehicle_id"]).first()
-            )
-            if existing_vehicle:
-                # Update existing vehicle details
-                existing_vehicle.model = car["model"]
-                existing_vehicle.year = car["year"]
-                existing_vehicle.partner_location = car.get("partner_location")
-                existing_vehicle.retail_price = car.get("retail_price")
-                existing_vehicle.mileage = car.get("mileage")
-                existing_vehicle.vin = car.get("vin")
-                existing_vehicle.state = car.get("state")
-                existing_vehicle.first_time_registration = car.get(
-                    "first_time_registration"
-                )  # added field
-                existing_vehicle.last_scan = datetime.datetime.now()
-                existing_vehicle.available = True  # mark as available
-                print(f"Updated vehicle {existing_vehicle.id}")
-            else:
-                # Insert new vehicle
-                new_vehicle = Vehicle(
-                    id=car["vehicle_id"],
-                    model=car["model"],
-                    year=car["year"],
-                    partner_location=car.get("partner_location"),
-                    retail_price=car.get("retail_price"),
-                    mileage=car.get("mileage"),
-                    vin=car.get("vin"),
-                    state=car.get("state"),
-                    first_time_registration=car.get(
-                        "first_time_registration"
-                    ),  # added field
-                    date_added=datetime.datetime.now(),
-                    last_scan=datetime.datetime.now(),
-                    available=True,  # new vehicles are available
-                )
-                session.add(new_vehicle)
-                new_count += 1
-                print(f"Added new vehicle {new_vehicle.id}")
-        # Mark vehicles not included in this scan (for this model) as unavailable
-        session.query(Vehicle).filter(
-            Vehicle.model == model, ~Vehicle.id.in_(scanned_ids)
-        ).update({"available": False}, synchronize_session=False)
-        session.commit()
-    except Exception as e:
-        session.rollback()
-        print(f"Error updating inventory: {e}")
-    finally:
-        session.close()
-    return new_count
+    return {}
 
-
-def deep_scan_loop(carModel: str):
+# ---------- Public API ----------
+def fetch_raw(
+    models: Optional[List[str]] = None,
+    market: Optional[str] = None,
+    page_limit: Optional[int] = None,
+    include_details: bool = False,
+) -> List[Dict]:
     """
-    Executes deep scans for each filter defined in the filters dictionary.
-    Uses the global 'filters' imported from filters.py.
+    Fetch ALL vehicles for the given model list with pagination.
+    Returns a list of normalized dicts, one per vehicle.
+    Set include_details=True later if you wire up fetch_details().
     """
-    for feature_name, filter_mapping in filters.items():
-        print(f"Deep scan for {feature_name}...")
-        time.sleep(1)  # Delay to avoid rate limits
-        deep_data = fetch_scan(
-            deepcopy(get_payload(carModel, equalFilters=[filter_mapping]))
-        )
+    models = models or DEFAULT_MODELS
+    market = market or DEFAULT_MARKET
+    limit = page_limit or DEFAULT_LIMIT
 
-        # Determine which feature column to update
-        raw_feature_key = list(filter_mapping.keys())[0]
-        if raw_feature_key.lower() == "cyclestate":
-            feature_column = "state"
-        elif feature_name.lower() in ["performance", "pilot", "plus"]:
-            feature_column = feature_name.lower()
-        else:
-            feature_column = raw_feature_key.lower()
+    sess = _session()
+    out: List[Dict] = []
 
-        update_feature_scan(feature_column, feature_name, deep_data)
+    for model in models:
+        offset = 0
+        total = None
+        while True:
+            block = _fetch_page(sess, model, market, offset, limit)
+            data = (block.get("data") or {}).get("searchVehicleAds") or {}
+            meta = data.get("metadata") or {}
+            ads = data.get("vehicleAds") or []
 
+            for ad in ads:
+                v = _normalize_vehicle(ad, model_family=model)
+                if include_details:
+                    try:
+                        details = fetch_details(v["id"])
+                        if details:
+                            v.update(details)
+                    except Exception as e:
+                        # Non-fatal; continue with summary
+                        print(f"[deep-scan] {v['id']} failed: {e}")
+                out.append(v)
 
-def update_feature_scan(feature_key: str, feature_name: str, deep_vehicles_data: list):
-    """
-    Updates vehicles in the database for a specific feature.
+            result_count = int(meta.get("resultCount") or len(ads))
+            total = int(meta.get("totalCount") or (offset + result_count) if total is None else total)
 
-    :param feature_key: The feature column to update (e.g., "exterior", "interior").
-    :param feature_name: The value to set (e.g., "Snow", "Space", etc.).
-    :param deep_vehicles_data: List of vehicles (dicts) returned from the deep scan.
-    """
-    session = SessionLocal()
-    try:
-        for car in deep_vehicles_data:
-            vehicle = session.query(Vehicle).filter_by(id=car["vehicle_id"]).first()
-            if vehicle:
-                if feature_key.lower() in [
-                    "exterior",
-                    "interior",
-                    "wheels",
-                    "motor",
-                    "edition",
-                    "state",
-                ]:
-                    setattr(vehicle, feature_key.lower(), feature_name)
-                elif feature_key.lower() in ["performance", "pilot", "plus"]:
-                    setattr(vehicle, feature_key.lower(), True)
-                # Update price, mileage, etc.
-                vehicle.retail_price = car.get("retail_price")
-                vehicle.dealer_price = car.get("dealer_price")
-                vehicle.mileage = car.get("mileage")
-                vehicle.last_scan = datetime.datetime.now()
-                print(
-                    f"Updated {feature_key} for vehicle {vehicle.id} -> {feature_name}"
-                )
-        session.commit()
-    except Exception as e:
-        session.rollback()
-        print(f"Error updating {feature_key}: {e}")
-    finally:
-        session.close()
+            if result_count <= 0 or offset + result_count >= total:
+                break
+            offset += result_count  # or += limit
 
+    return out
 
+# ---------- CLI test ----------
 if __name__ == "__main__":
-
-    if __name__ == "__main__":
-
-        # Configure logging: timestamp, log level and message
-        logging.basicConfig(
-            level=logging.INFO,
-            format="%(asctime)s %(levelname)s: %(message)s",
-            datefmt="%Y-%m-%d %H:%M:%S",
-            filemode="w",
-            filename="scraper.log",
-        )
-
-        args = sys.argv[1:]
-        deep_scan_arg = "deep" in args
-
-        logging.info("Starting fetch of PS2 vehicles...")
-        ps2_payload = get_payload("PS2")
-        ps2_data = fetch_scan(deepcopy(ps2_payload))
-        logging.info("Fetched %d PS2 vehicles.", len(ps2_data))
-        for vehicle in ps2_data:
-            logging.info(
-                "PS2 Vehicle ID: %s, Model: %s, Year: %s, Price: %s",
-                vehicle["vehicle_id"],
-                vehicle["model"],
-                vehicle["year"],
-                vehicle["retail_price"],
-            )
-
-        logging.info("Starting fetch of PS1 vehicles...")
-        ps1_payload = get_payload("PS1")
-        ps1_data = fetch_scan(deepcopy(ps1_payload))
-        logging.info("Fetched %d PS1 vehicles.", len(ps1_data))
-        for vehicle in ps1_data:
-            logging.info(
-                "PS1 Vehicle ID: %s, Model: %s, Year: %s, Price: %s",
-                vehicle["vehicle_id"],
-                vehicle["model"],
-                vehicle["year"],
-                vehicle["retail_price"],
-            )
-        logging.info("Writing to inventory.json...")
-        with open("inventory.json", "w") as f:
-            json.dump({"PS2": ps2_data, "PS1": ps1_data}, f, indent=4)
+    cars = fetch_raw()  # uses env defaults
+    print(f"Fetched {len(cars)} vehicles")
+    if cars:
+        from pprint import pprint
+        pprint(cars[0])

@@ -24,9 +24,13 @@ CREATE TABLE IF NOT EXISTS vehicles (
   plus BOOLEAN NOT NULL DEFAULT FALSE,
   available BOOLEAN NOT NULL DEFAULT TRUE,
   stock_images JSONB,                     -- array of URLs
-  date_added TIMESTAMPTZ NOT NULL DEFAULT now(),
-  last_scan  TIMESTAMPTZ NOT NULL DEFAULT now()
+  first_seen_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  last_seen_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- optional helper index if you filter by last_seen_at
+CREATE INDEX IF NOT EXISTS vehicles_last_seen_at_idx ON vehicles (last_seen_at);
+
 
 -- VIN unique only when present
 CREATE UNIQUE INDEX IF NOT EXISTS uq_vehicles_vin_not_null

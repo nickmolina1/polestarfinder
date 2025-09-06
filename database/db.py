@@ -1,7 +1,7 @@
 import os, psycopg2
 from contextlib import contextmanager
 from dotenv import load_dotenv
-from psycopg2.extras import DictCursor
+from psycopg2.extras import DictCursor, Json
 
 load_dotenv()
 

@@ -65,6 +65,11 @@ def apply_migration(conn, mig_id, path):
             (mig_id,),
         )
 
+def handler(event, context):
+    from jobs.migrate import main
+    main()
+    return {"ok": True}
+
 
 def main():
     if not DSN:

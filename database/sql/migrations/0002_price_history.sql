@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS price_history (
   observed_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+-- Indexes to optimize queries
 CREATE INDEX IF NOT EXISTS ix_price_history_vehicle ON price_history (vehicle_id);
 CREATE INDEX IF NOT EXISTS ix_price_history_observed ON price_history (observed_at DESC);

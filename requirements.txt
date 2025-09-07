@@ -1,0 +1,7 @@
+# Main dependencies for polestarfinder
+psycopg2-binary
+python-dotenv
+requests
+boto3
+brotli
+gzip

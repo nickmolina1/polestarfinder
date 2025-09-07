@@ -1,14 +1,13 @@
 import os, glob, re, sys
-import psycopg2 as psycopg
-from psycopg2.extras import DictCursor
 from dotenv import load_dotenv
+import psycopg2
+from psycopg2.extras import DictCursor
 
 load_dotenv()
 DSN = os.getenv("PG_DSN")
 
 if not DSN:
     raise RuntimeError("PG_DSN not set! Did you create .env?")
-
 
 def read_sql_statements(path: str):
     """
@@ -81,7 +80,7 @@ def main():
         print("No migration files found in sql/migrations")
         sys.exit(1)
 
-    with psycopg.connect(DSN) as conn:
+    with psycopg2.connect(DSN) as conn:
         ensure_migrations_table(conn)
         applied = get_applied(conn)
         to_apply = [f for f in files if os.path.basename(f) not in applied]

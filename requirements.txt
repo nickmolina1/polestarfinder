@@ -4,4 +4,3 @@ python-dotenv
 requests
 boto3
 brotli
-gzip

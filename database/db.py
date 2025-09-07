@@ -1,11 +1,10 @@
-import os, psycopg2
+import os
 from contextlib import contextmanager
 from dotenv import load_dotenv
+import psycopg2
 from psycopg2.extras import DictCursor, Json
 
 load_dotenv()
-
-
 DSN = os.getenv("PG_DSN")
 
 

@@ -3,3 +3,4 @@ __pycache__/
 *.log
 build/
 artifact.zip
+vehicles.json

@@ -1,7 +1,5 @@
 # jobs/daily_refresh.py
 from __future__ import annotations
-
-from curses import raw
 import os
 import json
 import logging

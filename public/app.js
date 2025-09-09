@@ -11,7 +11,7 @@ let defaultSortApplied = false;  // Flag to apply default sort only once
 
 // --- Utility Functions ---
 function buildApiUrl() {
-  const baseUrl = '/data/vehicles.json'; // Adjust this to your actual API endpoint
+  const baseUrl = 'data/vehicles.json'; // Adjust this to your actual API endpoint
 
   const params = new URLSearchParams();
   // (Assume similar logic as before for dropdowns, number inputs, and checkboxes)
@@ -23,7 +23,8 @@ function buildApiUrl() {
 
 function formatPrice(price) {
   if (!price) return ""; // Handle null/undefined cases
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(price);
+  // Remove cents by setting minimumFractionDigits and maximumFractionDigits to 0
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(price);
 }
 
 // --- API Functions ---
@@ -171,11 +172,11 @@ function filterInventory() {
 }
 
 function updateTable(data) {
-  const tbody = document.querySelector("#vehiclesTable tbody");
-  tbody.innerHTML = ""; // Clear existing table rows
+  const grid = document.getElementById("vehiclesGrid");
+  grid.innerHTML = "";
 
   if (data.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="12" class="text-center">No vehicles found</td></tr>';
+    grid.innerHTML = '<div class="no-vehicles">No vehicles found</div>';
     return;
   }
 
@@ -185,56 +186,31 @@ function updateTable(data) {
     if (vehicle.pilot) packs.push("Pilot");
     if (vehicle.plus) packs.push("Plus");
     const packsDisplay = packs.join(", ");
-  const modelStr = vehicle.model ? vehicle.model.toLowerCase() : "";
-  const vehicleUrl = `https://www.polestar.com/us/preowned-cars/product/polestar-${modelStr.slice(-1)}/${vehicle.id}`;
-
-    // Ensure price is a valid number, else default to 0
+    const modelStr = vehicle.model ? vehicle.model.toLowerCase() : "";
+    const vehicleUrl = `https://www.polestar.com/us/preowned-cars/product/polestar-${modelStr.slice(-1)}/${vehicle.id}`;
     const rawPrice = vehicle.retail_price ? parseFloat(vehicle.retail_price) : 0;
     const formattedPrice = rawPrice > 0 ? formatPrice(rawPrice) : "";
+    const dateAdded = vehicle.first_seen_at ? new Date(vehicle.first_seen_at).toLocaleDateString("en-US") : "";
+    const firstReg = vehicle.first_time_registration ? new Date(vehicle.first_time_registration).toLocaleDateString("en-US") : "";
 
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td><a href="${vehicleUrl}" target="_blank">${vehicle.model}</a></td>
-      <td>${vehicle.year}</td>
-      <td>${vehicle.partner_location || ""}</td>
-      <td data-price="${rawPrice}">${formattedPrice}</td> 
-      <td>${vehicle.mileage ? vehicle.mileage.toLocaleString() : ""}</td>
-      <td>${vehicle.exterior || ""}</td>
-      <td>${vehicle.interior || ""}</td>
-      <td>${vehicle.wheels || ""}</td>
-      <td>${vehicle.motor || ""}</td>
-      <td>${vehicle.state || ""}</td>
-      <td>${vehicle.edition || ""}</td>
-      <td>${packsDisplay}</td>
-      <td>${vehicle.date_added ? new Date(vehicle.date_added).toLocaleDateString("en-US") : ""}</td>
-      <td>${vehicle.first_time_registration ? new Date(vehicle.first_time_registration).toLocaleDateString("en-US") : ""}</td>
+    const card = document.createElement("div");
+    card.className = "vehicle-card";
+    card.innerHTML = `
+      <div class="card-header">
+        <span class="card-model">${vehicle.model || ""}</span>
+        <span class="card-year">${vehicle.year || ""}</span>
+      </div>
+      <div class="card-location">${vehicle.partner_location || ""}</div>
+      <div class="card-price">${formattedPrice}</div>
+      <div class="card-mileage">${vehicle.mileage ? vehicle.mileage.toLocaleString() + ' mi' : ""}</div>
+      <div class="card-state">${vehicle.state || ""}</div>
+      <div class="card-packs">${packsDisplay}</div>
+      <div class="card-added">Added: ${dateAdded}</div>
+      <div class="card-firstreg">First Reg: ${firstReg}</div>
+      <a class="card-link" href="${vehicleUrl}" target="_blank">View Details</a>
     `;
-    row.style.cursor = "pointer";
-    row.addEventListener("click", () => {
-      window.open(vehicleUrl, "_blank");
-    });
-    tbody.appendChild(row);
+    grid.appendChild(card);
   });
-
-  // Reattach sorting after updating the table
-  attachSortingEvents();
-
-  // Apply default sort only on the first load
-  if (!defaultSortApplied) {
-    // Default sort by price (column index 3, type number)
-    sortTableByColumn(3, "asc", "number");
-    // Set default sorting arrow on Retail Price header (column index 3)
-    const table = document.getElementById("vehiclesTable");
-    const headers = table.querySelectorAll("th");
-    if (headers[3]) {
-      headers[3].setAttribute("data-order", "asc");
-      const arrowSpan = headers[3].querySelector(".sort-arrow");
-      if (arrowSpan) {
-        arrowSpan.textContent = " ▲";
-      }
-    }
-    defaultSortApplied = true;
-  }
 }
 
 // --- Sorting Functions ---

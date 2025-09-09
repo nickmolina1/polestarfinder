@@ -148,14 +148,18 @@ def _export_json(rows: list[dict]) -> None:
 # ----------------- Entry point -----------------
 def handler(event=None, context=None):
     # 1) Extract
+    
     log.info("start: daily_refresh (loader)")
+    log.info("loader: get raw from s3 ...")
     raw = _load_raw_from_s3()
+    log.info("loader: got raw, count=%s", None if raw is None else len(raw))
     if raw is None:
         log.info("RAW_* not set, scraping directly (local/dev mode)")
         raw = scraper.fetch_raw()
     log.info("fetched=%d", len(raw))
 
     # 2) Transform + Load (upsert + history)
+    log.info("loader: start db upsert ...")
     inserted = updated = price_changes = 0
     inserted_ids = []
     price_change_ids = []
@@ -182,13 +186,15 @@ def handler(event=None, context=None):
             })
             price_changes += 1
             price_change_ids.append(v["id"])
-
+    log.info("loader: db upsert done")
     # 3) Mark vehicles not seen today as unavailable
     execute(MARK_UNAVAILABLE)
 
     # 4) Export snapshot for the SPA
+    log.info("loader: export json ...")
     rows = fetch_all(SELECT_EXPORT)
     _export_json(rows)
+    log.info("loader: export json done")
 
     summary = {
         "fetched": len(raw),

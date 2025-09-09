@@ -4,4 +4,4 @@ __pycache__/
 build/
 artifact.zip
 
-public/data/vehicles.json
+vehicles.json

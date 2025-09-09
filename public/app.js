@@ -1,15 +1,22 @@
 // --- Globals ---
 let fullInventory = null;  // Global variable to hold the full dataset
+const VEHICLE_KEYS = [
+  "id", "model", "year", "partner_location", "retail_price", "dealer_price", "mileage",
+  "first_time_registration", "vin", "stock_images",
+  "exterior", "interior", "wheels", "motor", "edition",
+  "performance", "pilot", "plus", "state", "available",
+  "first_seen_at", "last_seen_at"
+];
 let defaultSortApplied = false;  // Flag to apply default sort only once
 
 // --- Utility Functions ---
 function buildApiUrl() {
-  const baseUrl = 'data/vehicles.json'; // Adjust this to your actual API endpoint
+  const baseUrl = '/data/vehicles.json'; // Adjust this to your actual API endpoint
 
   const params = new URLSearchParams();
   // (Assume similar logic as before for dropdowns, number inputs, and checkboxes)
   // ...
-  params.append('available', 'true'); // Fetch only available vehicles
+
   console.log("Constructed API URL:", baseUrl + "?" + params.toString());
   return params.toString() ? `${baseUrl}?${params.toString()}` : baseUrl;
 }
@@ -40,8 +47,13 @@ function fetchFullInventory() {
     .then(response => response.json())
     .then(data => {
       console.log("Fetched full inventory:", data);
-      fullInventory = data;  // Cache in global variable
-      localStorage.setItem(cacheKey, JSON.stringify(data));
+      if (data.vehicles && Array.isArray(data.vehicles)) {
+        fullInventory = data.vehicles.map(arr => Object.fromEntries(VEHICLE_KEYS.map((k, i) => [k, arr[i]])));
+        localStorage.setItem(cacheKey, JSON.stringify(fullInventory));
+      } else {
+        fullInventory = [];
+        localStorage.setItem(cacheKey, JSON.stringify([]));
+      }
       localStorage.setItem(cacheTimestampKey, Date.now().toString());
       updateTable(filterInventory());
     })
@@ -70,8 +82,13 @@ function loadVehicles() {
     .then(response => response.json())
     .then(data => {
       console.log("API Response:", data);
-      fullInventory = data;
-      localStorage.setItem(cacheKey, JSON.stringify(data));
+      if (data.vehicles && Array.isArray(data.vehicles)) {
+        fullInventory = data.vehicles.map(arr => Object.fromEntries(VEHICLE_KEYS.map((k, i) => [k, arr[i]])));
+        localStorage.setItem(cacheKey, JSON.stringify(fullInventory));
+      } else {
+        fullInventory = [];
+        localStorage.setItem(cacheKey, JSON.stringify([]));
+      }
       localStorage.setItem(cacheTimestampKey, Date.now().toString());
       updateTable(filterInventory());
     })
@@ -168,7 +185,8 @@ function updateTable(data) {
     if (vehicle.pilot) packs.push("Pilot");
     if (vehicle.plus) packs.push("Plus");
     const packsDisplay = packs.join(", ");
-    const vehicleUrl = `https://www.polestar.com/us/preowned-cars/product/polestar-${vehicle.model.toLowerCase().slice(-1)}/${vehicle.id}`;
+  const modelStr = vehicle.model ? vehicle.model.toLowerCase() : "";
+  const vehicleUrl = `https://www.polestar.com/us/preowned-cars/product/polestar-${modelStr.slice(-1)}/${vehicle.id}`;
 
     // Ensure price is a valid number, else default to 0
     const rawPrice = vehicle.retail_price ? parseFloat(vehicle.retail_price) : 0;

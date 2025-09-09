@@ -148,7 +148,11 @@ def _export_json(rows: list[dict]) -> None:
 # ----------------- Entry point -----------------
 def handler(event=None, context=None):
     # 1) Extract
-    
+    print("LOADER: handler entered")  # shows even without logging config
+    import logging, os
+    logging.getLogger().setLevel(logging.INFO)
+    print(f"LOADER: env OK, region={os.getenv('AWS_REGION')}, bucket={os.getenv('PUBLIC_BUCKET')}")
+
     log.info("start: daily_refresh (loader)")
     log.info("loader: get raw from s3 ...")
     raw = _load_raw_from_s3()

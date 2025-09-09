@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import os, json, datetime as dt, logging
 import boto3
-import scraper  # your scraper.fetch_raw()
+import scraper.scraper as scraper  # your scraper.fetch_raw()
 
 log = logging.getLogger("scrape_to_s3")
 logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"))

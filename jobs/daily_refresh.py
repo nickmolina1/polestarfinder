@@ -1,10 +1,11 @@
 # jobs/daily_refresh.py
 from __future__ import annotations
 
+from curses import raw
 import os
 import json
-import uuid
 import logging
+import uuid
 from datetime import datetime, timezone
 
 import boto3
@@ -14,6 +15,9 @@ from database.db import fetch_all, fetch_one, execute
 import scraper.scraper as scraper  # your library-style scraper.py
 
 # ----------------- Config -----------------
+
+RAW_BUCKET = os.getenv("RAW_BUCKET")
+RAW_KEY    = os.getenv("RAW_KEY")  # e.g., raw/latest.json
 REGION = os.getenv("AWS_REGION", "us-east-1")
 BUCKET = os.getenv("PUBLIC_BUCKET", "local")        # "local" => write to disk
 KEY_PREFIX = os.getenv("PUBLIC_KEY_PREFIX", "")     # e.g., "staging/" or ""
@@ -91,6 +95,14 @@ ORDER BY year DESC, retail_price NULLS LAST;
 """
 
 # ----------------- Helpers -----------------
+def _load_raw_from_s3():
+    if not RAW_BUCKET or not RAW_KEY:
+        return None
+    obj = s3.get_object(Bucket=RAW_BUCKET, Key=RAW_KEY)
+    data = json.loads(obj["Body"].read().decode("utf-8"))
+    vehicles = data["vehicles"] if isinstance(data, dict) and "vehicles" in data else data
+    return vehicles
+
 def _normalize_for_db(v: dict) -> dict:
     """
     Ensure the dict from scraper has all DB keys (even if None).
@@ -136,11 +148,17 @@ def _export_json(rows: list[dict]) -> None:
 # ----------------- Entry point -----------------
 def handler(event=None, context=None):
     # 1) Extract
-    raw = scraper.fetch_raw()  # uses env: MODELS, MARKET, PAGE_LIMIT
-    log.info("Fetched %d raw vehicles", len(raw))
+    log.info("start: daily_refresh (loader)")
+    raw = _load_raw_from_s3()
+    if raw is None:
+        log.info("RAW_* not set, scraping directly (local/dev mode)")
+        raw = scraper.fetch_raw()
+    log.info("fetched=%d", len(raw))
 
     # 2) Transform + Load (upsert + history)
     inserted = updated = price_changes = 0
+    inserted_ids = []
+    price_change_ids = []
     for item in raw:
         v = _normalize_for_db(item)
 
@@ -150,6 +168,7 @@ def handler(event=None, context=None):
         execute(UPSERT_VEHICLE, v)
         if old is None:
             inserted += 1
+            inserted_ids.append(v["id"])
         else:
             updated += 1
 
@@ -162,6 +181,7 @@ def handler(event=None, context=None):
                 "observed_at": datetime.now(timezone.utc),
             })
             price_changes += 1
+            price_change_ids.append(v["id"])
 
     # 3) Mark vehicles not seen today as unavailable
     execute(MARK_UNAVAILABLE)
@@ -176,7 +196,13 @@ def handler(event=None, context=None):
         "updated": updated,
         "price_changes": price_changes,
         "exported": len(rows),
+        "inserted_ids": inserted_ids,
+        "price_change_ids": price_change_ids,
     }
+    if inserted_ids:
+        log.info("Inserted IDs (%d):\n%s", len(inserted_ids), "\n".join(str(i) for i in inserted_ids))
+    if price_change_ids:
+        log.info("Price Change IDs (%d):\n%s", len(price_change_ids), "\n".join(str(i) for i in price_change_ids))
     log.info("Summary: %s", summary)
     return summary
 

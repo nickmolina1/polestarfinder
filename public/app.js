@@ -27,6 +27,29 @@ function formatPrice(price) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(price);
 }
 
+// Return the first image URL from various possible shapes for stock_images
+function extractFirstImage(images) {
+  if (!images) return null;
+  // Already an array
+  if (Array.isArray(images) && images.length) return images[0];
+  // JSON string
+  if (typeof images === 'string') {
+    try {
+      const parsed = JSON.parse(images);
+      if (Array.isArray(parsed) && parsed.length) return parsed[0];
+    } catch (e) {
+      // not JSON
+    }
+  }
+  // Plain object with numeric keys or first value
+  if (typeof images === 'object') {
+    for (const k in images) {
+      if (images[k]) return images[k];
+    }
+  }
+  return null;
+}
+
 // --- API Functions ---
 function fetchFullInventory() {
   const cacheKey = "fullVehicleInventory";
@@ -39,7 +62,7 @@ function fetchFullInventory() {
   if (cachedData && cachedTimestamp && (Date.now() - parseInt(cachedTimestamp, 10)) < oneHour) {
     console.log("Using cached full inventory");
     fullInventory = JSON.parse(cachedData);
-    updateTable(filterInventory());
+  renderCurrentView();
     return;
   }
 
@@ -56,7 +79,7 @@ function fetchFullInventory() {
         localStorage.setItem(cacheKey, JSON.stringify([]));
       }
       localStorage.setItem(cacheTimestampKey, Date.now().toString());
-      updateTable(filterInventory());
+  renderCurrentView();
     })
     .catch(error => {
       console.error('Error fetching full inventory:', error);
@@ -75,7 +98,7 @@ function loadVehicles() {
   if (cachedData && cachedTimestamp && (Date.now() - parseInt(cachedTimestamp, 10)) < oneHour) {
     console.log("Using cached full inventory");
     fullInventory = JSON.parse(cachedData);
-    updateTable(filterInventory());
+  renderCurrentView();
     return;
   }
 
@@ -91,7 +114,7 @@ function loadVehicles() {
         localStorage.setItem(cacheKey, JSON.stringify([]));
       }
       localStorage.setItem(cacheTimestampKey, Date.now().toString());
-      updateTable(filterInventory());
+  renderCurrentView();
     })
     .catch(error => {
       console.error('Error fetching vehicles:', error);
@@ -195,11 +218,15 @@ function updateTable(data) {
 
     const card = document.createElement("div");
     card.className = "vehicle-card";
+    const firstImage = extractFirstImage(vehicle.stock_images);
+    const imageHtml = firstImage ? `<img class="card-image" src="${firstImage}" alt="${(vehicle.model||'').replace(/"/g,'')}">` : `<div class="card-image placeholder"></div>`;
+
     card.innerHTML = `
       <div class="card-header">
         <span class="card-model">${vehicle.model || ""}</span>
         <span class="card-year">${vehicle.year || ""}</span>
       </div>
+      ${imageHtml}
       <div class="card-location">${vehicle.partner_location || ""}</div>
       <div class="card-price">${formattedPrice}</div>
       <div class="card-mileage">${vehicle.mileage ? vehicle.mileage.toLocaleString() + ' mi' : ""}</div>
@@ -211,6 +238,70 @@ function updateTable(data) {
     `;
     grid.appendChild(card);
   });
+
+  // Update statistics for the currently displayed set
+  updateStats(data);
+}
+
+// Update the statistics panel (total count, average retail price, average mileage)
+function updateStats(data) {
+  const totalEl = document.getElementById('totalVehicles');
+  const avgPriceEl = document.getElementById('averageRetailPrice');
+  const avgMileageEl = document.getElementById('averageMileage');
+  if (!totalEl || !avgPriceEl || !avgMileageEl) return;
+
+  const total = data.length;
+  let priceSum = 0;
+  let priceCount = 0;
+  let mileageSum = 0;
+  let mileageCount = 0;
+
+  data.forEach(v => {
+    const p = parseFloat(v.retail_price);
+    if (!isNaN(p) && p > 0) { priceSum += p; priceCount++; }
+    const m = parseFloat(v.mileage);
+    if (!isNaN(m) && m >= 0) { mileageSum += m; mileageCount++; }
+  });
+
+  const avgPrice = priceCount ? (priceSum / priceCount) : 0;
+  const avgMileage = mileageCount ? Math.round(mileageSum / mileageCount) : 0;
+
+  totalEl.textContent = total.toString();
+  avgPriceEl.textContent = avgPrice ? formatPrice(avgPrice) : '$0';
+  avgMileageEl.textContent = avgMileage ? avgMileage.toLocaleString() : '0';
+}
+
+// Helper to compute filtered + sorted data and render
+function renderCurrentView() {
+  const filtered = filterInventory();
+  const sorted = applySorting(filtered);
+  updateTable(sorted);
+}
+
+// Sorting support: read controls and sort data accordingly
+function applySorting(data) {
+  const sortField = document.getElementById('sortField')?.value;
+  const sortOrder = document.getElementById('sortOrder')?.value || 'asc';
+  if (!sortField) return data;
+
+  const sorted = [...data].sort((a, b) => {
+    let aVal = a[sortField];
+    let bVal = b[sortField];
+    // coerce to numbers where applicable
+    const numFields = ['retail_price', 'mileage', 'year'];
+    if (numFields.includes(sortField)) {
+      aVal = parseFloat(aVal) || 0;
+      bVal = parseFloat(bVal) || 0;
+    } else {
+      aVal = (aVal || '').toString().toLowerCase();
+      bVal = (bVal || '').toString().toLowerCase();
+    }
+
+    if (aVal < bVal) return sortOrder === 'asc' ? -1 : 1;
+    if (aVal > bVal) return sortOrder === 'asc' ? 1 : -1;
+    return 0;
+  });
+  return sorted;
 }
 
 // --- Sorting Functions ---
@@ -295,14 +386,14 @@ function sortHandler(event) {
 document.querySelectorAll('.form-select, input[type="number"], input[type="checkbox"]').forEach(input => {
   input.addEventListener('input', () => {
     // On any filter change, update table using cached fullInventory
-    updateTable(filterInventory());
+  renderCurrentView();
   });
 });
 
 document.querySelectorAll('#exteriorColorSwatches .color-swatch').forEach(swatch => {
   swatch.addEventListener('click', () => {
     swatch.classList.toggle('selected');
-    updateTable(filterInventory());
+  renderCurrentView();
   });
 });
 
@@ -310,7 +401,7 @@ document.querySelectorAll('#wheelThumbnails a').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
     this.classList.toggle('selected');
-    updateTable(filterInventory());
+  renderCurrentView();
   });
 });
 
@@ -318,7 +409,7 @@ document.querySelectorAll('#interiorOptions .interior-option').forEach(option =>
   option.addEventListener('click', function(e) {
     e.preventDefault();
     this.classList.toggle('selected');
-    updateTable(filterInventory());
+  renderCurrentView();
   });
 });
 
@@ -327,7 +418,7 @@ document.querySelectorAll('#packOptions .pack-option').forEach(option => {
     option.addEventListener('click', function(e) {
       e.preventDefault();
       this.classList.toggle('selected');
-      updateTable(filterInventory());
+  renderCurrentView();
     });
   });
 
@@ -342,4 +433,11 @@ window.addEventListener('load', () => {
       console.log("Cache cleared due to page reload.");
     }
     loadVehicles();
+    // Wire sort controls
+    const sortField = document.getElementById('sortField');
+    const sortOrder = document.getElementById('sortOrder');
+    if (sortField && sortOrder) {
+  sortField.addEventListener('change', () => renderCurrentView());
+  sortOrder.addEventListener('change', () => renderCurrentView());
+    }
   });

@@ -244,7 +244,23 @@
         </div>
       </div>
       <div class="inventory-cards">
-        <h2>Vehicles</h2>
+        <div class="inventory-header">
+          <h2>Vehicles</h2>
+          <div class="sort-controls">
+            <label for="sortField" class="form-label small">Sort by</label>
+            <select id="sortField" class="form-select small">
+              <option value="">None</option>
+              <option value="retail_price">Price</option>
+              <option value="mileage">Mileage</option>
+              <option value="year">Year</option>
+            </select>
+            <label for="sortOrder" class="form-label small">Order</label>
+            <select id="sortOrder" class="form-select small">
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
+          </div>
+        </div>
         <div id="vehiclesGrid" class="vehicles-grid"></div>
       </div>
     </div>

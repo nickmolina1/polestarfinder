@@ -72,7 +72,13 @@ function fetchFullInventory() {
     .then(data => {
       console.log("Fetched full inventory:", data);
       if (data.vehicles && Array.isArray(data.vehicles)) {
-        fullInventory = data.vehicles.map(arr => Object.fromEntries(VEHICLE_KEYS.map((k, i) => [k, arr[i]])));
+        fullInventory = data.vehicles.map(arr => {
+          const obj = Object.fromEntries(VEHICLE_KEYS.map((k, i) => [k, arr[i]]));
+          if (obj.partner_location && obj.partner_location.startsWith('Polestar ')) {
+            obj.partner_location = obj.partner_location.replace(/^Polestar\s+/i, '').trim();
+          }
+          return obj;
+        });
         localStorage.setItem(cacheKey, JSON.stringify(fullInventory));
       } else {
         fullInventory = [];
@@ -107,7 +113,13 @@ function loadVehicles() {
     .then(data => {
       console.log("API Response:", data);
       if (data.vehicles && Array.isArray(data.vehicles)) {
-        fullInventory = data.vehicles.map(arr => Object.fromEntries(VEHICLE_KEYS.map((k, i) => [k, arr[i]])));
+        fullInventory = data.vehicles.map(arr => {
+          const obj = Object.fromEntries(VEHICLE_KEYS.map((k, i) => [k, arr[i]]));
+          if (obj.partner_location && obj.partner_location.startsWith('Polestar ')) {
+            obj.partner_location = obj.partner_location.replace(/^Polestar\s+/i, '').trim();
+          }
+          return obj;
+        });
         localStorage.setItem(cacheKey, JSON.stringify(fullInventory));
       } else {
         fullInventory = [];
@@ -227,15 +239,26 @@ function updateTable(data) {
         <span class="card-year">${vehicle.year || ""}</span>
       </div>
       ${imageHtml}
-      <div class="card-location">${vehicle.partner_location || ""}</div>
-      <div class="card-price">${formattedPrice}</div>
-      <div class="card-mileage">${vehicle.mileage ? vehicle.mileage.toLocaleString() + ' mi' : ""}</div>
-      <div class="card-state">${vehicle.state || ""}</div>
-      <div class="card-packs">${packsDisplay}</div>
-      <div class="card-added">Added: ${dateAdded}</div>
-      <div class="card-firstreg">First Reg: ${firstReg}</div>
-      <a class="card-link" href="${vehicleUrl}" target="_blank">View Details</a>
+  <div class="card-location">${vehicle.partner_location || ""}</div>
+  <div class="card-price">${formattedPrice}</div>
+  <div class="card-mileage">${vehicle.mileage ? vehicle.mileage.toLocaleString() + ' mi' : ""}</div>
+  <div class="card-state">${vehicle.state || ""}</div>
+  <div class="card-packs">${packsDisplay}</div>
     `;
+    // Make the whole card act as a link (click and keyboard accessible)
+    const ariaLabel = `Open details for ${(vehicle.model||'').trim()} ${(vehicle.year||'').toString()}`;
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'link');
+    card.setAttribute('aria-label', ariaLabel);
+    card.addEventListener('click', () => {
+      window.open(vehicleUrl, '_blank');
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.open(vehicleUrl, '_blank');
+      }
+    });
     grid.appendChild(card);
   });
 

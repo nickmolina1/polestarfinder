@@ -31,6 +31,13 @@
 .vehicle-card:hover {
     box-shadow: 0 4px 16px rgba(0,0,0,0.16);
 }
+.vehicle-card[role="link"] {
+    cursor: pointer;
+}
+.vehicle-card:focus {
+    outline: 3px solid rgba(243,119,29,0.25);
+    outline-offset: 3px;
+}
 .card-header {
     display: flex;
     justify-content: space-between;
@@ -40,10 +47,12 @@
     margin-bottom: 8px;
 }
 .card-model {
-    color: var(--terra-dark, #d95b00);
+    color: rgb(117, 120, 123);
+    font-weight: 400;
 }
 .card-year {
     color: #333;
+    font-weight: 400;
 }
 .card-location {
     font-size: 1em;
@@ -77,18 +86,7 @@
     margin-bottom: 4px;
 }
 .card-link {
-    margin-top: 10px;
-    color: #fff;
-    background: var(--terra, #f3771d);
-    padding: 7px 16px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: 600;
-    align-self: flex-end;
-    transition: background 0.2s;
-}
-.card-link:hover {
-    background: var(--terra-dark, #d95b00);
+    display: none !important;
 }
 /* Card image */
 .card-image {

@@ -1,3 +1,53 @@
+/* ================== VARIABLES ================== */
+:root {
+    --terra: #f3771d;
+    --terra-light: #f9a67a;
+    --terra-dark: #d95b00;
+    --topbar-height: 20px;
+    /* Thumbnail sizing: change these to control thumbnail dimensions centrally */
+    --thumbnail-size: 72px;
+    --thumbnail-min: 72px;
+}
+/* ================== TYPOGRAPHY ================== */
+body, h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+}
+
+/* ================== TOPBAR ================== */
+.topbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: #ffffff;
+    border-bottom: 1px solid #eee;
+    z-index: 50;
+}
+.topbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 25px;
+}
+.brand {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.5rem;
+    letter-spacing: -0.05em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    padding-top: calc(var(--topbar-height) + env(safe-area-inset-top));
+    scroll-padding-top: calc(var(--topbar-height) + env(safe-area-inset-top)); /* anchors */
+}
+
+
+
+/* ================== VEHICLE CARDS ================== */
 .vehicles-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -6,12 +56,12 @@
     box-sizing: border-box;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
     .vehicles-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
-@media (max-width: 700px) {
+@media (max-width: 950px) {
     .vehicles-grid {
         grid-template-columns: 1fr;
     }
@@ -88,6 +138,7 @@
 .card-link {
     display: none !important;
 }
+
 /* Card image */
 .card-image {
     width: 100%;
@@ -103,38 +154,38 @@
     border-radius: 8px;
     margin-bottom: 10px;
 }
-/* ================== VARIABLES ================== */
-:root {
-    --terra: #f3771d;
-    --terra-light: #f9a67a;
-    --terra-dark: #d95b00;
-}
 
 /* ================== THUMBNAILS ================== */
 /* New classes for images moved from inline styles */
 .thumbnail {
-    width: 75px;
-    height: 75px;
-    box-sizing: border-box; /* added for consistent sizing */
+    width: var(--thumbnail-size);
+    height: var(--thumbnail-size);
+    box-sizing: border-box;
+    object-fit: cover;
+
+    display: block; /* remove inline baseline gap inside anchors */
+    cursor: pointer;
 }
 .thumbnail-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px; /* adjust spacing as needed */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    justify-items: center;
+    align-items: start;
 }
 
-/* ================== TYPOGRAPHY ================== */
-body, h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    margin: 0;
-    padding: 0;
+.thumbnail-container a {
+    display: inline-block;
+
+    vertical-align: middle;
 }
+
 
 /* ================== LINKS & TOOLTIP ================== */
 a[data-wheel] {
     position: relative;
 }
+/* Tooltip for wheel info on thumbnails */
 a[data-wheel]:hover::after {
     content: attr(data-wheel);
     position: absolute;
@@ -161,34 +212,45 @@ a[data-wheel]:hover::after {
 }
 
 /* ================== COLOR SWATCHES ================== */
-.color-swatch[data-color="Snow"] {
+/* Exterior swatches now contain an inner .thumbnail span so they match the structure
+   used by other thumbnail groups. We set the color on the inner span and keep
+   the anchor as the interactive element. */
+.exterior-option[data-color="Snow"] .thumbnail {
     background-color: #F5F5F5;
 }
-.color-swatch[data-color="Magnesium"] {
+.exterior-option[data-color="Magnesium"] .thumbnail {
     background-color: #BFC2C3;
 }
-.color-swatch[data-color="Jupiter"] {
+.exterior-option[data-color="Jupiter"] .thumbnail {
     background-color: #D3C8C9;
 }
-.color-swatch[data-color="Moon"] {
+.exterior-option[data-color="Moon"] .thumbnail {
     background-color: #928E81;
 }
-.color-swatch[data-color="Thunder"] {
+.exterior-option[data-color="Thunder"] .thumbnail {
     background-color: #606163;
 }
-.color-swatch[data-color="Midnight"] {
+.exterior-option[data-color="Midnight"] .thumbnail {
     background-color: #183A50;
 }
-.color-swatch[data-color="Space"],
-.color-swatch[data-color="Void"] {
+.exterior-option[data-color="Space"] .thumbnail,
+.exterior-option[data-color="Void"] .thumbnail {
     background-color: #000000;
 }
-.color-swatch {
-    border: 2px solid transparent;
+.exterior-option {
+    display: inline-block;
     cursor: pointer;
-    position: relative; /* added for tooltip positioning */
+    position: relative; /* for tooltip */
+    box-sizing: border-box;
 }
-.color-swatch:hover::after {
+.exterior-option .thumbnail {
+    width: var(--thumbnail-min);
+    height: var(--thumbnail-min);
+    display: block;
+    box-sizing: border-box;
+}
+/* Tooltip for color swatches */
+.exterior-option:hover::after {
     content: attr(data-color);
     position: absolute;
     bottom: 110%;
@@ -196,22 +258,22 @@ a[data-wheel]:hover::after {
     transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.7);
     color: #fff;
-    padding: 2px 5px;
-    border-radius: 3px;
+    padding: 3px 5px;
     max-width: 200px;
     white-space: normal;
     overflow-wrap: break-word;
     font-size: 12px;
     z-index: 10;
 }
-.selected {
-    border: 2px solid var(--terra);
+/* Hover / focus affordance for thumbnails and swatches (subtle lift + shadow) */
+.thumbnail:hover {
+    outline: 3px solid var(--terra-light);
 }
-
-
-
+.selected {
+    /* Use an outline so the selected visual does not change element layout or size */
+    outline: 3px solid var(--terra);
+}
 /* ================== CONTAINERS & LAYOUT ================== */
-/* Updated container styling to use flexbox instead of .my-row */
 .my-container {
     display: flex;
     flex-direction: row; /* changed from column to row for side-by-side layout */
@@ -227,7 +289,6 @@ a[data-wheel]:hover::after {
     padding: 15px;
     border-right: 1px solid #ccc; /* custom border styling */
     width: 250px;
-
 }
 .my-main {
     padding: 15px;
@@ -239,7 +300,6 @@ a[data-wheel]:hover::after {
     padding: 0 10px 10px 0;
     box-sizing: border-box;
 }
-
 .inventory-header {
     display: flex;
     align-items: center;
@@ -260,36 +320,58 @@ a[data-wheel]:hover::after {
     padding: 6px 8px;
     font-size: 0.9rem;
 }
-
-/* Ensure tables within .my-main remain within its width */
-
 .my-main table {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
     table-layout: auto; /* columns expand to fit content */
 }
-
 .filter-section {
     display: flex;
     flex-direction: column;
-    gap: 10px 10px 10px 0;
-    margin-bottom: 1rem;
+    gap: 6px;
+    margin-bottom: 0.6rem;
     width: auto;
 }
-
 .filter-subsection {
-    margin-bottom: 1rem;
+    margin-bottom: 0.6rem;
 }
-
 .thumbnail-container {
-    display: flex;
-    flex-direction: row;    
-    flex-wrap: wrap;
-
-
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* keep 3 thumbnails per row by default */
+    gap: 8px;
+    justify-items: center;
+    align-items: start;
 }
+@media (max-width: 700px) {
+    /* Move sidebar to top */
+    .my-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .my-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #eee;
+        padding: 12px;
+        order: 0;
+    }
+    .my-main {
+        order: 1;
+        padding: 12px;
+    }
+    /* Each filter section starts on its own line and stretches full width */
+    .filter-section {
+        width: 100%;
 
+        margin-bottom: 1rem;
+    }
+    /* Thumbnails expand to fill available width and wrap onto new rows */
+    .thumbnail-container {
+        grid-template-columns: repeat(auto-fit, minmax(var(--thumbnail-min), 1fr));
+    }
+}
+/* ================== STATISTICS PANEL ================== */
 .statistics-panel {
     display: flex;
     flex-direction: row;
@@ -297,7 +379,6 @@ a[data-wheel]:hover::after {
     gap: 10px;
     margin-bottom: 1rem;
 }
-
 .statistics-panel .statistic {
         background: #fff;
         padding: 12px 14px;
@@ -316,26 +397,21 @@ a[data-wheel]:hover::after {
         font-weight: 700;
         margin: 0;
 }
-
 @media (max-width: 700px) {
     .statistics-panel {
         flex-direction: column;
     }
 }
-
-
 /* ================== FORMS ================== */
 .form-label {
     display: block;
     margin-bottom: 0.5rem;
     font-size: 20px;
 }
-
 .sub-label {
     font-size: 0.875rem;
     color: #666;
 }   
-
 .form-select, .form-control {
     width: auto;
     padding: 8px;
@@ -343,9 +419,6 @@ a[data-wheel]:hover::after {
     border: 1px solid #ddd;
     border-radius: 4px;
 }
-
-
-
 @media screen and (max-width: 768px) {
     .form-select, .form-control {
         width: 100%;

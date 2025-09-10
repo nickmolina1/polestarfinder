@@ -9,6 +9,10 @@ const VEHICLE_KEYS = [
 ];
 let defaultSortApplied = false;  // Flag to apply default sort only once
 
+// Image angle to use when displaying vehicle images
+const ANGLE = 0;
+
+
 // --- Utility Functions ---
 function buildApiUrl() {
   const baseUrl = 'data/vehicles.json'; // Adjust this to your actual API endpoint
@@ -30,23 +34,47 @@ function formatPrice(price) {
 // Return the first image URL from various possible shapes for stock_images
 function extractFirstImage(images) {
   if (!images) return null;
+  let candidate = null;
+
   // Already an array
-  if (Array.isArray(images) && images.length) return images[0];
-  // JSON string
-  if (typeof images === 'string') {
+  if (Array.isArray(images) && images.length) {
+    candidate = images[0];
+  } else if (typeof images === 'string') {
+    // JSON string or plain URL
     try {
       const parsed = JSON.parse(images);
-      if (Array.isArray(parsed) && parsed.length) return parsed[0];
+      if (Array.isArray(parsed) && parsed.length) candidate = parsed[0];
+      else candidate = parsed;
     } catch (e) {
-      // not JSON
+      candidate = images;
     }
-  }
-  // Plain object with numeric keys or first value
-  if (typeof images === 'object') {
+  } else if (typeof images === 'object') {
+    // Plain object with numeric keys or first value
     for (const k in images) {
-      if (images[k]) return images[k];
+      if (images[k]) {
+        candidate = images[k];
+        break;
+      }
     }
   }
+
+  if (!candidate) return null;
+
+  // If candidate is an object, try to pull the first string value (e.g., url)
+  if (typeof candidate === 'object') {
+    for (const k in candidate) {
+      if (typeof candidate[k] === 'string') {
+        candidate = candidate[k];
+        break;
+      }
+    }
+  }
+
+  // If it's a string, replace angle=0 with angle=1
+  if (typeof candidate === 'string') {
+    return candidate.replace(/angle=0\b/g, `angle=${ANGLE}`);
+  }
+
   return null;
 }
 
@@ -141,14 +169,14 @@ function filterInventory() {
   const partnerLocation = document.getElementById('partnerLocationFilter').value.toLowerCase();
   const model = document.getElementById('modelFilter').value.toLowerCase();
   const state = document.getElementById('stateFilter').value.toLowerCase();
-  const swatches = document.querySelectorAll('#exteriorColorSwatches .color-swatch.selected');
+  const swatches = document.querySelectorAll('#exteriorOptions .exterior-option.selected');
   const exteriorColors = Array.from(swatches).map(el => el.getAttribute('data-color').toLowerCase());
   
   // Use the new interior options (multiple selection)
   const interiorOptions = document.querySelectorAll('#interiorOptions .interior-option.selected');
   const selectedInteriors = Array.from(interiorOptions).map(el => el.getAttribute('data-interior').toLowerCase());
   
-  const wheelElements = document.querySelectorAll('#wheelThumbnails a.selected');
+  const wheelElements = document.querySelectorAll('#wheelOptions a.selected');
   const selectedWheels = Array.from(wheelElements).map(el => el.getAttribute('data-wheel').toLowerCase());
   const motor = document.getElementById('motorFilter').value.toLowerCase();
   const edition = document.getElementById('editionFilter').value.toLowerCase();
@@ -230,7 +258,8 @@ function updateTable(data) {
 
     const card = document.createElement("div");
     card.className = "vehicle-card";
-    const firstImage = extractFirstImage(vehicle.stock_images);
+    const newLocal = extractFirstImage(vehicle.stock_images);
+    const firstImage = newLocal;
     const imageHtml = firstImage ? `<img class="card-image" src="${firstImage}" alt="${(vehicle.model||'').replace(/"/g,'')}">` : `<div class="card-image placeholder"></div>`;
 
     card.innerHTML = `
@@ -413,37 +442,40 @@ document.querySelectorAll('.form-select, input[type="number"], input[type="check
   });
 });
 
-document.querySelectorAll('#exteriorColorSwatches .color-swatch').forEach(swatch => {
-  swatch.addEventListener('click', () => {
-    swatch.classList.toggle('selected');
-  renderCurrentView();
-  });
-});
+// Helper to wire up selectable thumbnail-like elements consistently
+function setupSelectable(containerSelector, itemSelector) {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+  container.querySelectorAll(itemSelector).forEach(el => {
+    // ensure keyboard focusability
+    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
 
-document.querySelectorAll('#wheelThumbnails a').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    e.preventDefault();
-    this.classList.toggle('selected');
-  renderCurrentView();
-  });
-});
+    el.addEventListener('click', (e) => {
+      // prevent anchor navigation where applicable
+      if (el.tagName === 'A') e.preventDefault();
+      el.classList.toggle('selected');
+      renderCurrentView();
+    });
 
-document.querySelectorAll('#interiorOptions .interior-option').forEach(option => {
-  option.addEventListener('click', function(e) {
-    e.preventDefault();
-    this.classList.toggle('selected');
-  renderCurrentView();
-  });
-});
-
-
-document.querySelectorAll('#packOptions .pack-option').forEach(option => {
-    option.addEventListener('click', function(e) {
-      e.preventDefault();
-      this.classList.toggle('selected');
-  renderCurrentView();
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (el.tagName === 'A') {
+          // don't navigate away
+        }
+        el.classList.toggle('selected');
+        renderCurrentView();
+      }
     });
   });
+}
+
+// Apply to the various thumbnail groups
+setupSelectable('#exteriorOptions', '.exterior-option');
+setupSelectable('#interiorOptions', '.interior-option');
+setupSelectable('#wheelOptions', 'a');
+setupSelectable('#packOptions', '.pack-option');
+
 
 
 // --- Initialization ---

@@ -1,34 +1,6 @@
 {
   "vehicles": [
     [
-      "48c6002a-a1dd-4ce0-924b-79554028ffa3",
-      "Polestar 2",
-      2024,
-      "Polestar Short Hills",
-      "31990.00",
-      "31990.00",
-      9168,
-      "2024-08-31",
-      "YSMFE3KA1RL232920",
-      [
-        "https://cas.polestar.com/image/dynamic/MY24_2335/534/summary-transparent-v1/FE/1/31/72900/R60000/R184/LR01/_/BD02/EV01/JB13/2G03/ET01/default.png?market=us&angle=0&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY24_2335/534/summary-transparent-v1/FE/1/31/72900/R60000/R184/LR01/_/BD02/EV01/JB13/2G03/ET01/default.png?market=us&angle=2&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY24_2335/534/summary-transparent-v1/FE/1/31/72900/R60000/R184/LR01/_/BD02/EV01/JB13/2G03/ET01/default.png?market=us&angle=3&bg=00000000"
-      ],
-      null,
-      null,
-      null,
-      null,
-      null,
-      false,
-      false,
-      false,
-      "CertifiedPreOwned",
-      true,
-      "2025-09-06 04:32:03.567655+00:00",
-      "2025-09-09 22:05:31.786337+00:00"
-    ],
-    [
       "9e58f3b8-d529-427c-af95-0889d20c9339",
       "Polestar 2",
       2024,
@@ -54,7 +26,35 @@
       "CertifiedPreOwned",
       true,
       "2025-09-09 22:05:31.832509+00:00",
-      "2025-09-09 22:05:31.832509+00:00"
+      "2025-09-10 19:44:14.573005+00:00"
+    ],
+    [
+      "48c6002a-a1dd-4ce0-924b-79554028ffa3",
+      "Polestar 2",
+      2024,
+      "Polestar Short Hills",
+      "31990.00",
+      "31990.00",
+      9168,
+      "2024-08-31",
+      "YSMFE3KA1RL232920",
+      [
+        "https://cas.polestar.com/image/dynamic/MY24_2335/534/summary-transparent-v1/FE/1/31/72900/R60000/R184/LR01/_/BD02/EV01/JB13/2G03/ET01/default.png?market=us&angle=0&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY24_2335/534/summary-transparent-v1/FE/1/31/72900/R60000/R184/LR01/_/BD02/EV01/JB13/2G03/ET01/default.png?market=us&angle=2&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY24_2335/534/summary-transparent-v1/FE/1/31/72900/R60000/R184/LR01/_/BD02/EV01/JB13/2G03/ET01/default.png?market=us&angle=3&bg=00000000"
+      ],
+      null,
+      null,
+      null,
+      null,
+      null,
+      false,
+      false,
+      false,
+      "CertifiedPreOwned",
+      true,
+      "2025-09-06 04:32:03.567655+00:00",
+      "2025-09-10 19:44:14.513707+00:00"
     ],
     [
       "8807e3be-8db3-4e91-bba0-40496b10215b",
@@ -82,7 +82,35 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:04.182683+00:00",
-      "2025-09-09 22:05:32.419626+00:00"
+      "2025-09-10 19:44:15.044606+00:00"
+    ],
+    [
+      "48ad0612-aea9-4510-97ff-00f37c85446b",
+      "Polestar 2",
+      2024,
+      "Polestar Portland",
+      "34800.00",
+      "34800.00",
+      31515,
+      "2023-12-03",
+      "YSMFE3KA9RL234365",
+      [
+        "https://cas.polestar.com/image/dynamic/MY24_2335/534/summary-transparent-v1/FE/1/31/72800/RF8000/R184/LR01/_/BD02/EV05/JB13/2G03/ET01/default.png?market=us&angle=0&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY24_2335/534/summary-transparent-v1/FE/1/31/72800/RF8000/R184/LR01/_/BD02/EV05/JB13/2G03/ET01/default.png?market=us&angle=2&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY24_2335/534/summary-transparent-v1/FE/1/31/72800/RF8000/R184/LR01/_/BD02/EV05/JB13/2G03/ET01/default.png?market=us&angle=3&bg=00000000"
+      ],
+      null,
+      null,
+      null,
+      null,
+      null,
+      false,
+      false,
+      false,
+      "CertifiedPreOwned",
+      true,
+      "2025-09-10 19:44:15.435873+00:00",
+      "2025-09-10 19:44:15.435873+00:00"
     ],
     [
       "df71d54f-c798-4669-ae4a-ca8b28a9cd1d",
@@ -110,7 +138,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:04.990804+00:00",
-      "2025-09-09 22:05:32.947201+00:00"
+      "2025-09-10 19:44:15.580960+00:00"
     ],
     [
       "afd66685-2dbe-4956-95e6-3e86ef1c8dad",
@@ -138,7 +166,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:05.361501+00:00",
-      "2025-09-09 22:05:33.144941+00:00"
+      "2025-09-10 19:44:15.789771+00:00"
     ],
     [
       "de14f436-0f09-42e9-a222-369c5cb877fc",
@@ -166,7 +194,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:05.686929+00:00",
-      "2025-09-09 22:05:33.382213+00:00"
+      "2025-09-10 19:44:16.004980+00:00"
     ],
     [
       "4b96fda4-aeb3-4c21-b2fa-5094cedeb970",
@@ -194,7 +222,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:05.826275+00:00",
-      "2025-09-09 22:05:33.490544+00:00"
+      "2025-09-10 19:44:16.077598+00:00"
     ],
     [
       "1379e475-8485-421a-945e-bc277aa4bda9",
@@ -222,7 +250,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:05.981409+00:00",
-      "2025-09-09 22:05:33.517788+00:00"
+      "2025-09-10 19:44:16.239055+00:00"
     ],
     [
       "93eeff16-0321-4706-9d33-2875a3d7e0aa",
@@ -250,7 +278,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:55.386796+00:00",
-      "2025-09-09 22:05:25.701506+00:00"
+      "2025-09-10 19:44:09.007261+00:00"
     ],
     [
       "7d261886-bb78-470e-a884-fb63287d52be",
@@ -278,7 +306,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:55.463874+00:00",
-      "2025-09-09 22:05:25.762997+00:00"
+      "2025-09-10 19:44:09.059927+00:00"
     ],
     [
       "39191827-0839-4b01-94de-c0ac373b29e1",
@@ -306,7 +334,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:31:56.643435+00:00",
-      "2025-09-09 22:05:26.669937+00:00"
+      "2025-09-10 19:44:09.864316+00:00"
     ],
     [
       "a25d22f5-d8b2-4135-83c2-e822cc8408cb",
@@ -334,7 +362,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:57.329666+00:00",
-      "2025-09-09 22:05:27.153902+00:00"
+      "2025-09-10 19:44:10.177616+00:00"
     ],
     [
       "444ef13a-ca91-43e1-814f-c0f8aedc7b53",
@@ -362,7 +390,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:57.421233+00:00",
-      "2025-09-09 22:05:27.216273+00:00"
+      "2025-09-10 19:44:10.297883+00:00"
     ],
     [
       "abdcfb25-76a9-4a50-aa76-cfb6e71a1d80",
@@ -390,7 +418,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:57.653075+00:00",
-      "2025-09-09 22:05:27.402632+00:00"
+      "2025-09-10 19:44:10.405983+00:00"
     ],
     [
       "8ec608d5-3760-4239-9cc9-0c6d97fe0139",
@@ -418,35 +446,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:31:58.159081+00:00",
-      "2025-09-09 22:05:27.833489+00:00"
-    ],
-    [
-      "681c6085-b997-43aa-b14c-abcb939b0ace",
-      "Polestar 2",
-      2023,
-      "Polestar Short Hills",
-      "28990.00",
-      "28990.00",
-      34439,
-      "2022-09-30",
-      "YSMED3KAXPL114649",
-      [
-        "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ED/1/72900/RF8000/R159/LR01/JT02/BD02/EV05/JB11/2G03/ET01/default.png?market=us&angle=0&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ED/1/72900/RF8000/R159/LR01/JT02/BD02/EV05/JB11/2G03/ET01/default.png?market=us&angle=2&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ED/1/72900/RF8000/R159/LR01/JT02/BD02/EV05/JB11/2G03/ET01/default.png?market=us&angle=3&bg=00000000"
-      ],
-      null,
-      null,
-      null,
-      null,
-      null,
-      false,
-      false,
-      false,
-      "CertifiedPreOwned",
-      true,
-      "2025-09-06 04:32:01.461943+00:00",
-      "2025-09-09 22:05:28.333407+00:00"
+      "2025-09-10 19:44:10.944168+00:00"
     ],
     [
       "9a80ed1d-344f-4c54-879e-10df09f67d3d",
@@ -474,7 +474,35 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:01.514440+00:00",
-      "2025-09-09 22:05:28.478262+00:00"
+      "2025-09-10 19:44:11.468107+00:00"
+    ],
+    [
+      "681c6085-b997-43aa-b14c-abcb939b0ace",
+      "Polestar 2",
+      2023,
+      "Polestar Short Hills",
+      "28990.00",
+      "28990.00",
+      34439,
+      "2022-09-30",
+      "YSMED3KAXPL114649",
+      [
+        "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ED/1/72900/RF8000/R159/LR01/JT02/BD02/EV05/JB11/2G03/ET01/default.png?market=us&angle=0&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ED/1/72900/RF8000/R159/LR01/JT02/BD02/EV05/JB11/2G03/ET01/default.png?market=us&angle=2&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ED/1/72900/RF8000/R159/LR01/JT02/BD02/EV05/JB11/2G03/ET01/default.png?market=us&angle=3&bg=00000000"
+      ],
+      null,
+      null,
+      null,
+      null,
+      null,
+      false,
+      false,
+      false,
+      "CertifiedPreOwned",
+      true,
+      "2025-09-06 04:32:01.461943+00:00",
+      "2025-09-10 19:44:11.413773+00:00"
     ],
     [
       "72cd4a99-88c3-49e5-ab0f-8b2757fea83d",
@@ -502,35 +530,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:59.103756+00:00",
-      "2025-09-09 22:05:28.694957+00:00"
-    ],
-    [
-      "aa116316-95b8-4313-9748-72112e66fe13",
-      "Polestar 2",
-      2023,
-      "Polestar Columbus ",
-      "29750.00",
-      "29750.00",
-      23186,
-      "2022-11-02",
-      "YSMED3KA2PL115679",
-      [
-        "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ED/1/72300/RFA000/R159/LR01/JT02/BD02/EV05/JB11/2G03/ET01/default.png?market=us&angle=0&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ED/1/72300/RFA000/R159/LR01/JT02/BD02/EV05/JB11/2G03/ET01/default.png?market=us&angle=2&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ED/1/72300/RFA000/R159/LR01/JT02/BD02/EV05/JB11/2G03/ET01/default.png?market=us&angle=3&bg=00000000"
-      ],
-      null,
-      null,
-      null,
-      null,
-      null,
-      false,
-      false,
-      false,
-      "CertifiedPreOwned",
-      true,
-      "2025-09-06 04:32:00.876825+00:00",
-      "2025-09-09 22:05:29.961609+00:00"
+      "2025-09-10 19:44:11.763638+00:00"
     ],
     [
       "c3c8ff23-311c-42e0-9847-0e91375d596b",
@@ -558,7 +558,35 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:00.823136+00:00",
-      "2025-09-09 22:05:29.928704+00:00"
+      "2025-09-10 19:44:12.754576+00:00"
+    ],
+    [
+      "aa116316-95b8-4313-9748-72112e66fe13",
+      "Polestar 2",
+      2023,
+      "Polestar Columbus ",
+      "29750.00",
+      "29750.00",
+      23186,
+      "2022-11-02",
+      "YSMED3KA2PL115679",
+      [
+        "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ED/1/72300/RFA000/R159/LR01/JT02/BD02/EV05/JB11/2G03/ET01/default.png?market=us&angle=0&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ED/1/72300/RFA000/R159/LR01/JT02/BD02/EV05/JB11/2G03/ET01/default.png?market=us&angle=2&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ED/1/72300/RFA000/R159/LR01/JT02/BD02/EV05/JB11/2G03/ET01/default.png?market=us&angle=3&bg=00000000"
+      ],
+      null,
+      null,
+      null,
+      null,
+      null,
+      false,
+      false,
+      false,
+      "CertifiedPreOwned",
+      true,
+      "2025-09-06 04:32:00.876825+00:00",
+      "2025-09-10 19:44:12.817651+00:00"
     ],
     [
       "4e96efaf-3fbf-442d-8193-69a0a542babe",
@@ -586,7 +614,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:01.593953+00:00",
-      "2025-09-09 22:05:30.290814+00:00"
+      "2025-09-10 19:44:13.196298+00:00"
     ],
     [
       "ad00e787-41ea-4e59-abe1-da1b30c1cd5e",
@@ -614,7 +642,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:03.787353+00:00",
-      "2025-09-09 22:05:31.111570+00:00"
+      "2025-09-10 19:44:13.885171+00:00"
     ],
     [
       "bc77b5a2-4e1c-48dc-a2f8-60adaf7c5d08",
@@ -624,7 +652,7 @@
       "31460.00",
       "31460.00",
       22071,
-      null,
+      "2022-12-20",
       "YSMED3KA9PL114352",
       [
         "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ED/1/72900/RFA000/R159/LR01/JT02/BD02/EV05/JB11/2G03/ET01/default.png?market=us&angle=0&bg=00000000",
@@ -642,7 +670,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:03.043016+00:00",
-      "2025-09-09 22:05:31.536636+00:00"
+      "2025-09-10 19:44:14.247718+00:00"
     ],
     [
       "00dac66b-d43f-42a8-ba52-f58b4a89ef39",
@@ -670,7 +698,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:03.308034+00:00",
-      "2025-09-09 22:05:31.644752+00:00"
+      "2025-09-10 19:44:14.341101+00:00"
     ],
     [
       "5d349958-6ddb-4c78-b40c-44e73183d630",
@@ -698,7 +726,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:03.473525+00:00",
-      "2025-09-09 22:05:31.741432+00:00"
+      "2025-09-10 19:44:14.456548+00:00"
     ],
     [
       "86174b89-7e79-4b17-85e8-f97f2ac61be4",
@@ -726,7 +754,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:04.105011+00:00",
-      "2025-09-09 22:05:32.357963+00:00"
+      "2025-09-10 19:44:14.999803+00:00"
     ],
     [
       "ef496451-0adc-4011-9de9-205fe0ddc082",
@@ -754,7 +782,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:04.260175+00:00",
-      "2025-09-09 22:05:32.452624+00:00"
+      "2025-09-10 19:44:15.094452+00:00"
     ],
     [
       "537b7f57-691a-408c-9929-2c657827cd2a",
@@ -782,7 +810,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:04.619296+00:00",
-      "2025-09-09 22:05:32.637854+00:00"
+      "2025-09-10 19:44:15.258318+00:00"
     ],
     [
       "788f786a-d984-4680-96b5-24eab7367f2f",
@@ -810,35 +838,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:06.166352+00:00",
-      "2025-09-09 22:05:33.658660+00:00"
-    ],
-    [
-      "1fe0f250-4458-4a91-96c1-d945111a36e1",
-      "Polestar 2",
-      2023,
-      "Polestar Short Hills",
-      "34990.00",
-      "34990.00",
-      14862,
-      null,
-      "YSMET3KA4PL129280",
-      [
-        "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ET/1/72900/RCZ300/XPFWHE/LR01/JT02/BD02/EV05/JB11/2G03/ET02/default.png?market=us&angle=0&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ET/1/72900/RCZ300/XPFWHE/LR01/JT02/BD02/EV05/JB11/2G03/ET02/default.png?market=us&angle=2&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY23_2215/534/summary-transparent-v2/ET/1/72900/RCZ300/XPFWHE/LR01/JT02/BD02/EV05/JB11/2G03/ET02/default.png?market=us&angle=3&bg=00000000"
-      ],
-      null,
-      null,
-      null,
-      null,
-      null,
-      false,
-      false,
-      false,
-      "CertifiedPreOwned",
-      true,
-      "2025-09-09 22:05:32.792198+00:00",
-      "2025-09-09 22:05:32.792198+00:00"
+      "2025-09-10 19:44:16.395597+00:00"
     ],
     [
       "c31076e4-9ddc-4e79-b888-3d445b8f78a4",
@@ -866,7 +866,7 @@
       "PreOwned",
       true,
       "2025-09-09 04:49:31.693167+00:00",
-      "2025-09-09 22:05:32.886842+00:00"
+      "2025-09-10 19:44:15.527631+00:00"
     ],
     [
       "b4855af9-d3f3-40c4-bdaf-2cd9e69a101c",
@@ -894,7 +894,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:05.065134+00:00",
-      "2025-09-09 22:05:32.994118+00:00"
+      "2025-09-10 19:44:15.640028+00:00"
     ],
     [
       "87d88065-9e14-49fb-89a8-25b664e85e53",
@@ -922,7 +922,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:05.238352+00:00",
-      "2025-09-09 22:05:33.038215+00:00"
+      "2025-09-10 19:44:15.673638+00:00"
     ],
     [
       "5236aef2-c3cb-46dd-a298-a2071a4ecef4",
@@ -950,7 +950,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:05.454789+00:00",
-      "2025-09-09 22:05:33.194522+00:00"
+      "2025-09-10 19:44:15.843974+00:00"
     ],
     [
       "4637fab9-f4fe-4f25-944f-b4938690c6de",
@@ -978,7 +978,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:05.517815+00:00",
-      "2025-09-09 22:05:33.256693+00:00"
+      "2025-09-10 19:44:15.907344+00:00"
     ],
     [
       "bec3531c-d25a-441b-82be-bc9c32a53d8e",
@@ -1006,7 +1006,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:05.589173+00:00",
-      "2025-09-09 22:05:33.319078+00:00"
+      "2025-09-10 19:44:15.968961+00:00"
     ],
     [
       "31bd63ab-7653-4bf4-9d16-f105e08d8f49",
@@ -1034,7 +1034,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:55.585072+00:00",
-      "2025-09-09 22:05:25.867637+00:00"
+      "2025-09-10 19:44:09.151447+00:00"
     ],
     [
       "0fd4679c-f9f6-438a-b805-aa904689aba7",
@@ -1062,7 +1062,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:55.643436+00:00",
-      "2025-09-09 22:05:25.928652+00:00"
+      "2025-09-10 19:44:09.218117+00:00"
     ],
     [
       "586a0278-a113-4cea-b2c4-3b92e18d25e6",
@@ -1090,7 +1090,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:55.688706+00:00",
-      "2025-09-09 22:05:25.991669+00:00"
+      "2025-09-10 19:44:09.274461+00:00"
     ],
     [
       "71a2b645-9f2c-4a7d-9b56-c8e1f4d196ce",
@@ -1118,7 +1118,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:57.157537+00:00",
-      "2025-09-09 22:05:26.098647+00:00"
+      "2025-09-10 19:44:09.353092+00:00"
     ],
     [
       "bc964b84-2683-4edb-85dc-0af59a55806d",
@@ -1146,7 +1146,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:55.817941+00:00",
-      "2025-09-09 22:05:26.160284+00:00"
+      "2025-09-10 19:44:09.474903+00:00"
     ],
     [
       "520d1fab-4f12-422c-9ef8-b5782439f806",
@@ -1174,7 +1174,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:55.894480+00:00",
-      "2025-09-09 22:05:26.204501+00:00"
+      "2025-09-10 19:44:09.540480+00:00"
     ],
     [
       "b0e89715-fd3d-4d1e-b8f1-01845832bf3c",
@@ -1202,7 +1202,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:55.989792+00:00",
-      "2025-09-09 22:05:26.271373+00:00"
+      "2025-09-10 19:44:09.594648+00:00"
     ],
     [
       "6aa36e53-a37e-48b2-8cd1-deea11c0212b",
@@ -1230,7 +1230,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:31:56.079460+00:00",
-      "2025-09-09 22:05:26.333078+00:00"
+      "2025-09-10 19:44:09.639278+00:00"
     ],
     [
       "41a99b9a-d411-4dd0-92f6-3088b6cdac0e",
@@ -1258,7 +1258,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:56.214553+00:00",
-      "2025-09-09 22:05:26.393544+00:00"
+      "2025-09-10 19:44:09.675354+00:00"
     ],
     [
       "c430a081-f3c9-4a2c-94a8-652cbec7158e",
@@ -1286,7 +1286,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:56.354925+00:00",
-      "2025-09-09 22:05:26.518561+00:00"
+      "2025-09-10 19:44:09.734790+00:00"
     ],
     [
       "54bd5106-fe5b-40b7-af39-269e6aed0063",
@@ -1314,35 +1314,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:31:56.788038+00:00",
-      "2025-09-09 22:05:26.798938+00:00"
-    ],
-    [
-      "6ba13a2f-8ff2-454a-95f2-9afd042bcd46",
-      "Polestar 2",
-      2022,
-      "Polestar New Canaan",
-      "27500.00",
-      "27500.00",
-      38159,
-      "2021-10-29",
-      "LPSED3KA7NL050443",
-      [
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72700/RF8000/R14B/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=0&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72700/RF8000/R14B/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=2&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72700/RF8000/R14B/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=3&bg=00000000"
-      ],
-      null,
-      null,
-      null,
-      null,
-      null,
-      false,
-      false,
-      false,
-      "CertifiedPreOwned",
-      true,
-      "2025-09-06 04:31:56.912243+00:00",
-      "2025-09-09 22:05:26.922644+00:00"
+      "2025-09-10 19:44:09.937265+00:00"
     ],
     [
       "789a7a1c-82ed-4c0b-ac3a-624a14dd3079",
@@ -1370,7 +1342,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:56.975622+00:00",
-      "2025-09-09 22:05:26.982831+00:00"
+      "2025-09-10 19:44:10.051007+00:00"
     ],
     [
       "2153d8e4-6cfd-4b44-aef3-9d7eafa2ef97",
@@ -1398,7 +1370,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:57.053057+00:00",
-      "2025-09-09 22:05:27.030894+00:00"
+      "2025-09-10 19:44:10.110237+00:00"
     ],
     [
       "5b0ff727-3480-4942-83b6-f1425356883c",
@@ -1426,7 +1398,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:57.230575+00:00",
-      "2025-09-09 22:05:27.090816+00:00"
+      "2025-09-10 19:44:10.134325+00:00"
     ],
     [
       "4d4bdd0b-d13b-48cc-8ca2-d3b22f3c09c2",
@@ -1454,7 +1426,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:58.719279+00:00",
-      "2025-09-09 22:05:27.259654+00:00"
+      "2025-09-10 19:44:10.239906+00:00"
     ],
     [
       "1e517223-673f-4e5b-bbb8-c841de7582c1",
@@ -1482,7 +1454,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:57.512842+00:00",
-      "2025-09-09 22:05:27.340677+00:00"
+      "2025-09-10 19:44:10.360011+00:00"
     ],
     [
       "9c9b328c-dd56-4ab2-8703-0827126b8bfd",
@@ -1510,7 +1482,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:57.770277+00:00",
-      "2025-09-09 22:05:27.509810+00:00"
+      "2025-09-10 19:44:10.526350+00:00"
     ],
     [
       "b23c9694-f806-41c0-927c-afec1c54bf0f",
@@ -1538,7 +1510,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:57.820229+00:00",
-      "2025-09-09 22:05:27.572980+00:00"
+      "2025-09-10 19:44:10.589079+00:00"
     ],
     [
       "4451de52-c196-4774-80a9-70ea771ad5ec",
@@ -1566,7 +1538,35 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:57.882767+00:00",
-      "2025-09-09 22:05:27.619560+00:00"
+      "2025-09-10 19:44:10.647139+00:00"
+    ],
+    [
+      "f81a488b-9540-4422-804e-e526654da260",
+      "Polestar 2",
+      2022,
+      "Polestar Lisle",
+      "28236.00",
+      "28236.00",
+      30913,
+      "2022-06-04",
+      "LPSED3KA5NL076698",
+      [
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/01900/RFA000/R149/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=0&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/01900/RFA000/R149/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=2&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/01900/RFA000/R149/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=3&bg=00000000"
+      ],
+      null,
+      null,
+      null,
+      null,
+      null,
+      false,
+      false,
+      false,
+      "CertifiedPreOwned",
+      true,
+      "2025-09-06 04:31:58.216626+00:00",
+      "2025-09-10 19:44:10.703126+00:00"
     ],
     [
       "4d609a46-a999-4cfc-b8ad-613bcf5ac71a",
@@ -1594,7 +1594,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:57.937944+00:00",
-      "2025-09-09 22:05:27.680804+00:00"
+      "2025-09-10 19:44:10.790011+00:00"
     ],
     [
       "aa6e54a1-e5eb-4983-ab86-0485f6fbc067",
@@ -1622,35 +1622,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:58.061453+00:00",
-      "2025-09-09 22:05:27.787684+00:00"
-    ],
-    [
-      "f81a488b-9540-4422-804e-e526654da260",
-      "Polestar 2",
-      2022,
-      "Polestar Lisle",
-      "28736.00",
-      "28736.00",
-      30913,
-      "2022-06-04",
-      "LPSED3KA5NL076698",
-      [
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/01900/RFA000/R149/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=0&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/01900/RFA000/R149/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=2&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/01900/RFA000/R149/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=3&bg=00000000"
-      ],
-      null,
-      null,
-      null,
-      null,
-      null,
-      false,
-      false,
-      false,
-      "CertifiedPreOwned",
-      true,
-      "2025-09-06 04:31:58.216626+00:00",
-      "2025-09-09 22:05:27.873934+00:00"
+      "2025-09-10 19:44:10.902839+00:00"
     ],
     [
       "fee4138d-49e1-448e-8e83-eeac9a3033df",
@@ -1678,7 +1650,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:31:58.368667+00:00",
-      "2025-09-09 22:05:27.987891+00:00"
+      "2025-09-10 19:44:11.029473+00:00"
     ],
     [
       "411a3de5-3a51-40b6-9c08-ed83b7480b9a",
@@ -1706,7 +1678,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:58.436035+00:00",
-      "2025-09-09 22:05:28.048978+00:00"
+      "2025-09-10 19:44:11.071496+00:00"
     ],
     [
       "43c91e98-4b3c-4e15-9a63-31355fed77f1",
@@ -1734,7 +1706,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:59.684800+00:00",
-      "2025-09-09 22:05:28.111878+00:00"
+      "2025-09-10 19:44:11.184558+00:00"
     ],
     [
       "11008bd3-fb38-48d9-8d89-8b49d8100e08",
@@ -1762,7 +1734,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:58.618987+00:00",
-      "2025-09-09 22:05:28.232037+00:00"
+      "2025-09-10 19:44:11.302358+00:00"
     ],
     [
       "f6d2c22b-f0fa-41a0-9182-d9eca5808627",
@@ -1790,7 +1762,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:58.673164+00:00",
-      "2025-09-09 22:05:28.294037+00:00"
+      "2025-09-10 19:44:11.361674+00:00"
     ],
     [
       "de09bab2-fa48-44ca-8c69-e598bbb9f089",
@@ -1818,35 +1790,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:58.804302+00:00",
-      "2025-09-09 22:05:28.414117+00:00"
-    ],
-    [
-      "2d26b60c-9b4a-4f6f-8f4a-5c771ece8567",
-      "Polestar 2",
-      2022,
-      "Polestar Lisle",
-      "28995.00",
-      "28995.00",
-      32390,
-      "2022-08-31",
-      "LPSED3KA5NL084932",
-      [
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/01900/RF8000/R149/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=0&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/01900/RF8000/R149/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=2&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/01900/RF8000/R149/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=3&bg=00000000"
-      ],
-      null,
-      null,
-      null,
-      null,
-      null,
-      false,
-      false,
-      false,
-      "PreOwned",
-      true,
-      "2025-09-06 04:31:59.067417+00:00",
-      "2025-09-09 22:05:28.755902+00:00"
+      "2025-09-10 19:44:11.530811+00:00"
     ],
     [
       "1d205bc6-46d2-47d3-a0d7-30f27d954a88",
@@ -1874,7 +1818,35 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:58.896223+00:00",
-      "2025-09-09 22:05:28.571038+00:00"
+      "2025-09-10 19:44:11.580018+00:00"
+    ],
+    [
+      "2d26b60c-9b4a-4f6f-8f4a-5c771ece8567",
+      "Polestar 2",
+      2022,
+      "Polestar Lisle",
+      "28995.00",
+      "28995.00",
+      32390,
+      "2022-08-31",
+      "LPSED3KA5NL084932",
+      [
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/01900/RF8000/R149/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=0&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/01900/RF8000/R149/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=2&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/01900/RF8000/R149/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=3&bg=00000000"
+      ],
+      null,
+      null,
+      null,
+      null,
+      null,
+      false,
+      false,
+      false,
+      "PreOwned",
+      true,
+      "2025-09-06 04:31:59.067417+00:00",
+      "2025-09-10 19:44:11.703566+00:00"
     ],
     [
       "15807613-3b80-4a9a-a3d2-0a6ef2431216",
@@ -1902,7 +1874,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:58.973667+00:00",
-      "2025-09-09 22:05:28.633760+00:00"
+      "2025-09-10 19:44:11.643188+00:00"
     ],
     [
       "de0a3254-9658-4702-94fb-7c4ac0a38981",
@@ -1930,35 +1902,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:59.159799+00:00",
-      "2025-09-09 22:05:28.819184+00:00"
-    ],
-    [
-      "33280570-178b-4a65-a412-6a26332b8416",
-      "Polestar 2",
-      2022,
-      "Polestar Manhattan",
-      "29000.00",
-      "29000.00",
-      44889,
-      "2022-03-21",
-      "LPSED3KA4NL072416",
-      [
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72300/RCC000/R14B/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=0&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72300/RCC000/R14B/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=2&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72300/RCC000/R14B/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=3&bg=00000000"
-      ],
-      null,
-      null,
-      null,
-      null,
-      null,
-      false,
-      false,
-      false,
-      "PreOwned",
-      true,
-      "2025-09-06 04:31:59.500989+00:00",
-      "2025-09-09 22:05:29.052142+00:00"
+      "2025-09-10 19:44:11.802679+00:00"
     ],
     [
       "854ce3ab-06b8-4f5f-9a4a-8fd23d1e2367",
@@ -1986,7 +1930,35 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:02.888444+00:00",
-      "2025-09-09 22:05:28.983041+00:00"
+      "2025-09-10 19:44:11.959094+00:00"
+    ],
+    [
+      "33280570-178b-4a65-a412-6a26332b8416",
+      "Polestar 2",
+      2022,
+      "Polestar Manhattan",
+      "29000.00",
+      "29000.00",
+      44889,
+      "2022-03-21",
+      "LPSED3KA4NL072416",
+      [
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72300/RCC000/R14B/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=0&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72300/RCC000/R14B/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=2&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72300/RCC000/R14B/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=3&bg=00000000"
+      ],
+      null,
+      null,
+      null,
+      null,
+      null,
+      false,
+      false,
+      false,
+      "PreOwned",
+      true,
+      "2025-09-06 04:31:59.500989+00:00",
+      "2025-09-10 19:44:12.019228+00:00"
     ],
     [
       "24cf4137-419f-4f94-8d6e-2587876a4ad2",
@@ -2014,7 +1986,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:59.547513+00:00",
-      "2025-09-09 22:05:29.113769+00:00"
+      "2025-09-10 19:44:12.059563+00:00"
     ],
     [
       "eb3d54ca-30ac-498c-8133-4bbfed1c0541",
@@ -2042,7 +2014,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:59.640132+00:00",
-      "2025-09-09 22:05:29.144282+00:00"
+      "2025-09-10 19:44:12.102628+00:00"
     ],
     [
       "6ed6517d-459c-4158-a107-af83cfa86d31",
@@ -2070,7 +2042,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:59.809499+00:00",
-      "2025-09-09 22:05:29.254776+00:00"
+      "2025-09-10 19:44:12.219118+00:00"
     ],
     [
       "f4cc607e-9feb-4d09-a11a-4d512ff95fca",
@@ -2098,7 +2070,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:00.214080+00:00",
-      "2025-09-09 22:05:29.316798+00:00"
+      "2025-09-10 19:44:12.252503+00:00"
     ],
     [
       "ae70d289-26be-4963-83ff-5a0f7306ec13",
@@ -2126,7 +2098,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:31:59.888173+00:00",
-      "2025-09-09 22:05:29.376169+00:00"
+      "2025-09-10 19:44:12.319009+00:00"
     ],
     [
       "0682beaf-715e-46ef-8ca8-687e8f349e93",
@@ -2154,35 +2126,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:59.961573+00:00",
-      "2025-09-09 22:05:29.419279+00:00"
-    ],
-    [
-      "53012353-dd5d-407f-84ff-a372351d4eea",
-      "Polestar 2",
-      2022,
-      "Polestar Lisle",
-      "29445.00",
-      "29445.00",
-      17487,
-      "2022-08-31",
-      "LPSED3KA6NL084728",
-      [
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72800/RF8000/R14B/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=0&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72800/RF8000/R14B/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=2&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72800/RF8000/R14B/JT02/BD02/EV05/JB11/2G03/_/001162/_/default.png?market=us&angle=3&bg=00000000"
-      ],
-      null,
-      null,
-      null,
-      null,
-      null,
-      false,
-      false,
-      false,
-      "CertifiedPreOwned",
-      true,
-      "2025-09-06 04:32:00.040398+00:00",
-      "2025-09-09 22:05:29.468172+00:00"
+      "2025-09-10 19:44:12.373742+00:00"
     ],
     [
       "80cd06f3-768c-40c7-b3b0-156517046b6d",
@@ -2210,7 +2154,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:00.118171+00:00",
-      "2025-09-09 22:05:29.533837+00:00"
+      "2025-09-10 19:44:12.397002+00:00"
     ],
     [
       "baff4d28-cb94-491b-b9e7-e21ccbf57749",
@@ -2238,7 +2182,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:00.306053+00:00",
-      "2025-09-09 22:05:29.559466+00:00"
+      "2025-09-10 19:44:12.449564+00:00"
     ],
     [
       "4f58d7de-b022-4e16-99a5-4a3514ec8009",
@@ -2266,7 +2210,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:00.400249+00:00",
-      "2025-09-09 22:05:29.626276+00:00"
+      "2025-09-10 19:44:12.486013+00:00"
     ],
     [
       "d2b6074e-cee4-4a30-9adb-efbbcaf91a80",
@@ -2294,7 +2238,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:00.491172+00:00",
-      "2025-09-09 22:05:29.675312+00:00"
+      "2025-09-10 19:44:12.515759+00:00"
     ],
     [
       "1a59e2c7-ad62-4620-879d-86d7806e81c9",
@@ -2322,35 +2266,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:00.535840+00:00",
-      "2025-09-09 22:05:29.734955+00:00"
-    ],
-    [
-      "d099200c-e1d4-4a27-b53b-fd91c1d18211",
-      "Polestar 2",
-      2022,
-      "Polestar Los Angeles",
-      "29675.00",
-      "40000.00",
-      24293,
-      "2022-10-19",
-      "LPSED3KA8NL084584",
-      [
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72800/RFA000/R14B/JT01/BD02/EV05/JB13/_/_/_/_/default.png?market=us&angle=0&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72800/RFA000/R14B/JT01/BD02/EV05/JB13/_/_/_/_/default.png?market=us&angle=2&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72800/RFA000/R14B/JT01/BD02/EV05/JB13/_/_/_/_/default.png?market=us&angle=3&bg=00000000"
-      ],
-      null,
-      null,
-      null,
-      null,
-      null,
-      false,
-      false,
-      false,
-      "CertifiedPreOwned",
-      true,
-      "2025-09-06 04:32:00.767703+00:00",
-      "2025-09-09 22:05:29.905709+00:00"
+      "2025-09-10 19:44:12.572552+00:00"
     ],
     [
       "b5637ced-3cc3-446a-a89f-6cdd0f8ee7fc",
@@ -2378,7 +2294,35 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:00.692023+00:00",
-      "2025-09-09 22:05:29.842357+00:00"
+      "2025-09-10 19:44:12.645991+00:00"
+    ],
+    [
+      "d099200c-e1d4-4a27-b53b-fd91c1d18211",
+      "Polestar 2",
+      2022,
+      "Polestar Los Angeles",
+      "29675.00",
+      "40000.00",
+      24293,
+      "2022-10-19",
+      "LPSED3KA8NL084584",
+      [
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72800/RFA000/R14B/JT01/BD02/EV05/JB13/_/_/_/_/default.png?market=us&angle=0&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72800/RFA000/R14B/JT01/BD02/EV05/JB13/_/_/_/_/default.png?market=us&angle=2&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72800/RFA000/R14B/JT01/BD02/EV05/JB13/_/_/_/_/default.png?market=us&angle=3&bg=00000000"
+      ],
+      null,
+      null,
+      null,
+      null,
+      null,
+      false,
+      false,
+      false,
+      "CertifiedPreOwned",
+      true,
+      "2025-09-06 04:32:00.767703+00:00",
+      "2025-09-10 19:44:12.709130+00:00"
     ],
     [
       "4f4d2f64-c87c-4e85-b0fa-316b6db9f5e1",
@@ -2406,7 +2350,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:01.017886+00:00",
-      "2025-09-09 22:05:30.043027+00:00"
+      "2025-09-10 19:44:12.910123+00:00"
     ],
     [
       "faee859a-4689-4a5c-947d-bd6ec8d1cee3",
@@ -2434,7 +2378,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:01.075707+00:00",
-      "2025-09-09 22:05:30.104730+00:00"
+      "2025-09-10 19:44:12.972340+00:00"
     ],
     [
       "c40a74b4-39c0-441b-ac9e-165eb6e931f6",
@@ -2462,7 +2406,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:01.221454+00:00",
-      "2025-09-09 22:05:30.165995+00:00"
+      "2025-09-10 19:44:13.078446+00:00"
     ],
     [
       "9c8e363e-cfa6-4e9d-80af-52e10f5e6a6a",
@@ -2490,7 +2434,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:01.299753+00:00",
-      "2025-09-09 22:05:30.228613+00:00"
+      "2025-09-10 19:44:13.134747+00:00"
     ],
     [
       "866e1c79-1086-4eaf-b6aa-a856b56a1883",
@@ -2518,7 +2462,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-09 22:05:30.417375+00:00",
-      "2025-09-09 22:05:30.417375+00:00"
+      "2025-09-10 19:44:13.248069+00:00"
     ],
     [
       "a769ed2f-a083-46eb-ab98-79345598d412",
@@ -2546,7 +2490,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:01.670429+00:00",
-      "2025-09-09 22:05:30.354278+00:00"
+      "2025-09-10 19:44:13.279983+00:00"
     ],
     [
       "3d9877eb-8c91-48c2-b684-b3ccdebec20c",
@@ -2574,7 +2518,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:01.740757+00:00",
-      "2025-09-09 22:05:30.486718+00:00"
+      "2025-09-10 19:44:13.337645+00:00"
     ],
     [
       "62f73ac5-1421-4997-a654-b4ceb1df62c0",
@@ -2602,7 +2546,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:01.923137+00:00",
-      "2025-09-09 22:05:30.677113+00:00"
+      "2025-09-10 19:44:13.481699+00:00"
     ],
     [
       "5461308c-32a4-46ae-ba45-daa7c1aec3fa",
@@ -2630,7 +2574,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:01.864209+00:00",
-      "2025-09-09 22:05:30.614639+00:00"
+      "2025-09-10 19:44:13.447024+00:00"
     ],
     [
       "5774a113-d283-4906-9c4d-327842f9d710",
@@ -2658,7 +2602,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:01.792409+00:00",
-      "2025-09-09 22:05:30.553915+00:00"
+      "2025-09-10 19:44:13.397681+00:00"
     ],
     [
       "af2421d1-6ce5-4b7d-9b0d-ac595cce21f0",
@@ -2686,7 +2630,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:01.994227+00:00",
-      "2025-09-09 22:05:30.740433+00:00"
+      "2025-09-10 19:44:13.533905+00:00"
     ],
     [
       "34b6fb95-fdab-410c-9cfe-c7655d01abde",
@@ -2714,7 +2658,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:02.140973+00:00",
-      "2025-09-09 22:05:30.847901+00:00"
+      "2025-09-10 19:44:13.630281+00:00"
     ],
     [
       "307a4dcc-cb68-4c9a-9b0f-727ac73555cb",
@@ -2742,7 +2686,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:02.070002+00:00",
-      "2025-09-09 22:05:30.784480+00:00"
+      "2025-09-10 19:44:13.571663+00:00"
     ],
     [
       "3910e438-787d-4918-bc9e-c92172bd14dc",
@@ -2770,7 +2714,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:02.203521+00:00",
-      "2025-09-09 22:05:30.893570+00:00"
+      "2025-09-10 19:44:13.684533+00:00"
     ],
     [
       "c720ea25-5838-4ad0-a41d-65dc4e58f04e",
@@ -2798,7 +2742,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:02.271337+00:00",
-      "2025-09-09 22:05:30.955934+00:00"
+      "2025-09-10 19:44:13.723337+00:00"
     ],
     [
       "57c9f0a1-40b1-46f3-a56d-34cb2dd04a31",
@@ -2826,7 +2770,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:02.349254+00:00",
-      "2025-09-09 22:05:31.017141+00:00"
+      "2025-09-10 19:44:13.777507+00:00"
     ],
     [
       "c3c39d79-4520-4fa2-8557-915a293558d1",
@@ -2854,7 +2798,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:02.442183+00:00",
-      "2025-09-09 22:05:31.064390+00:00"
+      "2025-09-10 19:44:13.827502+00:00"
     ],
     [
       "bb9d9fd4-f586-4614-bbbb-0bc895d05975",
@@ -2882,7 +2826,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:02.596135+00:00",
-      "2025-09-09 22:05:31.243542+00:00"
+      "2025-09-10 19:44:14.001448+00:00"
     ],
     [
       "89de50b9-2ba5-4fac-8040-1920e1de487a",
@@ -2910,7 +2854,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:02.515870+00:00",
-      "2025-09-09 22:05:31.203056+00:00"
+      "2025-09-10 19:44:13.943642+00:00"
     ],
     [
       "813eb927-8e5d-42db-b7d7-91a8ce6d3f66",
@@ -2938,35 +2882,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:02.686498+00:00",
-      "2025-09-09 22:05:31.311638+00:00"
-    ],
-    [
-      "63aad05d-44ff-451a-b424-c31dd8155719",
-      "Polestar 2",
-      2022,
-      "Polestar Manhattan",
-      "31000.00",
-      "31000.00",
-      15631,
-      "2022-10-31",
-      "LPSED3KA0NL055029",
-      [
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72300/R60000/XPFWHE/JT02/BD02/EV01/JB11/2G03/_/001162/ET02/default.png?market=us&angle=0&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72300/R60000/XPFWHE/JT02/BD02/EV01/JB11/2G03/_/001162/ET02/default.png?market=us&angle=2&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72300/R60000/XPFWHE/JT02/BD02/EV01/JB11/2G03/_/001162/ET02/default.png?market=us&angle=3&bg=00000000"
-      ],
-      null,
-      null,
-      null,
-      null,
-      null,
-      false,
-      false,
-      false,
-      "CertifiedPreOwned",
-      true,
-      "2025-09-06 04:32:02.795470+00:00",
-      "2025-09-09 22:05:31.434490+00:00"
+      "2025-09-10 19:44:14.043610+00:00"
     ],
     [
       "307ec1dc-d011-40f9-9606-2c4acff376a2",
@@ -2994,7 +2910,35 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:02.733765+00:00",
-      "2025-09-09 22:05:31.373524+00:00"
+      "2025-09-10 19:44:14.101104+00:00"
+    ],
+    [
+      "63aad05d-44ff-451a-b424-c31dd8155719",
+      "Polestar 2",
+      2022,
+      "Polestar Manhattan",
+      "31000.00",
+      "31000.00",
+      15631,
+      "2022-10-31",
+      "LPSED3KA0NL055029",
+      [
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72300/R60000/XPFWHE/JT02/BD02/EV01/JB11/2G03/_/001162/ET02/default.png?market=us&angle=0&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72300/R60000/XPFWHE/JT02/BD02/EV01/JB11/2G03/_/001162/ET02/default.png?market=us&angle=2&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/ED/72300/R60000/XPFWHE/JT02/BD02/EV01/JB11/2G03/_/001162/ET02/default.png?market=us&angle=3&bg=00000000"
+      ],
+      null,
+      null,
+      null,
+      null,
+      null,
+      false,
+      false,
+      false,
+      "CertifiedPreOwned",
+      true,
+      "2025-09-06 04:32:02.795470+00:00",
+      "2025-09-10 19:44:14.143577+00:00"
     ],
     [
       "500c268f-a3ef-4d67-9314-3e30cd2f5252",
@@ -3022,7 +2966,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:02.966046+00:00",
-      "2025-09-09 22:05:31.495544+00:00"
+      "2025-09-10 19:44:14.201246+00:00"
     ],
     [
       "9f802303-ad78-49c9-a57c-26f514b421b4",
@@ -3050,7 +2994,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:03.210998+00:00",
-      "2025-09-09 22:05:31.603809+00:00"
+      "2025-09-10 19:44:14.290187+00:00"
     ],
     [
       "23e2bec2-5b6e-4e0a-9414-1e0bc2853fd1",
@@ -3078,7 +3022,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:03.381867+00:00",
-      "2025-09-09 22:05:31.678919+00:00"
+      "2025-09-10 19:44:14.398599+00:00"
     ],
     [
       "938d1846-2c78-492e-9580-9f257f38068a",
@@ -3106,7 +3050,7 @@
       "PreOwned",
       true,
       "2025-09-07 00:14:40.659554+00:00",
-      "2025-09-09 22:05:31.910330+00:00"
+      "2025-09-10 19:44:14.616528+00:00"
     ],
     [
       "8dea1005-2f3e-49df-b425-311d97b04231",
@@ -3134,7 +3078,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:03.685970+00:00",
-      "2025-09-09 22:05:32.034345+00:00"
+      "2025-09-10 19:44:14.727720+00:00"
     ],
     [
       "84079581-1ec9-4561-9f0f-df71d5a41b2f",
@@ -3162,35 +3106,7 @@
       "PreOwned",
       true,
       "2025-09-07 00:14:40.875852+00:00",
-      "2025-09-09 22:05:32.081238+00:00"
-    ],
-    [
-      "a54568c0-fa96-434b-a62c-1700ad98a070",
-      "Polestar 2",
-      2022,
-      "Polestar Palm Beach",
-      "32995.00",
-      "30995.00",
-      16251,
-      "2022-09-03",
-      "LPSEG3KA2NL083325",
-      [
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/EG/72300/R60000/R14B/JT02/BD02/EV01/JB11/2G03/_/001162/_/default.png?market=us&angle=0&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/EG/72300/R60000/R14B/JT02/BD02/EV01/JB11/2G03/_/001162/_/default.png?market=us&angle=2&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/EG/72300/R60000/R14B/JT02/BD02/EV01/JB11/2G03/_/001162/_/default.png?market=us&angle=3&bg=00000000"
-      ],
-      null,
-      null,
-      null,
-      null,
-      null,
-      false,
-      false,
-      false,
-      "CertifiedPreOwned",
-      true,
-      "2025-09-06 04:32:03.952685+00:00",
-      "2025-09-09 22:05:32.235839+00:00"
+      "2025-09-10 19:44:14.767837+00:00"
     ],
     [
       "ad6463a7-0114-4037-a69d-767fafdf97c8",
@@ -3218,7 +3134,35 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:03.874549+00:00",
-      "2025-09-09 22:05:32.125333+00:00"
+      "2025-09-10 19:44:14.828552+00:00"
+    ],
+    [
+      "a54568c0-fa96-434b-a62c-1700ad98a070",
+      "Polestar 2",
+      2022,
+      "Polestar Palm Beach",
+      "32995.00",
+      "30995.00",
+      16251,
+      "2022-09-03",
+      "LPSEG3KA2NL083325",
+      [
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/EG/72300/R60000/R14B/JT02/BD02/EV01/JB11/2G03/_/001162/_/default.png?market=us&angle=0&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/EG/72300/R60000/R14B/JT02/BD02/EV01/JB11/2G03/_/001162/_/default.png?market=us&angle=2&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY22_2108/534/summary-transparent-v2/EG/72300/R60000/R14B/JT02/BD02/EV01/JB11/2G03/_/001162/_/default.png?market=us&angle=3&bg=00000000"
+      ],
+      null,
+      null,
+      null,
+      null,
+      null,
+      false,
+      false,
+      false,
+      "CertifiedPreOwned",
+      true,
+      "2025-09-06 04:32:03.952685+00:00",
+      "2025-09-10 19:44:14.944086+00:00"
     ],
     [
       "da2491ef-d6f1-4f19-83c1-90fe2b43660a",
@@ -3246,7 +3190,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:03.920297+00:00",
-      "2025-09-09 22:05:32.168989+00:00"
+      "2025-09-10 19:44:14.881374+00:00"
     ],
     [
       "25bfda0e-9d18-4e7a-b69c-f34cb9844e1c",
@@ -3274,7 +3218,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-09 04:49:31.091076+00:00",
-      "2025-09-09 22:05:32.297038+00:00"
+      "2025-09-10 19:44:14.967104+00:00"
     ],
     [
       "3617007d-decc-4f92-b56b-bf843e86ce3d",
@@ -3302,7 +3246,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:04.432620+00:00",
-      "2025-09-09 22:05:32.515081+00:00"
+      "2025-09-10 19:44:15.157419+00:00"
     ],
     [
       "f1df3736-01fd-47ad-865b-82eb39d81eff",
@@ -3330,7 +3274,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:04.527062+00:00",
-      "2025-09-09 22:05:32.576690+00:00"
+      "2025-09-10 19:44:15.215006+00:00"
     ],
     [
       "7839f33b-fff6-4577-92e4-2a8619f18626",
@@ -3358,7 +3302,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:04.710772+00:00",
-      "2025-09-09 22:05:32.700792+00:00"
+      "2025-09-10 19:44:15.315603+00:00"
     ],
     [
       "86c67622-83f9-491e-9a94-0b52be90d9aa",
@@ -3386,7 +3330,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:04.861536+00:00",
-      "2025-09-09 22:05:32.742141+00:00"
+      "2025-09-10 19:44:15.373088+00:00"
     ],
     [
       "b742abca-2fdf-445c-bd70-6a3c43fadb37",
@@ -3414,7 +3358,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:05.749313+00:00",
-      "2025-09-09 22:05:33.424372+00:00"
+      "2025-09-10 19:44:16.030184+00:00"
     ],
     [
       "04491960-f6c6-49f5-8732-b50cbf191373",
@@ -3423,7 +3367,7 @@
       "Polestar Princeton",
       "23991.00",
       "18900.00",
-      77561,
+      77571,
       "2022-01-27",
       "LPSED3KA5ML021697",
       [
@@ -3442,7 +3386,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:31:55.510193+00:00",
-      "2025-09-09 22:05:25.824609+00:00"
+      "2025-09-10 19:44:09.118528+00:00"
     ],
     [
       "393c3657-7fc2-4aef-b0e8-3e5837c64a73",
@@ -3470,22 +3414,22 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:55.767786+00:00",
-      "2025-09-09 22:05:26.032614+00:00"
+      "2025-09-10 19:44:09.314343+00:00"
     ],
     [
-      "e8f00596-fee9-4e7a-8e93-e78c835b4819",
+      "d94cf647-002f-40b4-9665-a8673b75912f",
       "Polestar 2",
       2021,
-      "Polestar Manhattan",
-      "26495.00",
-      "26495.00",
-      19461,
-      "2022-02-28",
-      "LPSED3KA9ML019015",
+      "Polestar Los Angeles",
+      "24999.00",
+      "24999.00",
+      36273,
+      null,
+      "LPSED3KAXML019685",
       [
-        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/01900/RF8000/R14B/default.png?market=us&angle=0&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/01900/RF8000/R14B/default.png?market=us&angle=2&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/01900/RF8000/R14B/default.png?market=us&angle=3&bg=00000000"
+        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/72900/RFA000/XPFWHE/default.png?market=us&angle=0&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/72900/RFA000/XPFWHE/default.png?market=us&angle=2&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/72900/RFA000/XPFWHE/default.png?market=us&angle=3&bg=00000000"
       ],
       null,
       null,
@@ -3497,8 +3441,8 @@
       false,
       "CertifiedPreOwned",
       true,
-      "2025-09-06 04:31:56.282459+00:00",
-      "2025-09-09 22:05:26.456604+00:00"
+      "2025-09-10 19:44:09.418700+00:00",
+      "2025-09-10 19:44:09.418700+00:00"
     ],
     [
       "e800f773-bee9-4fd7-9aa8-3f9cf343822f",
@@ -3526,7 +3470,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:56.435177+00:00",
-      "2025-09-09 22:05:26.580374+00:00"
+      "2025-09-10 19:44:09.793369+00:00"
     ],
     [
       "874e62f8-0c24-4b6a-a096-6ae6b5a3e619",
@@ -3554,7 +3498,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:56.589627+00:00",
-      "2025-09-09 22:05:26.623501+00:00"
+      "2025-09-10 19:44:09.832431+00:00"
     ],
     [
       "39f9412c-967d-429d-a3d9-d0d46a6c94dd",
@@ -3582,7 +3526,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:56.692361+00:00",
-      "2025-09-09 22:05:26.736966+00:00"
+      "2025-09-10 19:44:09.915003+00:00"
     ],
     [
       "c13501e5-1ba4-4739-9f6b-0985cc485837",
@@ -3610,7 +3554,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:31:56.850202+00:00",
-      "2025-09-09 22:05:26.860340+00:00"
+      "2025-09-10 19:44:09.993011+00:00"
     ],
     [
       "4b6bf10e-b38f-468a-8645-66799da80778",
@@ -3638,7 +3582,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:31:57.705135+00:00",
-      "2025-09-09 22:05:27.444134+00:00"
+      "2025-09-10 19:44:10.464339+00:00"
     ],
     [
       "19d0dfa6-71b2-4a47-9775-008c541b2676",
@@ -3666,7 +3610,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:31:58.025387+00:00",
-      "2025-09-09 22:05:27.740523+00:00"
+      "2025-09-10 19:44:10.845331+00:00"
     ],
     [
       "6a540f9f-8432-4363-af87-a5bea572b64e",
@@ -3694,7 +3638,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:31:58.313930+00:00",
-      "2025-09-09 22:05:27.922299+00:00"
+      "2025-09-10 19:44:10.989289+00:00"
     ],
     [
       "e133433e-04e6-431e-8509-38a400085d77",
@@ -3722,63 +3666,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:58.527424+00:00",
-      "2025-09-09 22:05:28.171756+00:00"
-    ],
-    [
-      "02d81470-865f-4e92-ae97-6f09c26c0da0",
-      "Polestar 2",
-      2021,
-      "Polestar Manhattan",
-      "29000.00",
-      "29000.00",
-      23400,
-      "2021-08-24",
-      "LPSED3KAXML011604",
-      [
-        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/72300/RF8000/001147/default.png?market=us&angle=0&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/72300/RF8000/001147/default.png?market=us&angle=2&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/72300/RF8000/001147/default.png?market=us&angle=3&bg=00000000"
-      ],
-      null,
-      null,
-      null,
-      null,
-      null,
-      false,
-      false,
-      false,
-      "PreOwned",
-      true,
-      "2025-09-06 04:31:59.377494+00:00",
-      "2025-09-09 22:05:28.941877+00:00"
-    ],
-    [
-      "dfec17bd-3b54-47cf-9304-688b1ee6df62",
-      "Polestar 2",
-      2021,
-      "Polestar Manhattan",
-      "29000.00",
-      "29000.00",
-      12167,
-      "2021-12-27",
-      "LPSED3KA7ML027405",
-      [
-        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/72800/RF8000/R14B/default.png?market=us&angle=0&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/72800/RF8000/R14B/default.png?market=us&angle=2&bg=00000000",
-        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/72800/RF8000/R14B/default.png?market=us&angle=3&bg=00000000"
-      ],
-      null,
-      null,
-      null,
-      null,
-      null,
-      false,
-      false,
-      false,
-      "PreOwned",
-      true,
-      "2025-09-06 04:31:59.215247+00:00",
-      "2025-09-09 22:05:28.881616+00:00"
+      "2025-09-10 19:44:11.244590+00:00"
     ],
     [
       "555f0d67-90d8-4007-80d6-8674b6ba1ad7",
@@ -3806,7 +3694,63 @@
       "PreOwned",
       true,
       "2025-09-06 04:31:59.455883+00:00",
-      "2025-09-09 22:05:29.030343+00:00"
+      "2025-09-10 19:44:11.906249+00:00"
+    ],
+    [
+      "dfec17bd-3b54-47cf-9304-688b1ee6df62",
+      "Polestar 2",
+      2021,
+      "Polestar Manhattan",
+      "29000.00",
+      "29000.00",
+      12167,
+      "2021-12-27",
+      "LPSED3KA7ML027405",
+      [
+        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/72800/RF8000/R14B/default.png?market=us&angle=0&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/72800/RF8000/R14B/default.png?market=us&angle=2&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/72800/RF8000/R14B/default.png?market=us&angle=3&bg=00000000"
+      ],
+      null,
+      null,
+      null,
+      null,
+      null,
+      false,
+      false,
+      false,
+      "PreOwned",
+      true,
+      "2025-09-06 04:31:59.215247+00:00",
+      "2025-09-10 19:44:11.824984+00:00"
+    ],
+    [
+      "02d81470-865f-4e92-ae97-6f09c26c0da0",
+      "Polestar 2",
+      2021,
+      "Polestar Manhattan",
+      "29000.00",
+      "29000.00",
+      23400,
+      "2021-08-24",
+      "LPSED3KAXML011604",
+      [
+        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/72300/RF8000/001147/default.png?market=us&angle=0&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/72300/RF8000/001147/default.png?market=us&angle=2&bg=00000000",
+        "https://cas.polestar.com/image/dynamic/MY20_1909/534/summary-transparent-v1/72300/RF8000/001147/default.png?market=us&angle=3&bg=00000000"
+      ],
+      null,
+      null,
+      null,
+      null,
+      null,
+      false,
+      false,
+      false,
+      "PreOwned",
+      true,
+      "2025-09-06 04:31:59.377494+00:00",
+      "2025-09-10 19:44:11.873248+00:00"
     ],
     [
       "f165f5ef-e175-45a0-b5c5-89c33320ec3e",
@@ -3834,7 +3778,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:31:59.757195+00:00",
-      "2025-09-09 22:05:29.184512+00:00"
+      "2025-09-10 19:44:12.165582+00:00"
     ],
     [
       "c9ce0e10-35f1-4357-b089-bddf7a83cb4f",
@@ -3862,7 +3806,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:00.630464+00:00",
-      "2025-09-09 22:05:29.796690+00:00"
+      "2025-09-10 19:44:12.618173+00:00"
     ],
     [
       "22c80063-8e29-44a2-9688-bd969d0396a4",
@@ -3890,7 +3834,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:00.969256+00:00",
-      "2025-09-09 22:05:29.984340+00:00"
+      "2025-09-10 19:44:12.876002+00:00"
     ],
     [
       "4577ea66-a8cc-425e-b13d-54784c576a63",
@@ -3918,7 +3862,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:01.153211+00:00",
-      "2025-09-09 22:05:30.126932+00:00"
+      "2025-09-10 19:44:13.025963+00:00"
     ],
     [
       "d9b755db-03fc-4e20-a447-32c1e4c5610e",
@@ -3946,7 +3890,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:03.638716+00:00",
-      "2025-09-09 22:05:31.972149+00:00"
+      "2025-09-10 19:44:14.671040+00:00"
     ],
     [
       "128fa7c2-a7a3-4ebc-901f-79ecd7a24f23",
@@ -3974,7 +3918,7 @@
       "CertifiedPreOwned",
       true,
       "2025-09-06 04:32:05.315762+00:00",
-      "2025-09-09 22:05:33.103000+00:00"
+      "2025-09-10 19:44:15.727944+00:00"
     ],
     [
       "f11b8045-ec87-4860-b8d9-a6a354acbd70",
@@ -4002,7 +3946,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:06.016058+00:00",
-      "2025-09-09 22:05:33.583654+00:00"
+      "2025-09-10 19:44:16.294387+00:00"
     ],
     [
       "59560643-c2ff-4320-b6d5-a098ef7e503d",
@@ -4030,7 +3974,7 @@
       "PreOwned",
       true,
       "2025-09-06 04:32:06.069593+00:00",
-      "2025-09-09 22:05:33.625847+00:00"
+      "2025-09-10 19:44:16.349831+00:00"
     ]
   ]
 }

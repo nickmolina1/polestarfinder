@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "polestarfinder"
+version = "0.1.0"
+description = "Scrape & process Polestar vehicle listings"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [
+  { name = "Nick Molina" }
+]
+keywords = ["polestar", "scraper", "vehicles", "graphql"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent"
+]
+dependencies = [
+  "psycopg2-binary",
+  "python-dotenv",
+  "requests",
+  "boto3",
+  "brotli"
+]
+
+[project.optional-dependencies]
+dev = [
+  "black",
+  "ruff",
+  "mypy",
+  "pytest"
+]
+
+[project.scripts]
+polestar-scrape = "scraper.scraper:fetch_raw"
+
+[tool.setuptools.packages.find]
+exclude = ["tests", "research", "public"]
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+strict = false
+
+[tool.pytest.ini_options]
+addopts = "-q"
+python_files = ["test_*.py", "*_test.py"]

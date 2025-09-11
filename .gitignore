@@ -4,3 +4,9 @@ __pycache__/
 build/
 artifact.zip
 public/data/vehicles.json
+.venv/
+
+README.md
+polestarfinder.egg-info/
+.env.example
+__init__.py

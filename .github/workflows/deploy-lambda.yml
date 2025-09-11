@@ -37,16 +37,24 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
-    # --- STAGING (dev branch) ---
-    - name: Deploy STAGING - scrape-to-s3 + loader
+   
+    # STAGING (dev) — deploy both lambdas, no CF invalidate
+    - name: Deploy STAGING
       if: github.ref == 'refs/heads/dev'
       run: |
         aws lambda update-function-code --function-name ${{ secrets.LAMBDA_STAGING_SCRAPER }} --zip-file fileb://artifact.zip
         aws lambda update-function-code --function-name ${{ secrets.LAMBDA_STAGING_LOADER  }} --zip-file fileb://artifact.zip
 
-    # --- PROD (main branch) ---
-    - name: Deploy PROD - scrape-to-s3 + loader
+    # PROD (main) — deploy both lambdas + JSON-only invalidate
+    - name: Deploy PROD
       if: github.ref == 'refs/heads/main'
       run: |
         aws lambda update-function-code --function-name ${{ secrets.LAMBDA_PROD_SCRAPER }} --zip-file fileb://artifact.zip
         aws lambda update-function-code --function-name ${{ secrets.LAMBDA_PROD_LOADER  }} --zip-file fileb://artifact.zip
+
+    - name: Invalidate PROD JSON
+      if: github.ref == 'refs/heads/main'
+      run: |
+        aws cloudfront create-invalidation \
+          --distribution-id ${{ secrets.PROD_CF_ID }} \
+          --paths "/data/vehicles.json"

@@ -2,6 +2,11 @@ import os, glob, re, sys
 from dotenv import load_dotenv
 import psycopg2
 from psycopg2.extras import DictCursor
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 load_dotenv()
 DSN = os.getenv("PG_DSN")
@@ -14,6 +19,9 @@ def read_sql_statements(path: str):
     Naive splitter: remove /* */ and -- comments, then split on semicolons.
     Handles blank lines; skips empty statements.
     """
+
+    logger.info(f"Reading SQL statements from {path}")
+
     with open(path, "r", encoding="utf-8") as f:
         sql = f.read()
 
@@ -27,6 +35,7 @@ def read_sql_statements(path: str):
 
 
 def ensure_migrations_table(conn):
+    logger.info("Ensuring migrations table exists")
     with conn.cursor() as cur:
         cur.execute(
             """
@@ -39,12 +48,14 @@ def ensure_migrations_table(conn):
 
 
 def get_applied(conn):
+    logger.info("Fetching applied migrations")
     with conn.cursor() as cur:
         cur.execute("SELECT id FROM _migrations ORDER BY id;")
         return {r[0] for r in cur.fetchall()}
 
 
 def apply_migration(conn, mig_id, path):
+    logger.info(f"Applying migration {mig_id} from {path}")
     stmts = read_sql_statements(path)
     if not stmts:
         print(f"[SKIP] {mig_id}: no statements")
@@ -68,11 +79,13 @@ def apply_migration(conn, mig_id, path):
 def main():
     if not DSN:
         print("PG_DSN not set", file=sys.stderr)
+        logger.error("PG_DSN not set")
         sys.exit(1)
 
     files = sorted(glob.glob("database/sql/migrations/*.sql"))
     if not files:
         print("No migration files found in sql/migrations")
+        logger.warning("No migration files found in sql/migrations")
         sys.exit(1)
 
     with psycopg2.connect(DSN) as conn:
@@ -81,13 +94,14 @@ def main():
         to_apply = [f for f in files if os.path.basename(f) not in applied]
         if not to_apply:
             print("No new migrations.")
+            logger.info("No new migrations to apply")
             return
         for path in to_apply:
             mig_id = os.path.basename(path)
             apply_migration(conn, mig_id, path)
         conn.commit()
         print("Migrations complete.")
-
+        logger.info("Migrations complete.")
 
 if __name__ == "__main__":
     main()

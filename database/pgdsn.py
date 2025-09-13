@@ -48,5 +48,5 @@ def get_pg_dsn() -> str:
         port = os.getenv("PG_PORT", "5432")
         db   = os.environ["PG_DBNAME"]
 
-    _cached_dsn = f"postgresql://{user}:{pwd}@{host}:{port}/{db}?connect_timeout=5"
+    _cached_dsn = f"postgresql://{user}:{pwd}@{host}:{port}/{db}?connect_timeout=5&sslmode=require"
     return _cached_dsn

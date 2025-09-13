@@ -3,13 +3,14 @@ from dotenv import load_dotenv
 import psycopg2
 from psycopg2.extras import DictCursor
 import logging
+from database.pgdsn import get_pg_dsn
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+load_dotenv()  # take environment variables from .env.
 
-load_dotenv()
-DSN = os.getenv("PG_DSN")
+DSN = get_pg_dsn()
 
 if not DSN:
     raise RuntimeError("PG_DSN not set! Did you create .env?")

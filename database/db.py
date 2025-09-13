@@ -3,16 +3,13 @@ from contextlib import contextmanager
 from dotenv import load_dotenv
 import psycopg2
 from psycopg2.extras import DictCursor, Json
+from database.pgdsn import get_pg_dsn
 
-load_dotenv()
-DSN = os.getenv("PG_DSN")
-
+load_dotenv()  # take environment variables from .env.
 
 @contextmanager
 def conn():
-    if not DSN:
-        raise RuntimeError("PG_DSN not set")
-    with psycopg2.connect(DSN) as c:
+    with psycopg2.connect(get_pg_dsn()) as c:
         yield c
 
 

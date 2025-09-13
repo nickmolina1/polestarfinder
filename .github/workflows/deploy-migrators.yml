@@ -1,0 +1,86 @@
+name: Deploy (and optionally run) DB migrators
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Which migrator(s)?"
+        required: true
+        type: choice
+        options: [staging, prod, both]
+        default: staging
+      invoke_after_deploy:
+        description: "Invoke migrator(s) after deploy?"
+        required: true
+        type: choice
+        options: ["no", "yes"]
+        default: "no"
+
+env:
+  PYTHON_VERSION: "3.11"
+  BUILD_DIR: "build"
+  AWS_REGION: "us-east-1"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Build artifact (Linux wheels)
+      run: |
+        rm -rf $BUILD_DIR artifact.zip
+        mkdir -p $BUILD_DIR
+        pip install --upgrade pip
+        pip install -r requirements.txt -t $BUILD_DIR
+        cp -R jobs scraper database $BUILD_DIR/
+        cd $BUILD_DIR && zip -r ../artifact.zip .
+
+    - name: Configure AWS
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id:     ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    # ---- Deploy to staging/prod/both ----
+    - name: Deploy STAGING migrator
+      if: inputs.target == 'staging' || inputs.target == 'both'
+      run: |
+        aws lambda update-function-code \
+          --function-name "${{ secrets.MIGRATOR_STAGING_NAME }}" \
+          --zip-file fileb://artifact.zip
+
+    - name: Deploy PROD migrator
+      if: inputs.target == 'prod' || inputs.target == 'both'
+      run: |
+        aws lambda update-function-code \
+          --function-name "${{ secrets.MIGRATOR_PROD_NAME }}" \
+          --zip-file fileb://artifact.zip
+
+    # ---- Optional: invoke after deploy ----
+    - name: Invoke STAGING migrator
+      if: (inputs.invoke_after_deploy == 'yes') && (inputs.target == 'staging' || inputs.target == 'both')
+      run: |
+        aws lambda invoke \
+          --function-name "${{ secrets.MIGRATOR_STAGING_NAME }}" \
+          --payload '{}' \
+          --cli-binary-format raw-in-base64-out \
+          /tmp/out.json >/dev/null
+        echo "Staging invoke response:" && cat /tmp/out.json
+
+    - name: Invoke PROD migrator
+      if: (inputs.invoke_after_deploy == 'yes') && (inputs.target == 'prod' || inputs.target == 'both')
+      run: |
+        aws lambda invoke \
+          --function-name "${{ secrets.MIGRATOR_PROD_NAME }}" \
+          --payload '{}' \
+          --cli-binary-format raw-in-base64-out \
+          /tmp/out.json >/dev/null
+        echo "Prod invoke response:" && cat /tmp/out.json

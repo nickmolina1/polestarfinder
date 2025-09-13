@@ -16,7 +16,7 @@ on:
         default: "no"
 
 env:
-  PYTHON_VERSION: "3.11"
+  PYTHON_VERSION: "3.12"
   BUILD_DIR: "build"
   AWS_REGION: "us-east-1"
 

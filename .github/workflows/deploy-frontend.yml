@@ -24,13 +24,13 @@ jobs:
     - name: Sync to STAGING bucket
       if: github.ref == 'refs/heads/dev'
       run: |
-        aws s3 sync public/ s3://${{ secrets.STAGING_BUCKET }} --delete
+        aws s3 sync public/ s3://${{ secrets.STAGING_BUCKET }} --delete --exclude "data/*"
         
     # --- PROD (main branch) ---
     - name: Sync to PROD bucket
       if: github.ref == 'refs/heads/main'
       run: |
-        aws s3 sync public/ s3://${{ secrets.PROD_BUCKET }} --delete
+        aws s3 sync public/ s3://${{ secrets.PROD_BUCKET }} --delete --exclude "data/*"
         aws cloudfront create-invalidation \
           --distribution-id ${{ secrets.PROD_CF_ID }} \
           --paths "/*"

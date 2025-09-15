@@ -120,6 +120,34 @@ def classify_codes(codes: Set[str], code_to_label: Dict[str, Tuple[str, str]]):
     }
 
 
+def enrich_labels(classified: Dict[str, object], code_to_label: Dict[str, Tuple[str, str]]):
+    """Return a new dict including human-readable labels alongside codes.
+
+    For each *_code field present in classified, look up label from code_to_label where category matches.
+    Fields added:
+      exterior_label, interior_label, motor_label, wheel_label (if resolvable)
+    """
+    result = dict(classified)  # shallow copy
+
+    def label_for(code: str | None, expected_category: str):
+        if not code:
+            return None
+        cat_label = code_to_label.get(code)
+        if not cat_label:
+            return None
+        cat, label = cat_label
+        if cat.lower() == expected_category:
+            return label
+        return None
+
+    result["exterior_label"] = label_for(result.get("exterior_code"), "exterior")
+    result["interior_label"] = label_for(result.get("interior_code"), "interior")
+    # Motor codes: in filters they appear under category keys (e.g., "Motor")
+    result["motor_label"] = label_for(result.get("motor_code"), "motor") or label_for(result.get("motor_code"), "Motor")
+    result["wheel_label"] = label_for(result.get("wheel_code"), "wheels") or label_for(result.get("wheel_code"), "Wheels")
+    return result
+
+
 # Convenience: ephemeral test harness (manual run)
 if __name__ == "__main__":
     from scraper.filters import filters as FILTERS  # type: ignore
@@ -129,6 +157,7 @@ if __name__ == "__main__":
     raw = extract_option_codes(sample)
     code_to_label, _ = build_reverse_maps(FILTERS)
     result = classify_codes(raw, code_to_label)
+    enriched = enrich_labels(result, code_to_label)
     from pprint import pprint
     print("RAW:", raw)
-    pprint(result)
+    pprint(enriched)

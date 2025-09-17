@@ -252,18 +252,18 @@
         <div class="inventory-header">
 
           <div class="sort-controls">
-            <label for="sortField" class="form-label small">Sort by</label>
-            <select id="sortField" class="form-select small">
-              <option value="">None</option>
-              <option value="retail_price">Price</option>
-              <option value="mileage">Mileage</option>
-              <option value="year">Year</option>
-            </select>
-            <label for="sortOrder" class="form-label small">Order</label>
-            <select id="sortOrder" class="form-select small">
-              <option value="asc">Ascending</option>
-              <option value="desc">Descending</option>
-            </select>
+              <label for="sortCombined" class="form-label small">Sort</label>
+              <select id="sortCombined" class="form-select small" aria-label="Sort vehicles">
+                <option value="first_seen_at:desc" selected>Added: Newest → Oldest</option>
+                <option value="first_seen_at:asc">Added: Oldest → Newest</option>
+                <option value="retail_price:asc">Price: Low → High</option>
+                <option value="retail_price:desc">Price: High → Low</option>
+                <option value="mileage:asc">Mileage: Low → High</option>
+                <option value="mileage:desc">Mileage: High → Low</option>
+                <option value="year:desc">Year: Newest → Oldest</option>
+                <option value="year:asc">Year: Oldest → Newest</option>
+                <option value="">None</option>
+              </select>
           </div>
         </div>
         <div id="vehiclesGrid" class="vehicles-grid"></div>

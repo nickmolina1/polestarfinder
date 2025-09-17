@@ -354,23 +354,29 @@ function renderCurrentView() {
 
 // Sorting support: read controls and sort data accordingly
 function applySorting(data) {
-  const sortField = document.getElementById('sortField')?.value;
-  const sortOrder = document.getElementById('sortOrder')?.value || 'asc';
+  const combined = document.getElementById('sortCombined')?.value;
+  if (!combined) return data;
+  const [sortField, sortOrder] = combined.split(':');
   if (!sortField) return data;
 
   const sorted = [...data].sort((a, b) => {
     let aVal = a[sortField];
     let bVal = b[sortField];
-    // coerce to numbers where applicable
     const numFields = ['retail_price', 'mileage', 'year'];
+    const dateFields = ['first_seen_at', 'last_seen_at'];
     if (numFields.includes(sortField)) {
       aVal = parseFloat(aVal) || 0;
       bVal = parseFloat(bVal) || 0;
+    } else if (dateFields.includes(sortField)) {
+      // Parse ISO or timestamp-like strings into epoch for comparison
+      const aTime = aVal ? Date.parse(aVal) : 0;
+      const bTime = bVal ? Date.parse(bVal) : 0;
+      aVal = isNaN(aTime) ? 0 : aTime;
+      bVal = isNaN(bTime) ? 0 : bTime;
     } else {
       aVal = (aVal || '').toString().toLowerCase();
       bVal = (bVal || '').toString().toLowerCase();
     }
-
     if (aVal < bVal) return sortOrder === 'asc' ? -1 : 1;
     if (aVal > bVal) return sortOrder === 'asc' ? 1 : -1;
     return 0;
@@ -511,10 +517,13 @@ window.addEventListener('load', () => {
     }
     loadVehicles();
     // Wire sort controls
-    const sortField = document.getElementById('sortField');
-    const sortOrder = document.getElementById('sortOrder');
-    if (sortField && sortOrder) {
-  sortField.addEventListener('change', () => renderCurrentView());
-  sortOrder.addEventListener('change', () => renderCurrentView());
+    const sortCombined = document.getElementById('sortCombined');
+    if (sortCombined) {
+      // Ensure default selection (first_seen_at:desc) applied if present
+      if (!sortCombined.value) {
+        const defaultOpt = Array.from(sortCombined.options).find(o => o.value === 'first_seen_at:desc');
+        if (defaultOpt) defaultOpt.selected = true;
+      }
+      sortCombined.addEventListener('change', () => renderCurrentView());
     }
   });

@@ -320,7 +320,6 @@ function updateTable(data) {
 
     card.innerHTML = `
       <div class="card-header">
-        <span class="card-model">${vehicle.model || ""}</span>
         <span class="card-year">${vehicle.year || ""}</span>
         ${justAddedBadge}
       </div>

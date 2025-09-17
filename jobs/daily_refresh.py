@@ -171,8 +171,9 @@ def handler(event=None, context=None):
     # 2) Transform + Load (upsert + history)
     log.info("loader: start db upsert ...")
     inserted = updated = price_changes = 0
-    inserted_ids = []
-    price_change_ids = []
+    inserted_ids: list[str] = []
+    price_change_ids: list[str] = []
+    price_change_details: list[dict] = []  # {id, old_price, new_price, delta}
     for item in raw:
         v = _normalize_for_db(item)
 
@@ -199,6 +200,18 @@ def handler(event=None, context=None):
             )
             price_changes += 1
             price_change_ids.append(v["id"])
+            try:
+                delta = None if old_price is None else (new_price - old_price)
+                price_change_details.append(
+                    {
+                        "id": v["id"],
+                        "old_price": old_price,
+                        "new_price": new_price,
+                        "delta": delta,
+                    }
+                )
+            except Exception:
+                pass
     log.info("loader: db upsert done")
     # 3) Secondary deep feature scans (wheels, packages, motors)
     try:
@@ -334,16 +347,22 @@ def handler(event=None, context=None):
         "exported": len(rows),
         "inserted_ids": inserted_ids,
         "price_change_ids": price_change_ids,
+        "price_change_details": price_change_details,
     }
     if inserted_ids:
         log.info(
             "Inserted IDs (%d):\n%s", len(inserted_ids), "\n".join(str(i) for i in inserted_ids)
         )
-    if price_change_ids:
+    if price_change_details:
+        # Log a concise table-like output
+        lines = [
+            f"{d['id']}: {d['old_price']} -> {d['new_price']} (delta={d['delta']})"
+            for d in price_change_details
+        ]
         log.info(
-            "Price Change IDs (%d):\n%s",
-            len(price_change_ids),
-            "\n".join(str(i) for i in price_change_ids),
+            "Price Changes (%d):\n%s",
+            len(price_change_details),
+            "\n".join(lines),
         )
     log.info("Summary: %s", summary)
     return summary

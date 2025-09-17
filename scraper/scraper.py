@@ -4,10 +4,17 @@ import datetime as dt
 import gzip
 import json
 import os
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Set
 
 import brotli
 import requests
+from .code_parser import (
+    extract_option_codes,
+    build_reverse_maps,
+    classify_codes,
+    enrich_labels,
+)
+from .filters import filters as FILTERS  # type: ignore
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
@@ -106,6 +113,73 @@ def _payload(
     }
 
 
+# ---------- Feature deep scan helpers ----------
+def _build_feature_payload(
+    model: str,
+    market: str,
+    filter_type: str,
+    code: str,
+    offset: int,
+    limit: int,
+) -> dict:
+    """Build a payload to retrieve only vehicles matching a specific feature code.
+
+    This reuses the main search query but injects a single equalFilter. We still
+    exclude 'New' by default for consistency with the primary scrape.
+    """
+    return _payload(
+        model=model,
+        market=market,
+        offset=offset,
+        limit=limit,
+        equal_filters=[{"filterType": filter_type, "value": code}],
+        exclude_filters=[{"filterType": "CycleState", "value": "New"}],
+    )
+
+
+def fetch_ids_for_filter(
+    filter_type: str,
+    code: str,
+    model: str,
+    market: str,
+    page_limit: int = 200,
+) -> Set[str]:  # type: ignore[name-defined]
+    """Return a set of vehicle IDs that match the given filter.
+
+    Performs paginated queries until all results retrieved. Best-effort: any
+    network error logs and returns partial results.
+    """
+    sess = _session()
+    ids: Set[str] = set()
+    offset = 0
+    total = None
+    while True:
+        try:
+            resp = sess.post(
+                API_URL,
+                json=_build_feature_payload(model, market, filter_type, code, offset, page_limit),
+                timeout=20,
+            )
+            resp.raise_for_status()
+            block = _decode_json(resp)
+        except Exception as e:  # pragma: no cover - network variability
+            print(f"[feature-scan] {filter_type}={code} failed page offset={offset}: {e}")
+            break
+        data = (block.get("data") or {}).get("searchVehicleAds") or {}
+        meta = data.get("metadata") or {}
+        ads = data.get("vehicleAds") or []
+        for ad in ads:
+            vid = ad.get("id")
+            if vid is not None:
+                ids.add(str(vid))
+        result_count = int(meta.get("resultCount") or len(ads))
+        total = int(meta.get("totalCount") or (offset + result_count) if total is None else total)
+        if result_count <= 0 or offset + result_count >= total:
+            break
+        offset += result_count
+    return ids
+
+
 # ---------- Response decoding (brotli/gzip safe) ----------
 def _decode_json(resp: requests.Response) -> dict:
     enc = resp.headers.get("Content-Encoding", "")
@@ -197,6 +271,12 @@ def fetch_raw(
     sess = _session()
     out: List[Dict] = []
 
+    # Build reverse maps once per run for enrichment
+    try:
+        _code_to_label, _ = build_reverse_maps(FILTERS)
+    except Exception:
+        _code_to_label = {}
+
     for model in models:
         offset = 0
         total = None
@@ -208,14 +288,39 @@ def fetch_raw(
 
             for ad in ads:
                 v = _normalize_vehicle(ad, model_family=model)
+
+                # Phase A enrichment: parse stock image URLs for option codes
+                try:
+                    image_urls = v.get("stock_images") or []
+                    raw_codes = extract_option_codes(image_urls)
+                    classified = classify_codes(raw_codes, _code_to_label)
+                    enriched = enrich_labels(classified, _code_to_label)
+
+                    # Attach raw codes (list for JSON friendliness) for future heuristic use
+                    v["raw_option_codes"] = sorted(list(classified.get("raw_option_codes") or []))
+
+                    # Populate primary descriptive fields if discovered (do not overwrite if already present in future deep scan phases)
+                    if not v.get("exterior") and enriched.get("exterior_label"):
+                        v["exterior"] = enriched["exterior_label"]
+                    if not v.get("interior") and enriched.get("interior_label"):
+                        v["interior"] = enriched["interior_label"]
+                    if not v.get("motor") and enriched.get("motor_label"):
+                        v["motor"] = enriched["motor_label"]
+                    # Wheel label intentionally not populated from URL parsing (unreliable)
+                except Exception as e:  # pragma: no cover - enrichment best-effort
+                    print(f"[enrich] failed for {v.get('id')}: {e}")
+
                 if include_details:
                     try:
                         details = fetch_details(v["id"])
                         if details:
-                            v.update(details)
+                            # Prefer deep-scan values (only overwrite if deep scan supplies)
+                            for k, val in details.items():
+                                if val is not None:
+                                    v[k] = val
                     except Exception as e:
-                        # Non-fatal; continue with summary
                         print(f"[deep-scan] {v['id']} failed: {e}")
+
                 out.append(v)
 
             result_count = int(meta.get("resultCount") or len(ads))

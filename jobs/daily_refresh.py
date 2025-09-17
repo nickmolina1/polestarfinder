@@ -11,6 +11,7 @@ import boto3
 from psycopg2.extras import Json
 
 import scraper.scraper as scraper  # your library-style scraper.py
+from scraper.filters import filters as FILTERS  # type: ignore
 from database.db import execute, fetch_all, fetch_one
 
 # ----------------- Config -----------------
@@ -199,10 +200,127 @@ def handler(event=None, context=None):
             price_changes += 1
             price_change_ids.append(v["id"])
     log.info("loader: db upsert done")
-    # 3) Mark vehicles not seen today as unavailable
+    # 3) Secondary deep feature scans (wheels, packages, motors)
+    try:
+        log.info("loader: starting feature deep scans")
+
+        # Build reverse maps: category -> list of (human_label, code)
+        wheels = []
+        packages = []
+        motors = []
+        for label, mapping in FILTERS.items():
+            for category, code in mapping.items():
+                c_low = category.lower()
+                if c_low == "wheels":
+                    wheels.append((label, code))
+                elif c_low == "package":
+                    packages.append((label, code))
+                elif c_low == "motor":
+                    motors.append((label, code))
+
+        # Helper to batch update list of ids
+        def _update_with_ids(sql_template: str, label: str, ids: list[str]):
+            if not ids:
+                return 0
+            # Use ANY(array) pattern; simpler to build VALUES list then update
+            # For portability, run one UPDATE per chunk
+            chunk_size = 200
+            total_updated = 0
+            for i in range(0, len(ids), chunk_size):
+                subset = ids[i : i + chunk_size]
+                execute(
+                    sql_template,
+                    {"ids": tuple(subset), "label": label},
+                )
+                total_updated += len(subset)
+            return total_updated
+
+        # Map package label -> column
+        package_column = {
+            "Performance": "performance",
+            "Pilot": "pilot",
+            "Plus": "plus",
+        }
+
+        # Wheels: find vehicles for each wheel code
+        wheel_updates = 0
+        for human, code in wheels:
+            ids = scraper.fetch_ids_for_filter(
+                "Wheels", code, scraper.DEFAULT_MODELS[0], scraper.DEFAULT_MARKET
+            )
+            if ids:
+                wheel_updates += _update_with_ids(
+                    "UPDATE vehicles SET wheels=%(label)s WHERE id IN %(ids)s AND (wheels IS NULL OR wheels != %(label)s);",
+                    human,
+                    list(ids),
+                )
+        log.info("feature-scan: wheels updated approx rows=%d", wheel_updates)
+
+        # Motors: similar pattern
+        motor_updates = 0
+        for human, code in motors:
+            ids = scraper.fetch_ids_for_filter(
+                "Motor", code, scraper.DEFAULT_MODELS[0], scraper.DEFAULT_MARKET
+            )
+            if ids:
+                motor_updates += _update_with_ids(
+                    "UPDATE vehicles SET motor=%(label)s WHERE id IN %(ids)s AND (motor IS NULL OR motor != %(label)s);",
+                    human,
+                    list(ids),
+                )
+        log.info("feature-scan: motors updated approx rows=%d", motor_updates)
+
+        # Packages: set boolean flags
+        pkg_updates = 0
+        for human, code in packages:
+            column = package_column.get(human)
+            if not column:
+                continue
+            ids = scraper.fetch_ids_for_filter(
+                "Package", code, scraper.DEFAULT_MODELS[0], scraper.DEFAULT_MARKET
+            )
+            if ids:
+                pkg_updates += _update_with_ids(
+                    f"UPDATE vehicles SET {column}=TRUE WHERE id IN %(ids)s AND {column}=FALSE;",
+                    human,
+                    list(ids),
+                )
+        log.info("feature-scan: packages updated approx rows=%d", pkg_updates)
+        # Coverage snapshot (approximate): counts after updates
+        try:
+            coverage_rows = fetch_all(
+                """
+                SELECT
+                  count(*) FILTER (WHERE wheels IS NOT NULL) AS wheels_set,
+                  count(*) FILTER (WHERE motor IS NOT NULL) AS motor_set,
+                  count(*) FILTER (WHERE performance) AS performance_set,
+                  count(*) FILTER (WHERE pilot) AS pilot_set,
+                  count(*) FILTER (WHERE plus) AS plus_set,
+                  count(*) AS total
+                FROM vehicles
+                """
+            )
+            if coverage_rows:
+                cv = coverage_rows[0]
+                log.info(
+                    "feature-scan: coverage wheels=%s/%s motor=%s/%s performance=%s pilot=%s plus=%s",
+                    cv["wheels_set"],
+                    cv["total"],
+                    cv["motor_set"],
+                    cv["total"],
+                    cv["performance_set"],
+                    cv["pilot_set"],
+                    cv["plus_set"],
+                )
+        except Exception as ce:  # pragma: no cover
+            log.warning("feature-scan: coverage query failed: %s", ce)
+    except Exception as e:
+        log.warning("feature deep scan failed: %s", e)
+
+    # 4) Mark vehicles not seen today as unavailable
     execute(MARK_UNAVAILABLE)
 
-    # 4) Export snapshot for the SPA
+    # 5) Export snapshot for the SPA
     log.info("loader: export json ...")
     rows = fetch_all(SELECT_EXPORT)
     _export_json(rows)

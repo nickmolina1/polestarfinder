@@ -5,7 +5,7 @@ const VEHICLE_KEYS = [
   "first_time_registration", "vin", "stock_images",
   "exterior", "interior", "wheels", "motor", "edition",
   "performance", "pilot", "plus", "state", "available",
-  "first_seen_at", "last_seen_at"
+  "first_seen_at", "last_seen_at", "previous_price", "price_delta"
 ];
 let defaultSortApplied = false;  // Flag to apply default sort only once
 
@@ -265,6 +265,8 @@ function updateTable(data) {
     return;
   }
 
+  const NOW = Date.now();
+  const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
   data.forEach((vehicle) => {
     const packs = [];
     if (vehicle.performance) packs.push("Performance");
@@ -275,6 +277,30 @@ function updateTable(data) {
     const vehicleUrl = `https://www.polestar.com/us/preowned-cars/product/polestar-${modelStr.slice(-1)}/${vehicle.id}`;
     const rawPrice = vehicle.retail_price ? parseFloat(vehicle.retail_price) : 0;
     const formattedPrice = rawPrice > 0 ? formatPrice(rawPrice) : "";
+    // Price delta fields (previous_price, price_delta) now included in export
+    let deltaHtml = '';
+    // Coerce possible string to number
+    let priceDeltaVal = vehicle.price_delta;
+    if (priceDeltaVal !== undefined && priceDeltaVal !== null && typeof priceDeltaVal !== 'number') {
+      const coerced = parseFloat(priceDeltaVal);
+      if (!isNaN(coerced)) priceDeltaVal = coerced;
+    }
+    if (typeof priceDeltaVal === 'number' && priceDeltaVal !== 0) {
+      const isIncrease = priceDeltaVal > 0;
+      const sign = isIncrease ? '+' : '−'; // use true minus sign for clarity
+      const cls = isIncrease ? 'delta-up' : 'delta-down';
+      const absVal = Math.abs(priceDeltaVal);
+      const aria = isIncrease ? 'Price increased' : 'Price decreased';
+      deltaHtml = `<span class="price-delta ${cls}" title="${aria} since previous recorded price" aria-label="${aria} by ${formatPrice(absVal)}">${sign}${formatPrice(absVal)}</span>`;
+    } else if (vehicle.previous_price && (priceDeltaVal === 0 || priceDeltaVal === undefined || priceDeltaVal === null)) {
+      // Debug visibility: previous price exists but delta not shown
+      console.debug('Price delta not rendered', {
+        id: vehicle.id,
+        previous_price: vehicle.previous_price,
+        raw_delta: vehicle.price_delta,
+        coerced_delta: priceDeltaVal
+      });
+    }
     const dateAdded = vehicle.first_seen_at ? new Date(vehicle.first_seen_at).toLocaleDateString("en-US") : "";
     const firstReg = vehicle.first_time_registration ? new Date(vehicle.first_time_registration).toLocaleDateString("en-US") : "";
 
@@ -284,14 +310,23 @@ function updateTable(data) {
     const firstImage = newLocal;
     const imageHtml = firstImage ? `<img class="card-image" src="${firstImage}" alt="${(vehicle.model||'').replace(/"/g,'')}">` : `<div class="card-image placeholder"></div>`;
 
+    let justAddedBadge = '';
+    if (vehicle.first_seen_at) {
+      const firstSeenTs = Date.parse(vehicle.first_seen_at);
+      if (!isNaN(firstSeenTs) && (NOW - firstSeenTs) <= ONE_WEEK_MS) {
+        justAddedBadge = '<span class="badge just-added" title="Added within the last 7 days">Just Added</span>';
+      }
+    }
+
     card.innerHTML = `
       <div class="card-header">
         <span class="card-model">${vehicle.model || ""}</span>
         <span class="card-year">${vehicle.year || ""}</span>
+        ${justAddedBadge}
       </div>
       ${imageHtml}
   <div class="card-location">${vehicle.partner_location || ""}</div>
-  <div class="card-price">${formattedPrice}</div>
+  <div class="card-price">${formattedPrice} ${deltaHtml}</div>
   <div class="card-mileage">${vehicle.mileage ? vehicle.mileage.toLocaleString() + ' mi' : ""}</div>
   <div class="card-state">${vehicle.state || ""}</div>
   <div class="card-packs">${packsDisplay}</div>

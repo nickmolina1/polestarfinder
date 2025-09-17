@@ -96,6 +96,21 @@ body {
     font-weight: 600;
     margin-bottom: 8px;
 }
+.card-header .badge.just-added {
+    background: var(--terra, #f3771d);
+    color: #fff;
+    font-size: 0.55em;
+    font-weight: 600;
+    padding: 4px 6px 3px 6px;
+    border-radius: 12px;
+    letter-spacing: 0.5px;
+    align-self: center;
+    margin-left: 8px;
+    line-height: 1;
+    text-transform: uppercase;
+    display: inline-block;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
 .card-model {
     color: rgb(117, 120, 123);
     font-weight: 400;
@@ -114,6 +129,24 @@ body {
     font-weight: 700;
     color: var(--terra, #f3771d);
     margin-bottom: 6px;
+}
+.card-price .price-delta {
+    font-size: 0.55em;
+    font-weight: 600;
+    margin-left: 6px;
+    vertical-align: middle;
+    padding: 2px 4px 1px 4px;
+    border-radius: 6px;
+    line-height: 1;
+    display: inline-block;
+}
+.card-price .price-delta.delta-up {
+    background: rgba(220, 53, 69, 0.12); /* red-ish */
+    color: #c12b39;
+}
+.card-price .price-delta.delta-down {
+    background: rgba(25, 135, 84, 0.15); /* green-ish */
+    color: #1d6f4b;
 }
 .card-mileage {
     font-size: 1em;

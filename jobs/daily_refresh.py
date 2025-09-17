@@ -84,14 +84,43 @@ WHERE last_seen_at < now() - interval '12 hours'
 """
 
 SELECT_EXPORT = """
-SELECT id, model, year, partner_location, retail_price, dealer_price, mileage,
-       first_time_registration, vin, stock_images,
-       exterior, interior, wheels, motor, edition,
-       performance, pilot, plus, state, available,
-       first_seen_at, last_seen_at
-FROM vehicles
-WHERE available = TRUE
-ORDER BY year DESC, retail_price NULLS LAST;
+SELECT v.id,
+             v.model,
+             v.year,
+             v.partner_location,
+             v.retail_price,
+             v.dealer_price,
+             v.mileage,
+             v.first_time_registration,
+             v.vin,
+             v.stock_images,
+             v.exterior,
+             v.interior,
+             v.wheels,
+             v.motor,
+             v.edition,
+             v.performance,
+             v.pilot,
+             v.plus,
+             v.state,
+             v.available,
+             v.first_seen_at,
+             v.last_seen_at,
+             prev.previous_price,
+             CASE
+                 WHEN prev.previous_price IS NOT NULL THEN v.retail_price - prev.previous_price
+                 ELSE NULL
+             END AS price_delta
+FROM vehicles v
+LEFT JOIN LATERAL (
+        SELECT ph.price AS previous_price
+        FROM price_history ph
+        WHERE ph.vehicle_id = v.id
+        ORDER BY ph.observed_at DESC
+        OFFSET 1 LIMIT 1
+) prev ON TRUE
+WHERE v.available = TRUE
+ORDER BY v.year DESC, v.retail_price NULLS LAST;
 """
 
 
@@ -181,40 +210,67 @@ def handler(event=None, context=None):
         old_price = old["retail_price"] if old else None
 
         execute(UPSERT_VEHICLE, v)
+        new_price = v.get("retail_price")
+
         if old is None:
+            # New vehicle: record baseline (initial) price in history (if present)
             inserted += 1
             inserted_ids.append(v["id"])
+            if new_price is not None:
+                try:
+                    execute(
+                        INSERT_HISTORY,
+                        {
+                            "id": f'{v["id"]}-{uuid.uuid4()}',
+                            "vehicle_id": v["id"],
+                            "price": new_price,
+                            "observed_at": datetime.now(timezone.utc),
+                        },
+                    )
+                except Exception as e:  # pragma: no cover
+                    log.warning("baseline price_history insert failed for %s: %s", v["id"], e)
         else:
+            # Existing vehicle: only log if price actually changed
             updated += 1
-
-        new_price = v.get("retail_price")
-        if new_price is not None and new_price != old_price:
-            execute(
-                INSERT_HISTORY,
-                {
-                    "id": f'{v["id"]}-{uuid.uuid4()}',
-                    "vehicle_id": v["id"],
-                    "price": new_price,
-                    "observed_at": datetime.now(timezone.utc),
-                },
-            )
-            price_changes += 1
-            price_change_ids.append(v["id"])
-            try:
-                delta = None if old_price is None else (new_price - old_price)
-                price_change_details.append(
+            if new_price is not None and new_price != old_price:
+                execute(
+                    INSERT_HISTORY,
                     {
-                        "id": v["id"],
-                        "old_price": old_price,
-                        "new_price": new_price,
-                        "delta": delta,
-                    }
+                        "id": f'{v["id"]}-{uuid.uuid4()}',
+                        "vehicle_id": v["id"],
+                        "price": new_price,
+                        "observed_at": datetime.now(timezone.utc),
+                    },
                 )
-            except Exception:
-                pass
+                price_changes += 1
+                price_change_ids.append(v["id"])
+                try:
+                    delta = new_price - old_price if old_price is not None else None
+                    price_change_details.append(
+                        {
+                            "id": v["id"],
+                            "old_price": old_price,
+                            "new_price": new_price,
+                            "delta": delta,
+                        }
+                    )
+                except Exception:  # pragma: no cover
+                    pass
     log.info("loader: db upsert done")
-    # 3) Secondary deep feature scans (wheels, packages, motors)
+    # 3) Secondary deep feature scans (wheels, packages, motors) unless skipped
+    skip_scan = False
     try:
+        # precedence: explicit event flag overrides env
+        if isinstance(event, dict) and event.get("skip_deep_scan"):
+            skip_scan = True
+        elif os.getenv("SKIP_DEEP_SCAN", "").lower() in {"1", "true", "yes"}:
+            skip_scan = True
+    except Exception:  # pragma: no cover
+        pass
+
+    deep_scan_performed = False
+    if not skip_scan:
+
         log.info("loader: starting feature deep scans")
 
         # Build reverse maps: category -> list of (human_label, code)
@@ -327,8 +383,12 @@ def handler(event=None, context=None):
                 )
         except Exception as ce:  # pragma: no cover
             log.warning("feature-scan: coverage query failed: %s", ce)
-    except Exception as e:
-        log.warning("feature deep scan failed: %s", e)
+        except Exception as e:
+            log.warning("feature deep scan failed: %s", e)
+        else:
+            deep_scan_performed = True
+    else:
+        log.info("loader: deep feature scan skipped via flag")
 
     # 4) Mark vehicles not seen today as unavailable
     execute(MARK_UNAVAILABLE)
@@ -348,6 +408,7 @@ def handler(event=None, context=None):
         "inserted_ids": inserted_ids,
         "price_change_ids": price_change_ids,
         "price_change_details": price_change_details,
+        "deep_scan_skipped": not deep_scan_performed,
     }
     if inserted_ids:
         log.info(

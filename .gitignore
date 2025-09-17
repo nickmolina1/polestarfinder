@@ -11,3 +11,4 @@ polestarfinder.egg-info/
 .env.example
 __init__.py
 public/data/vehicles.json
+scraper/features.txt

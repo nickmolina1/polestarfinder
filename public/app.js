@@ -14,6 +14,19 @@ const ANGLE = 0;
 
 
 // --- Utility Functions ---
+function normalizeWheelLabel(str) {
+  if (!str) return "";
+  let s = str.toString().toLowerCase();
+  // unify quotes: remove all straight quotes / double quotes
+  s = s.replace(/["']/g, "");
+  // remove extra spaces
+  s = s.replace(/\s+/g, " ").trim();
+  // unify tire vs tires
+  s = s.replace(/summer tires?/g, "summer tire");
+  // remove inch markers written as two primes without space (e.g., 19'') by already removing quotes
+  return s;
+}
+
 function buildApiUrl() {
   const baseUrl = 'data/vehicles.json'; // Adjust this to your actual API endpoint
 
@@ -146,6 +159,10 @@ function loadVehicles() {
           if (obj.partner_location && obj.partner_location.startsWith('Polestar ')) {
             obj.partner_location = obj.partner_location.replace(/^Polestar\s+/i, '').trim();
           }
+          // Performance fallback: if performance flag falsey but motor label contains 'performance pack'
+          if (!obj.performance && typeof obj.motor === 'string' && /performance pack/i.test(obj.motor)) {
+            obj.performance = true;
+          }
           return obj;
         });
         localStorage.setItem(cacheKey, JSON.stringify(fullInventory));
@@ -177,7 +194,7 @@ function filterInventory() {
   const selectedInteriors = Array.from(interiorOptions).map(el => el.getAttribute('data-interior').toLowerCase());
   
   const wheelElements = document.querySelectorAll('#wheelOptions a.selected');
-  const selectedWheels = Array.from(wheelElements).map(el => el.getAttribute('data-wheel').toLowerCase());
+  const selectedWheels = Array.from(wheelElements).map(el => normalizeWheelLabel(el.getAttribute('data-wheel')));
   const motor = document.getElementById('motorFilter').value.toLowerCase();
   const edition = document.getElementById('editionFilter').value.toLowerCase();
   
@@ -204,8 +221,10 @@ function filterInventory() {
       return false;
     if (selectedInteriors.length > 0 && (!vehicle.interior || !selectedInteriors.includes(vehicle.interior.toLowerCase())))
       return false;
-    if (selectedWheels.length > 0 && (!vehicle.wheels || !selectedWheels.includes(vehicle.wheels.toLowerCase())))
-      return false;
+    if (selectedWheels.length > 0) {
+      const vw = normalizeWheelLabel(vehicle.wheels);
+      if (!vw || !selectedWheels.includes(vw)) return false;
+    }
     if (motor && (!vehicle.motor || vehicle.motor.toLowerCase() !== motor))
       return false;
     if (edition && (!vehicle.edition || vehicle.edition.toLowerCase() !== edition))
@@ -221,13 +240,16 @@ function filterInventory() {
       
     // NEW: Pack filters based on selected anchors.
     if (selectedPacks.length > 0) {
-      // For each selected pack, vehicle must have the corresponding flag true.
-      if (selectedPacks.includes("performance") && !vehicle.performance)
-        return false;
-      if (selectedPacks.includes("pilot") && !vehicle.pilot)
-        return false;
-      if (selectedPacks.includes("plus") && !vehicle.plus)
-        return false;
+      // Map pack strings to flags; treat absence as false
+      const mp = {
+        performance: !!vehicle.performance,
+        pilot: !!vehicle.pilot,
+        plus: !!vehicle.plus
+      };
+      for (const p of selectedPacks) {
+        const key = p.toLowerCase();
+        if (!mp[key]) return false;
+      }
     }
 
     return true;

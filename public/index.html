@@ -205,24 +205,114 @@
           </select>
         </div>
         
-        <!-- Price Filters -->
+        <!-- Price Filters (dropdown pair) -->
         <div class="filter-section">
-          <label for="minPriceFilter" class="form-label">Min Price ($)</label>
-          <input type="number" id="minPriceFilter" class="form-control" placeholder="Enter min price">
+          <label class="form-label">Price ($)</label>
+          <div class="range-pair">
+            <select id="minPriceFilter" class="form-select" aria-label="Minimum price">
+              <option value="">Min</option>
+              <option value="15000">$15k</option>
+              <option value="20000">$20k</option>
+              <option value="25000">$25k</option>
+              <option value="30000">$30k</option>
+              <option value="35000">$35k</option>
+              <option value="40000">$40k</option>
+              <option value="45000">$45k</option>
+              <option value="50000">$50k</option>
+              <option value="55000">$55k</option>
+              <option value="60000">$60k</option>
+              <option value="65000">$65k</option>
+              <option value="70000">$70k</option>
+              <option value="75000">$75k</option>
+              <option value="80000">$80k</option>
+              <option value="85000">$85k</option>
+              <option value="90000">$90k</option>
+              <option value="95000">$95k</option>
+              <option value="100000">$100k</option>
+              <option value="110000">$110k</option>
+              <option value="120000">$120k</option>
+            </select>
+            <select id="maxPriceFilter" class="form-select" aria-label="Maximum price">
+              <option value="">Max</option>
+              <option value="20000">$20k</option>
+              <option value="25000">$25k</option>
+              <option value="30000">$30k</option>
+              <option value="35000">$35k</option>
+              <option value="40000">$40k</option>
+              <option value="45000">$45k</option>
+              <option value="50000">$50k</option>
+              <option value="55000">$55k</option>
+              <option value="60000">$60k</option>
+              <option value="65000">$65k</option>
+              <option value="70000">$70k</option>
+              <option value="75000">$75k</option>
+              <option value="80000">$80k</option>
+              <option value="85000">$85k</option>
+              <option value="90000">$90k</option>
+              <option value="95000">$95k</option>
+              <option value="100000">$100k</option>
+              <option value="110000">$110k</option>
+              <option value="120000">$120k</option>
+            </select>
+          </div>
         </div>
+
+        <!-- Mileage Filters (dropdown pair) -->
         <div class="filter-section">
-          <label for="maxPriceFilter" class="form-label">Max Price ($)</label>
-          <input type="number" id="maxPriceFilter" class="form-control" placeholder="Enter max price">
-        </div>
-        
-        <!-- Mileage Filters -->
-        <div class="filter-section">
-          <label for="minMileageFilter" class="form-label">Min Mileage</label>
-          <input type="number" id="minMileageFilter" class="form-control" placeholder="Enter min mileage">
-        </div>
-        <div class="filter-section">
-          <label for="maxMileageFilter" class="form-label">Max Mileage</label>
-          <input type="number" id="maxMileageFilter" class="form-control" placeholder="Enter max mileage">
+          <label class="form-label">Mileage</label>
+          <div class="range-pair">
+            <select id="minMileageFilter" class="form-select" aria-label="Minimum mileage">
+              <option value="">Min</option>
+              <option value="0">0</option>
+              <option value="5000">5k</option>
+              <option value="10000">10k</option>
+              <option value="15000">15k</option>
+              <option value="20000">20k</option>
+              <option value="25000">25k</option>
+              <option value="30000">30k</option>
+              <option value="35000">35k</option>
+              <option value="40000">40k</option>
+              <option value="45000">45k</option>
+              <option value="50000">50k</option>
+              <option value="55000">55k</option>
+              <option value="60000">60k</option>
+              <option value="65000">65k</option>
+              <option value="70000">70k</option>
+              <option value="75000">75k</option>
+              <option value="80000">80k</option>
+              <option value="85000">85k</option>
+              <option value="90000">90k</option>
+              <option value="95000">95k</option>
+              <option value="100000">100k</option>
+              <option value="110000">110k</option>
+              <option value="120000">120k</option>
+            </select>
+            <select id="maxMileageFilter" class="form-select" aria-label="Maximum mileage">
+              <option value="">Max</option>
+              <option value="5000">5k</option>
+              <option value="10000">10k</option>
+              <option value="15000">15k</option>
+              <option value="20000">20k</option>
+              <option value="25000">25k</option>
+              <option value="30000">30k</option>
+              <option value="35000">35k</option>
+              <option value="40000">40k</option>
+              <option value="45000">45k</option>
+              <option value="50000">50k</option>
+              <option value="55000">55k</option>
+              <option value="60000">60k</option>
+              <option value="65000">65k</option>
+              <option value="70000">70k</option>
+              <option value="75000">75k</option>
+              <option value="80000">80k</option>
+              <option value="85000">85k</option>
+              <option value="90000">90k</option>
+              <option value="95000">95k</option>
+              <option value="100000">100k</option>
+              <option value="110000">110k</option>
+              <option value="120000">120k</option>
+            </select>
+          </div>
         </div>
         
         

@@ -1,24 +1,25 @@
 # jobs/daily_refresh.py
 from __future__ import annotations
-import os
+
 import json
 import logging
+import os
 import uuid
 from datetime import datetime, timezone
 
 import boto3
 from psycopg2.extras import Json
 
-from database.db import fetch_all, fetch_one, execute
 import scraper.scraper as scraper  # your library-style scraper.py
+from database.db import execute, fetch_all, fetch_one
 
 # ----------------- Config -----------------
 
 RAW_BUCKET = os.getenv("RAW_BUCKET")
-RAW_KEY    = os.getenv("RAW_KEY")  # e.g., raw/latest.json
+RAW_KEY = os.getenv("RAW_KEY")  # e.g., raw/latest.json
 REGION = os.getenv("AWS_REGION", "us-east-1")
-BUCKET = os.getenv("PUBLIC_BUCKET", "local")        # "local" => write to disk
-KEY_PREFIX = os.getenv("PUBLIC_KEY_PREFIX", "")     # e.g., "staging/" or ""
+BUCKET = os.getenv("PUBLIC_BUCKET", "local")  # "local" => write to disk
+KEY_PREFIX = os.getenv("PUBLIC_KEY_PREFIX", "")  # e.g., "staging/" or ""
 EXPORT_KEY = (KEY_PREFIX + "data/vehicles.json") if KEY_PREFIX else "data/vehicles.json"
 
 s3 = boto3.client("s3", region_name=REGION)
@@ -92,6 +93,7 @@ WHERE available = TRUE
 ORDER BY year DESC, retail_price NULLS LAST;
 """
 
+
 # ----------------- Helpers -----------------
 def _load_raw_from_s3():
     if not RAW_BUCKET or not RAW_KEY:
@@ -100,6 +102,7 @@ def _load_raw_from_s3():
     data = json.loads(obj["Body"].read().decode("utf-8"))
     vehicles = data["vehicles"] if isinstance(data, dict) and "vehicles" in data else data
     return vehicles
+
 
 def _normalize_for_db(v: dict) -> dict:
     """
@@ -122,8 +125,9 @@ def _normalize_for_db(v: dict) -> dict:
     imgs = merged.get("stock_images") or []
     if isinstance(imgs, str):
         imgs = [p.strip() for p in imgs.split(",") if p.strip()]
-    merged["stock_images"] = Json(imgs)   # <-- wrap with Json
+    merged["stock_images"] = Json(imgs)  # <-- wrap with Json
     return merged
+
 
 def _export_json(rows: list[dict]) -> None:
     body = json.dumps({"vehicles": rows}, indent=2, default=str)
@@ -143,11 +147,14 @@ def _export_json(rows: list[dict]) -> None:
         )
         log.info("Exported %d vehicles to s3://%s/%s", len(rows), BUCKET, EXPORT_KEY)
 
+
 # ----------------- Entry point -----------------
 def handler(event=None, context=None):
     # 1) Extract
     print("LOADER: handler entered")  # shows even without logging config
-    import logging, os
+    import logging
+    import os
+
     logging.getLogger().setLevel(logging.INFO)
     print(f"LOADER: env OK, region={os.getenv('AWS_REGION')}, bucket={os.getenv('PUBLIC_BUCKET')}")
 
@@ -180,12 +187,15 @@ def handler(event=None, context=None):
 
         new_price = v.get("retail_price")
         if new_price is not None and new_price != old_price:
-            execute(INSERT_HISTORY, {
-                "id": f'{v["id"]}-{uuid.uuid4()}',
-                "vehicle_id": v["id"],
-                "price": new_price,
-                "observed_at": datetime.now(timezone.utc),
-            })
+            execute(
+                INSERT_HISTORY,
+                {
+                    "id": f'{v["id"]}-{uuid.uuid4()}',
+                    "vehicle_id": v["id"],
+                    "price": new_price,
+                    "observed_at": datetime.now(timezone.utc),
+                },
+            )
             price_changes += 1
             price_change_ids.append(v["id"])
     log.info("loader: db upsert done")
@@ -208,11 +218,18 @@ def handler(event=None, context=None):
         "price_change_ids": price_change_ids,
     }
     if inserted_ids:
-        log.info("Inserted IDs (%d):\n%s", len(inserted_ids), "\n".join(str(i) for i in inserted_ids))
+        log.info(
+            "Inserted IDs (%d):\n%s", len(inserted_ids), "\n".join(str(i) for i in inserted_ids)
+        )
     if price_change_ids:
-        log.info("Price Change IDs (%d):\n%s", len(price_change_ids), "\n".join(str(i) for i in price_change_ids))
+        log.info(
+            "Price Change IDs (%d):\n%s",
+            len(price_change_ids),
+            "\n".join(str(i) for i in price_change_ids),
+        )
     log.info("Summary: %s", summary)
     return summary
+
 
 if __name__ == "__main__":
     print(handler())

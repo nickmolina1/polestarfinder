@@ -1,17 +1,15 @@
 from __future__ import annotations
 
-import os
-import json
 import datetime as dt
-from typing import List, Dict, Optional
+import gzip
+import json
+import os
+from typing import Dict, List, Optional
 
+import brotli
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-import brotli
-import gzip
-
-
 
 # ---------- Config (env-tunable) ----------
 API_URL = "https://pc-api.polestar.com/eu-north-1/partner-rm-tool/public/"
@@ -29,6 +27,7 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
 }
 
+
 # ---------- HTTP session with retries ----------
 def _session() -> requests.Session:
     s = requests.Session()
@@ -42,6 +41,7 @@ def _session() -> requests.Session:
     )
     s.mount("https://", HTTPAdapter(max_retries=retry))
     return s
+
 
 # ---------- GraphQL payload ----------
 def _payload(
@@ -105,6 +105,7 @@ def _payload(
         """,
     }
 
+
 # ---------- Response decoding (brotli/gzip safe) ----------
 def _decode_json(resp: requests.Response) -> dict:
     enc = resp.headers.get("Content-Encoding", "")
@@ -122,6 +123,7 @@ def _decode_json(resp: requests.Response) -> dict:
         text = resp.text
     return json.loads(text)
 
+
 # ---------- Helpers ----------
 def _km_to_miles(value, metric) -> Optional[int]:
     if value is None:
@@ -134,6 +136,7 @@ def _km_to_miles(value, metric) -> Optional[int]:
     if "km" in m:
         dist *= 0.621371
     return int(round(dist))
+
 
 def _normalize_vehicle(ad: dict, model_family: str) -> dict:
     vd = ad.get("vehicleDetails") or {}
@@ -159,10 +162,12 @@ def _normalize_vehicle(ad: dict, model_family: str) -> dict:
         "scrape_date": dt.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
     }
 
+
 def _fetch_page(sess: requests.Session, model: str, market: str, offset: int, limit: int) -> dict:
     resp = sess.post(API_URL, json=_payload(model, market, offset, limit), timeout=20)
     resp.raise_for_status()
     return _decode_json(resp)
+
 
 # ---------- (Optional) deep details hook ----------
 def fetch_details(vehicle_id: str) -> dict:
@@ -171,6 +176,7 @@ def fetch_details(vehicle_id: str) -> dict:
     Return {} for now; keep this function to wire in later without changing callers.
     """
     return {}
+
 
 # ---------- Public API ----------
 def fetch_raw(
@@ -213,7 +219,9 @@ def fetch_raw(
                 out.append(v)
 
             result_count = int(meta.get("resultCount") or len(ads))
-            total = int(meta.get("totalCount") or (offset + result_count) if total is None else total)
+            total = int(
+                meta.get("totalCount") or (offset + result_count) if total is None else total
+            )
 
             if result_count <= 0 or offset + result_count >= total:
                 break
@@ -221,10 +229,12 @@ def fetch_raw(
 
     return out
 
+
 # ---------- CLI test ----------
 if __name__ == "__main__":
     cars = fetch_raw()  # uses env defaults
     print(f"Fetched {len(cars)} vehicles")
     if cars:
         from pprint import pprint
+
         pprint(cars[0])

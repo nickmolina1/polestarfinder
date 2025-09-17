@@ -19,9 +19,7 @@ filters = {
     "Charcoal WeaveTech with Black Ash deco": {"Interior": "RF8000"},
     "Charcoal Embossed Textile with 3D Etched deco": {"Interior": "R60000"},
     "Zinc Embossed Textile with 3D Etched deco": {"Interior": "R6B000"},
-    "Ventilated Nappa leather Barley with reconstructed wood deco": {
-        "Interior": "RCC000"
-    },
+    "Ventilated Nappa leather Barley with reconstructed wood deco": {"Interior": "RCC000"},
     "Ventilated Nappa leather Zinc with Light Ash deco": {"Interior": "RCZ300"},
     "Charcoal MicroSuede textile with Black ash deco": {"Interior": "BST230"},
     "BST Edition 230": {"Edition": "BST Edition 230"},
@@ -29,9 +27,7 @@ filters = {
     '19" 5-V Spoke Black Diamond Cut Alloy Wheels - Summer Tire': {"Wheels": "R14B"},
     "19'' 5-Double Spoke Black Diamond Cut Alloy Wheel": {"Wheels": "R184"},
     '20" 4-V Spoke Black Diamond Cut Alloy Wheels': {"Wheels": "001147"},
-    '20" 4-Y Spoke Black Polished Forged Alloy Wheels - Summer Tire': {
-        "Wheels": "XPFWHE"
-    },
+    '20" 4-Y Spoke Black Polished Forged Alloy Wheels - Summer Tire': {"Wheels": "XPFWHE"},
     '20" Pro - All-Season Tires': {"Wheels": "001257"},
     "21'' Gloss Black Diamond Cut Alloy Wheel BST edition": {"Wheels": "XPEWHE"},
     "Certified PreOwned": {"CycleState": "CertifiedPreOwned"},

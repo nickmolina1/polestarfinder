@@ -18,10 +18,11 @@ Future (Phase B):
 - Add package inference once correlation is validated
 - Support per-vehicle fallback deep scan for missing attributes
 """
+
 from __future__ import annotations
 
-from typing import Iterable, Set, Dict, Tuple
 import re
+from typing import Dict, Iterable, Set, Tuple
 
 # Patterns / constants
 MOTOR_CODES = {"EG", "FE", "FD", "ED", "ET"}
@@ -65,7 +66,9 @@ def extract_option_codes(image_urls: Iterable[str]) -> Set[str]:
     return codes
 
 
-def build_reverse_maps(filters_dict: Dict[str, Dict[str, str]]) -> Tuple[Dict[str, Tuple[str, str]], Dict[Tuple[str, str], str]]:
+def build_reverse_maps(
+    filters_dict: Dict[str, Dict[str, str]],
+) -> Tuple[Dict[str, Tuple[str, str]], Dict[Tuple[str, str], str]]:
     """From the provided filters structure build reverse lookups.
 
     Returns:
@@ -143,14 +146,19 @@ def enrich_labels(classified: Dict[str, object], code_to_label: Dict[str, Tuple[
     result["exterior_label"] = label_for(result.get("exterior_code"), "exterior")
     result["interior_label"] = label_for(result.get("interior_code"), "interior")
     # Motor codes: in filters they appear under category keys (e.g., "Motor")
-    result["motor_label"] = label_for(result.get("motor_code"), "motor") or label_for(result.get("motor_code"), "Motor")
-    result["wheel_label"] = label_for(result.get("wheel_code"), "wheels") or label_for(result.get("wheel_code"), "Wheels")
+    result["motor_label"] = label_for(result.get("motor_code"), "motor") or label_for(
+        result.get("motor_code"), "Motor"
+    )
+    result["wheel_label"] = label_for(result.get("wheel_code"), "wheels") or label_for(
+        result.get("wheel_code"), "Wheels"
+    )
     return result
 
 
 # Convenience: ephemeral test harness (manual run)
 if __name__ == "__main__":
     from scraper.filters import filters as FILTERS  # type: ignore
+
     sample = [
         "https://cas.polestar.com/image/dynamic/MY24_2335/534/summary-transparent-v1/FE/1/31/72900/R60000/R184/LR01/_/BD02/EV01/JB13/2G03/ET01/default.png?market=us&angle=3&bg=00000000"
     ]
@@ -159,5 +167,6 @@ if __name__ == "__main__":
     result = classify_codes(raw, code_to_label)
     enriched = enrich_labels(result, code_to_label)
     from pprint import pprint
+
     print("RAW:", raw)
     pprint(enriched)

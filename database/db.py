@@ -1,11 +1,13 @@
-import os
 from contextlib import contextmanager
-from dotenv import load_dotenv
+
 import psycopg2
-from psycopg2.extras import DictCursor, Json
+from dotenv import load_dotenv
+from psycopg2.extras import DictCursor
+
 from database.pgdsn import get_pg_dsn
 
 load_dotenv()  # take environment variables from .env.
+
 
 @contextmanager
 def conn():

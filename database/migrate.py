@@ -1,8 +1,12 @@
-import os, glob, re, sys
-from dotenv import load_dotenv
-import psycopg2
-from psycopg2.extras import DictCursor
+import glob
 import logging
+import os
+import re
+import sys
+
+import psycopg2
+from dotenv import load_dotenv
+
 from database.pgdsn import get_pg_dsn
 
 logging.basicConfig(level=logging.INFO)
@@ -14,6 +18,7 @@ DSN = get_pg_dsn()
 
 if not DSN:
     raise RuntimeError("PG_DSN not set! Did you create .env?")
+
 
 def read_sql_statements(path: str):
     """
@@ -67,9 +72,7 @@ def apply_migration(conn, mig_id, path):
             try:
                 cur.execute(stmt)
             except Exception as e:
-                print(
-                    f"\n[ERROR] {mig_id} stmt#{i}\n{stmt}\n--> {e}\n", file=sys.stderr
-                )
+                print(f"\n[ERROR] {mig_id} stmt#{i}\n{stmt}\n--> {e}\n", file=sys.stderr)
                 raise
         cur.execute(
             "INSERT INTO _migrations (id) VALUES (%s) ON CONFLICT DO NOTHING;",
@@ -103,6 +106,7 @@ def main():
         conn.commit()
         print("Migrations complete.")
         logger.info("Migrations complete.")
+
 
 if __name__ == "__main__":
     main()

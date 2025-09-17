@@ -1,7 +1,11 @@
-import json, os, uuid
+import json
+import os
+import uuid
 from datetime import datetime, timezone
-from database.db import execute, fetch_one
+
 from dotenv import load_dotenv
+
+from database.db import execute, fetch_one
 
 load_dotenv()
 
@@ -63,9 +67,7 @@ def normalize_vehicle(v):
         "partner_location": v.get("partner_location"),
         "state": v.get("state"),
         "mileage": int(v["mileage"]) if v.get("mileage") is not None else None,
-        "first_time_registration": v.get(
-            "first_time_registration"
-        ),  # 'YYYY-MM-DD' or None
+        "first_time_registration": v.get("first_time_registration"),  # 'YYYY-MM-DD' or None
         "retail_price": v.get("retail_price"),
         "dealer_price": v.get("dealer_price"),
         "exterior": v.get("exterior"),
@@ -83,11 +85,7 @@ def normalize_vehicle(v):
 if __name__ == "__main__":
     with open(VEH_JSON, "r", encoding="utf-8") as f:
         payload = json.load(f)
-    items = (
-        payload["vehicles"]
-        if isinstance(payload, dict) and "vehicles" in payload
-        else payload
-    )
+    items = payload["vehicles"] if isinstance(payload, dict) and "vehicles" in payload else payload
 
     for raw in items:
         nv = normalize_vehicle(raw)

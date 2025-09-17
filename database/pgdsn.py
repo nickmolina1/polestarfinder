@@ -1,12 +1,15 @@
 # database/pgdsn.py
-import os, json
-import boto3
+import json
+import os
 from urllib.parse import quote_plus
+
+import boto3
 
 _REGION = os.getenv("AWS_REGION", "us-east-1")
 _SECRET_ARN = os.getenv("PG_SECRET_ARN")
 
 _cached_dsn = None
+
 
 def get_pg_dsn() -> str:
     """
@@ -37,16 +40,15 @@ def get_pg_dsn() -> str:
     data = json.loads(secret)  # must contain username, password
 
     user = data["username"]
-    pwd  = data["password"]
+    pwd = data["password"]
     host = os.environ["PG_HOST"]
     port = os.getenv("PG_PORT", "5432")
-    db   = os.environ["PG_DBNAME"]
+    db = os.environ["PG_DBNAME"]
 
     # URL-encode just in case the password has special characters
     pwd_q = quote_plus(pwd)
 
     _cached_dsn = (
-        f"postgresql://{user}:{pwd_q}@{host}:{port}/{db}"
-        f"?sslmode=require&connect_timeout=5"
+        f"postgresql://{user}:{pwd_q}@{host}:{port}/{db}" f"?sslmode=require&connect_timeout=5"
     )
     return _cached_dsn

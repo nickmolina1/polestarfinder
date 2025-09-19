@@ -292,6 +292,14 @@ a[data-wheel]:hover::after {
     position: relative; /* for tooltip */
     box-sizing: border-box;
 }
+.interior-option {
+    position: relative; /* for tooltip positioning */
+    display: inline-block;
+}
+.pack-option {
+    position: relative; /* for tooltip positioning */
+    display: inline-block;
+}
 .exterior-option .thumbnail {
     width: var(--thumbnail-min);
     height: var(--thumbnail-min);
@@ -313,6 +321,40 @@ a[data-wheel]:hover::after {
     overflow-wrap: break-word;
     font-size: 12px;
     z-index: 10;
+}
+/* Tooltip for interior options */
+.interior-option:hover::after {
+    content: attr(data-interior);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 3px 5px;
+    max-width: 220px;
+    white-space: normal;
+    overflow-wrap: break-word;
+    font-size: 12px;
+    z-index: 10;
+    border-radius: 3px;
+}
+/* Tooltip for pack options */
+.pack-option:hover::after {
+    content: attr(data-pack);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 3px 5px;
+    max-width: 180px;
+    white-space: normal;
+    overflow-wrap: break-word;
+    font-size: 12px;
+    z-index: 10;
+    border-radius: 3px;
 }
 /* Hover / focus affordance for thumbnails and swatches (subtle lift + shadow) */
 .thumbnail:hover {

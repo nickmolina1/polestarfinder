@@ -318,19 +318,22 @@ function updateTable(data) {
       }
     }
 
+        // ${vehicle.state && /certified/i.test(vehicle.state) ? `
+        //   <span class="cpo-badge-wrapper" title="Certified Pre-Owned" aria-label="Certified Pre-Owned">
+        //     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="cpo-badge" role="img" aria-label="Certified Pre-Owned">
+        //       <title>Certified Pre-Owned</title>
+        //       <path d="M32 4 L56 12 v16c0 18.2-12.1 28.8-24 33.8C20.1 56.8 8 46.2 8 28V12L32 4z" fill="currentColor" />
+        //       <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-weight="800" font-size="18" fill="white" letter-spacing="1.5">CPO</text>
+        //     </svg>
+        //   </span>
+        // ` : ''}
+
+
     card.innerHTML = `
       <div class="card-header">
         <span class="card-year">${vehicle.year || ""}</span>
         ${justAddedBadge}
-        ${vehicle.state && /certified/i.test(vehicle.state) ? `
-          <span class="cpo-badge-wrapper" title="Certified Pre-Owned" aria-label="Certified Pre-Owned">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="cpo-badge" role="img" aria-label="Certified Pre-Owned">
-              <title>Certified Pre-Owned</title>
-              <path d="M32 4 L56 12 v16c0 18.2-12.1 28.8-24 33.8C20.1 56.8 8 46.2 8 28V12L32 4z" fill="currentColor" />
-              <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-weight="800" font-size="18" fill="white" letter-spacing="1.5">CPO</text>
-            </svg>
-          </span>
-        ` : ''}
+
       </div>
       ${imageHtml}
   <div class="card-location">${vehicle.partner_location || ""}</div>
@@ -569,4 +572,90 @@ window.addEventListener('load', () => {
       }
       sortCombined.addEventListener('change', () => renderCurrentView());
     }
+
+    // Wire Clear Filters button
+    const clearBtn = document.getElementById('clearFilters');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        // Reset all form-selects in sidebar
+        document.querySelectorAll('.my-sidebar .form-select').forEach(sel => {
+          sel.value = '';
+        });
+        // Remove selections from swatches and thumbnails
+        document.querySelectorAll('#exteriorOptions .exterior-option.selected, #interiorOptions .interior-option.selected, #wheelOptions a.selected, #packOptions .pack-option.selected').forEach(el => {
+          el.classList.remove('selected');
+        });
+        // Re-render view using full inventory
+        renderCurrentView();
+      });
+    }
   });
+
+// --- Dynamic topbar offset to avoid gaps in landscape/mobile ---
+(function setTopbarOffset() {
+  function updateOffset() {
+    const topbar = document.querySelector('.topbar');
+    if (!topbar) return;
+    // Compute actual rendered height including safe-area padding
+    const h = topbar.getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--topbar-offset', `${h}px`);
+  }
+  window.addEventListener('resize', updateOffset);
+  window.addEventListener('orientationchange', updateOffset);
+  // Defer to next frame to ensure fonts/metrics applied
+  requestAnimationFrame(updateOffset);
+})();
+
+// --- Mobile filters docking behavior ---
+(function setupFiltersDocking() {
+  const sidebar = document.querySelector('.my-sidebar');
+  const toggleBtn = document.getElementById('filtersToggle');
+  const panel = document.getElementById('filtersPanel');
+  if (!sidebar || !toggleBtn || !panel) return;
+
+  // Helper to set panel height for smooth collapse/expand
+  function setPanelExpanded(expanded) {
+    toggleBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    if (expanded) {
+      panel.style.height = 'auto';
+      const h = panel.scrollHeight;
+      panel.style.height = '0px';
+      // Force reflow then set to target height for transition
+      panel.getBoundingClientRect();
+      panel.style.height = h + 'px';
+      sidebar.classList.remove('filters-collapsed');
+    } else {
+      panel.style.height = panel.scrollHeight + 'px';
+      panel.getBoundingClientRect();
+      panel.style.height = '0px';
+      sidebar.classList.add('filters-collapsed');
+    }
+  }
+
+  // After expanding transition, lock to auto height for content changes
+  panel.addEventListener('transitionend', (e) => {
+    if (e.propertyName === 'height' && toggleBtn.getAttribute('aria-expanded') === 'true') {
+      panel.style.height = 'auto';
+    }
+  });
+
+  // Initialize expanded on load for desktop; collapsed on small screens
+  function isSmall() { return window.matchMedia('(max-width: 700px)').matches; }
+  function initState() {
+    if (isSmall()) {
+      setPanelExpanded(false);
+    } else {
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      panel.style.height = 'auto';
+      sidebar.classList.remove('filters-collapsed');
+    }
+  }
+  initState();
+  window.addEventListener('resize', initState);
+
+  // Toggle on click
+  toggleBtn.addEventListener('click', () => {
+    const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+    setPanelExpanded(!expanded);
+  });
+})();

@@ -18,8 +18,13 @@
     <div class="my-container">
       <!-- Sidebar -->
       <div class="my-sidebar"> 
-        <div class="filter-container">
+        <button id="filtersToggle" class="filters-toggle" aria-expanded="true" aria-controls="filtersPanel">Filters</button>
+        <div id="filtersPanel" class="filter-container">
 
+          <!-- Clear Filters -->
+          <div class="filter-section">
+            <button id="clearFilters" class="btn btn-terra" type="button" aria-label="Clear all filters">Clear Filters</button>
+          </div>
 
           <!-- Model dropdown -->
           <div class="filter-section">
@@ -315,6 +320,8 @@
         </div>
         
         
+
+
         <!--End of Filters-->
   
       </div>  

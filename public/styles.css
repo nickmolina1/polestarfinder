@@ -3,7 +3,10 @@
     --terra: #f3771d;
     --terra-light: #f9a67a;
     --terra-dark: #d95b00;
-    --topbar-height: 20px;
+    /* Approximate visual height of the header (excludes safe-area inset) */
+    --topbar-height: 56px;
+    /* Runtime-updated offset for top spacing; JS sets this to the actual header height */
+    --topbar-offset: calc(var(--topbar-height) + env(safe-area-inset-top));
     /* Thumbnail sizing: change these to control thumbnail dimensions centrally */
     --thumbnail-size: 72px;
     --thumbnail-min: 72px;
@@ -18,12 +21,16 @@ body, h1, h2, h3, h4, h5, h6 {
 
 /* ================== TOPBAR ================== */
 .topbar {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     background: #ffffff;
     border-bottom: 1px solid #eee;
-    z-index: 50;
+    z-index: 1000;
+    /* ensure content inside the topbar doesn't sit under the notch on iOS */
+    padding-top: env(safe-area-inset-top);
 }
 .topbar-inner {
     max-width: 1200px;
@@ -41,8 +48,8 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 
 body {
-    padding-top: calc(var(--topbar-height) + env(safe-area-inset-top));
-    scroll-padding-top: calc(var(--topbar-height) + env(safe-area-inset-top)); /* anchors */
+    padding-top: var(--topbar-offset);
+    scroll-padding-top: var(--topbar-offset); /* anchors */
 }
 
 
@@ -369,7 +376,6 @@ a[data-wheel]:hover::after {
     display: flex;
     flex-direction: row; /* changed from column to row for side-by-side layout */
     flex-wrap: nowrap; /* changed from wrap to nowrap to keep items side-by-side */
-    gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 10px;
@@ -381,13 +387,17 @@ a[data-wheel]:hover::after {
     border-right: 1px solid #ccc; /* custom border styling */
     width: 250px;
     min-width: 250px;
-    height: 1850px;
+    max-height: 1850px;
 }
+
+/* Filters toggle is mobile-only by default */
+.filters-toggle { display: none; }
 .my-main {
     padding: 15px;
     overflow-x: auto;
     background: #fafbfc;
-    height: 1850px;
+    width: 100%;
+    height: 1850px
 }
 .inventory-cards {
     width: 100%;
@@ -449,20 +459,88 @@ a[data-wheel]:hover::after {
         border-bottom: 1px solid #eee;
         padding: 12px;
         order: 0;
+        position: sticky;
+        top: var(--topbar-offset);
+        background: #fff;
+        z-index: 40;
+
+    }
+    /* Sticky filters toggle button */
+    .filters-toggle {
+        position: sticky;
+        top: var(--topbar-offset);
+        z-index: 41;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 14px 16px; /* larger touch target */
+        margin: -12px -12px 12px -12px; /* full-bleed in the sidebar */
+        background: #f7f7f8;
+        border: 0;
+        border-bottom: 1px solid #eee;
+        cursor: pointer;
+        font-weight: 700;
+        text-align: left;
+        font-size: 1rem;
+    }
+    .filters-toggle:after {
+        content: '\25BC'; /* down chevron */
+        margin-left: auto;
+        transition: transform 0.2s ease;
+    }
+    .filters-toggle[aria-expanded="false"]:after {
+        transform: rotate(-90deg); /* points right when collapsed */
+    }
+    /* Collapsible panel */
+    #filtersPanel {
+        transition: height 0.2s ease, padding 0.2s ease, opacity 0.2s ease;
+        /* Expanded by default on mobile; allow internal scrolling */
+        max-height: calc(80vh - 56px);
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .filters-collapsed #filtersPanel {
+        height: 0 !important;
+        padding-top: 0;
+        padding-bottom: 0;
+        opacity: 0;
+        border-bottom: none;
+        overflow: hidden;
     }
     .my-main {
         order: 1;
         padding: 12px;
     }
-    /* Each filter section starts on its own line and stretches full width */
+    /* Filters: two-column grid on small screens */
+    .filter-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        align-items: start;
+    }
+    /* Default: filter sections span full width */
     .filter-section {
         width: 100%;
-
-        margin-bottom: 1rem;
+        margin: 0; /* let grid gap control spacing */
+        grid-column: 1 / -1;
     }
-    /* Thumbnails expand to fill available width and wrap onto new rows */
+    /* Place Exterior + Interior side-by-side */
+    .filter-section:has(#exteriorOptions),
+    #interiorOptions {
+        grid-column: span 1;
+    }
+    /* Place Wheels + Packs side-by-side */
+    #wheelOptions,
+    .filter-section:has(#packOptions) {
+        grid-column: span 1;
+    }
+    /* Tighter thumbnail layout: fixed-size tracks, left-aligned */
     .thumbnail-container {
-        grid-template-columns: repeat(auto-fit, minmax(var(--thumbnail-min), 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(var(--thumbnail-min), var(--thumbnail-min)));
+        gap: 6px;
+        justify-content: start;
+        justify-items: start;
     }
 }
 /* ================== STATISTICS PANEL ================== */
@@ -530,5 +608,40 @@ a[data-wheel]:hover::after {
     .form-select, .form-control {
         width: 100%;
     }
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    background: #f7f7f8;
+    color: #333;
+    font-size: 0.95rem;
+}
+.btn:hover { background: #efeff0; }
+.btn:active { background: #e8e8e9; }
+.btn-secondary {
+    border-color: #ccc;
+}
+/* Terra-colored button variant */
+.btn-terra {
+    background: var(--terra);
+    color: #fff;
+    border-color: var(--terra-dark);
+}
+.btn-terra:hover {
+    background: var(--terra-dark);
+    border-color: var(--terra-dark);
+}
+.btn-terra:active {
+    background: var(--terra-dark);
+    border-color: var(--terra-dark);
+}
+.btn-terra:focus-visible {
+    outline: 2px solid rgba(243, 119, 29, 0.35);
+    outline-offset: 2px;
 }
 

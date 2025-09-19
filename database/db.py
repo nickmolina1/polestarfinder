@@ -5,7 +5,7 @@ import os
 import psycopg2
 from psycopg2 import OperationalError
 from dotenv import load_dotenv
-from psycopg2.extras import DictCursor
+from psycopg2.extras import DictCursor, execute_values as _execute_values
 
 from database.pgdsn import get_pg_dsn
 
@@ -79,4 +79,19 @@ def fetch_one(sql, params=None):
 def execute(sql, params=None):
     with conn() as c, c.cursor() as cur:
         cur.execute(sql, params or {})
+        c.commit()
+
+
+def execute_values(sql: str, rows, template: str | None = None, page_size: int = 1000):
+    """Execute a VALUES-based bulk statement efficiently.
+
+    Example:
+      sql = "INSERT INTO table (col1, col2) VALUES %s ON CONFLICT ..."
+      template = "(%(col1)s, %(col2)s)"  # rows are dicts
+      execute_values(sql, list_of_dicts, template)
+    """
+    if not rows:
+        return
+    with conn() as c, c.cursor() as cur:
+        _execute_values(cur, sql, rows, template=template, page_size=page_size)
         c.commit()

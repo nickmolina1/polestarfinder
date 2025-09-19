@@ -12,7 +12,7 @@ from psycopg2.extras import Json
 
 import scraper.scraper as scraper  # your library-style scraper.py
 from scraper.filters import filters as FILTERS  # type: ignore
-from database.db import execute, fetch_all, fetch_one
+from database.db import execute, fetch_all, fetch_one, execute_values
 
 # ----------------- Config -----------------
 
@@ -197,66 +197,132 @@ def handler(event=None, context=None):
         raw = scraper.fetch_raw()
     log.info("fetched=%d", len(raw))
 
-    # 2) Transform + Load (upsert + history)
-    log.info("loader: start db upsert ...")
-    inserted = updated = price_changes = 0
-    inserted_ids: list[str] = []
-    price_change_ids: list[str] = []
-    price_change_details: list[dict] = []  # {id, old_price, new_price, delta}
-    for item in raw:
-        v = _normalize_for_db(item)
+    # 2) Transform + Load (batched upsert + history)
+    log.info("loader: start db upsert (batched) ...")
+    now_utc = datetime.now(timezone.utc)
+    # Normalize all vehicles first
+    normalized: list[dict] = [_normalize_for_db(item) for item in raw]
+    all_ids = [v["id"] for v in normalized]
 
-        old = fetch_one(GET_OLD_PRICE, {"id": v["id"]})
-        old_price = old["retail_price"] if old else None
+    # Load existing prices for all ids to classify new vs existing and detect changes
+    existing_price_map: dict[str, float | None] = {}
+    if all_ids:
+        try:
+            rows = fetch_all(
+                "SELECT id, retail_price FROM vehicles WHERE id IN %(ids)s", {"ids": tuple(all_ids)}
+            )
+            existing_price_map = {r["id"]: r["retail_price"] for r in rows}
+        except Exception as e:  # pragma: no cover
+            log.warning("preload existing prices failed: %s", e)
 
-        execute(UPSERT_VEHICLE, v)
+    inserted_ids: list[str] = [vid for vid in all_ids if vid not in existing_price_map]
+    updated_count = len(all_ids) - len(inserted_ids)
+
+    # Batch UPSERT using execute_values
+    UPSERT_VEHICLE_BULK = (
+        "INSERT INTO vehicles (\n"
+        "  id, vin, model, year, partner_location, state, mileage,\n"
+        "  first_time_registration, retail_price, dealer_price,\n"
+        "  exterior, interior, wheels, motor, edition,\n"
+        "  performance, pilot, plus, available, stock_images,\n"
+        "  first_seen_at, last_seen_at\n"
+        ") VALUES %s\n"
+        "ON CONFLICT (id) DO UPDATE SET\n"
+        "  vin = EXCLUDED.vin,\n"
+        "  model = EXCLUDED.model,\n"
+        "  year = EXCLUDED.year,\n"
+        "  partner_location = EXCLUDED.partner_location,\n"
+        "  state = EXCLUDED.state,\n"
+        "  mileage = EXCLUDED.mileage,\n"
+        "  first_time_registration = EXCLUDED.first_time_registration,\n"
+        "  retail_price = EXCLUDED.retail_price,\n"
+        "  dealer_price = EXCLUDED.dealer_price,\n"
+        "  exterior = EXCLUDED.exterior,\n"
+        "  interior = EXCLUDED.interior,\n"
+        "  wheels = COALESCE(EXCLUDED.wheels, vehicles.wheels),\n"
+        "  motor = COALESCE(EXCLUDED.motor, vehicles.motor),\n"
+        "  edition = EXCLUDED.edition,\n"
+        "  performance = CASE WHEN EXCLUDED.performance THEN TRUE ELSE vehicles.performance END,\n"
+        "  pilot = CASE WHEN EXCLUDED.pilot THEN TRUE ELSE vehicles.pilot END,\n"
+        "  plus = CASE WHEN EXCLUDED.plus THEN TRUE ELSE vehicles.plus END,\n"
+        "  stock_images = EXCLUDED.stock_images,\n"
+        "  available = TRUE,\n"
+        "  last_seen_at = now(),\n"
+        "  first_seen_at = vehicles.first_seen_at;\n"
+    )
+    VALUES_TEMPLATE = (
+        "(%(id)s, %(vin)s, %(model)s, %(year)s, %(partner_location)s, %(state)s, %(mileage)s,\n"
+        " %(first_time_registration)s, %(retail_price)s, %(dealer_price)s,\n"
+        " %(exterior)s, %(interior)s, %(wheels)s, %(motor)s, %(edition)s,\n"
+        " %(performance)s, %(pilot)s, %(plus)s, TRUE, %(stock_images)s, now(), now())"
+    )
+
+    # Chunk to keep statements reasonable in size
+    def _chunks(seq, size):
+        for i in range(0, len(seq), size):
+            yield seq[i : i + size]
+
+    for batch in _chunks(normalized, 500):
+        execute_values(UPSERT_VEHICLE_BULK, batch, template=VALUES_TEMPLATE, page_size=500)
+    log.info(
+        "loader: db upsert done (rows=%d new=%d existing=%d)",
+        len(all_ids),
+        len(inserted_ids),
+        updated_count,
+    )
+
+    # Build price history rows in bulk
+    price_change_details: list[dict] = []
+    history_rows: list[dict] = []
+    for v in normalized:
+        vid = v["id"]
         new_price = v.get("retail_price")
-
-        if old is None:
-            # New vehicle: record baseline (initial) price in history (if present)
-            inserted += 1
-            inserted_ids.append(v["id"])
+        old_price = existing_price_map.get(vid)
+        if vid in inserted_ids:
             if new_price is not None:
-                try:
-                    execute(
-                        INSERT_HISTORY,
-                        {
-                            "id": f'{v["id"]}-{uuid.uuid4()}',
-                            "vehicle_id": v["id"],
-                            "price": new_price,
-                            "observed_at": datetime.now(timezone.utc),
-                        },
-                    )
-                except Exception as e:  # pragma: no cover
-                    log.warning("baseline price_history insert failed for %s: %s", v["id"], e)
-        else:
-            # Existing vehicle: only log if price actually changed
-            updated += 1
-            if new_price is not None and new_price != old_price:
-                execute(
-                    INSERT_HISTORY,
+                history_rows.append(
                     {
-                        "id": f'{v["id"]}-{uuid.uuid4()}',
-                        "vehicle_id": v["id"],
+                        "id": f"{vid}-{uuid.uuid4()}",
+                        "vehicle_id": vid,
                         "price": new_price,
-                        "observed_at": datetime.now(timezone.utc),
-                    },
+                        "observed_at": now_utc,
+                    }
                 )
-                price_changes += 1
-                price_change_ids.append(v["id"])
+        else:
+            if new_price is not None and new_price != old_price:
+                history_rows.append(
+                    {
+                        "id": f"{vid}-{uuid.uuid4()}",
+                        "vehicle_id": vid,
+                        "price": new_price,
+                        "observed_at": now_utc,
+                    }
+                )
                 try:
                     delta = new_price - old_price if old_price is not None else None
-                    price_change_details.append(
-                        {
-                            "id": v["id"],
-                            "old_price": old_price,
-                            "new_price": new_price,
-                            "delta": delta,
-                        }
-                    )
-                except Exception:  # pragma: no cover
-                    pass
-    log.info("loader: db upsert done")
+                except Exception:
+                    delta = None
+                price_change_details.append(
+                    {
+                        "id": vid,
+                        "old_price": old_price,
+                        "new_price": new_price,
+                        "delta": delta,
+                    }
+                )
+
+    if history_rows:
+        execute_values(
+            "INSERT INTO price_history (id, vehicle_id, price, observed_at) VALUES %s",
+            history_rows,
+            template="(%(id)s, %(vehicle_id)s, %(price)s, %(observed_at)s)",
+            page_size=1000,
+        )
+
+    inserted = len(inserted_ids)
+    updated = updated_count
+    price_changes = len(price_change_details)
+    price_change_ids = [d["id"] for d in price_change_details]
     # 3) Secondary deep feature scans (wheels, packages, motors) unless skipped
     skip_scan = False
     try:

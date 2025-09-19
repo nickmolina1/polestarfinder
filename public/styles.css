@@ -380,11 +380,14 @@ a[data-wheel]:hover::after {
     padding: 15px;
     border-right: 1px solid #ccc; /* custom border styling */
     width: 250px;
+    min-width: 250px;
+    height: 1850px;
 }
 .my-main {
     padding: 15px;
     overflow-x: auto;
     background: #fafbfc;
+    height: 1850px;
 }
 .inventory-cards {
     width: 100%;

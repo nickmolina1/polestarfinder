@@ -446,12 +446,15 @@ a[data-wheel]:hover::after {
     gap: 8px;
     justify-items: center;
     align-items: start;
+    padding: 0px 3px;
 }
 @media (max-width: 700px) {
     /* Move sidebar to top */
+
     .my-container {
         flex-direction: column;
         align-items: stretch;
+        max-width: 100%;
     }
     .my-sidebar {
         width: 100%;
@@ -496,7 +499,7 @@ a[data-wheel]:hover::after {
     #filtersPanel {
         transition: height 0.2s ease, padding 0.2s ease, opacity 0.2s ease;
         /* Expanded by default on mobile; allow internal scrolling */
-        max-height: calc(80vh - 56px);
+        max-height: calc(100vh - 56px);
         overflow: auto;
         -webkit-overflow-scrolling: touch;
     }

@@ -322,12 +322,21 @@ function updateTable(data) {
       <div class="card-header">
         <span class="card-year">${vehicle.year || ""}</span>
         ${justAddedBadge}
+        ${vehicle.state && /certified/i.test(vehicle.state) ? `
+          <span class="cpo-badge-wrapper" title="Certified Pre-Owned" aria-label="Certified Pre-Owned">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="cpo-badge" role="img" aria-label="Certified Pre-Owned">
+              <title>Certified Pre-Owned</title>
+              <path d="M32 4 L56 12 v16c0 18.2-12.1 28.8-24 33.8C20.1 56.8 8 46.2 8 28V12L32 4z" fill="currentColor" />
+              <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-weight="800" font-size="18" fill="white" letter-spacing="1.5">CPO</text>
+            </svg>
+          </span>
+        ` : ''}
       </div>
       ${imageHtml}
   <div class="card-location">${vehicle.partner_location || ""}</div>
   <div class="card-price">${formattedPrice} ${deltaHtml}</div>
   <div class="card-mileage">${vehicle.mileage ? vehicle.mileage.toLocaleString() + ' mi' : ""}</div>
-  <div class="card-state">${vehicle.state || ""}</div>
+
   <div class="card-packs">${packsDisplay}</div>
     `;
     // Make the whole card act as a link (click and keyboard accessible)

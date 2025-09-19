@@ -111,6 +111,22 @@ body {
     display: inline-block;
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
+/* Certified Pre-Owned Badge */
+.cpo-badge-wrapper {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 8px;
+}
+.cpo-badge {
+    width: 26px;
+    height: 26px;
+    color: #222; /* shield color via currentColor */
+    flex-shrink: 0;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
+}
+@media (prefers-color-scheme: dark) {
+  .cpo-badge { color: #489cd4; }
+}
 .card-model {
     color: rgb(117, 120, 123);
     font-weight: 400;

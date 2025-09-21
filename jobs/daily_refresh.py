@@ -192,6 +192,7 @@ def handler(event=None, context=None):
     log.info("loader: get raw from s3 ...")
     raw = _load_raw_from_s3()
     log.info("loader: got raw, count=%s", None if raw is None else len(raw))
+    s3_loaded = raw is not None
     if raw is None:
         log.info("RAW_* not set, scraping directly (local/dev mode)")
         raw = scraper.fetch_raw()
@@ -324,13 +325,24 @@ def handler(event=None, context=None):
     price_changes = len(price_change_details)
     price_change_ids = [d["id"] for d in price_change_details]
     # 3) Secondary deep feature scans (wheels, packages, motors) unless skipped
+    # Decide deep scan policy
+    # Default: if data came from S3 (staging/prod pipeline), skip deep scans to avoid outbound calls from VPC.
+    # Allow explicit override via event.skip_deep_scan or env SKIP_DEEP_SCAN.
     skip_scan = False
+    reason = ""
     try:
-        # precedence: explicit event flag overrides env
-        if isinstance(event, dict) and event.get("skip_deep_scan"):
-            skip_scan = True
-        elif os.getenv("SKIP_DEEP_SCAN", "").lower() in {"1", "true", "yes"}:
-            skip_scan = True
+        # explicit event override takes precedence
+        if isinstance(event, dict) and ("skip_deep_scan" in event):
+            skip_scan = bool(event.get("skip_deep_scan"))
+            reason = "event override"
+        else:
+            env_flag = os.getenv("SKIP_DEEP_SCAN", "").lower() in {"1", "true", "yes"}
+            if env_flag:
+                skip_scan = True
+                reason = "env SKIP_DEEP_SCAN"
+            elif s3_loaded:
+                skip_scan = True
+                reason = "raw loaded from S3"
     except Exception:  # pragma: no cover
         pass
 
@@ -454,7 +466,7 @@ def handler(event=None, context=None):
         else:
             deep_scan_performed = True
     else:
-        log.info("loader: deep feature scan skipped via flag")
+        log.info("loader: deep feature scan skipped (%s)", reason or "policy")
 
     # 4) Mark vehicles not seen today as unavailable
     execute(MARK_UNAVAILABLE)

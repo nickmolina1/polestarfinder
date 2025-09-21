@@ -12,3 +12,4 @@ polestarfinder.egg-info/
 __init__.py
 public/data/vehicles.json
 scraper/features.txt
+.vscode/tasks.json

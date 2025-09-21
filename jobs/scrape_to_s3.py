@@ -11,8 +11,13 @@ import boto3
 import scraper.scraper as scraper  # your scraper.fetch_raw()
 from scraper.filters import filters as FILTERS  # type: ignore
 
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
+root_logger = logging.getLogger()
+root_logger.setLevel(LOG_LEVEL)
+if not root_logger.handlers:
+    logging.basicConfig(level=LOG_LEVEL)
 log = logging.getLogger("scrape_to_s3")
-logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"))
+log.setLevel(LOG_LEVEL)
 
 REGION = os.getenv("AWS_REGION", "us-east-1")
 RAW_BUCKET = os.getenv("RAW_BUCKET")  # e.g., staging.polestarfinder.com
@@ -27,6 +32,12 @@ def _timestamped_key() -> str:
 
 
 def handler(event=None, context=None):
+    log.info(
+        "startup: LOG_LEVEL=%s, SKIP_DEEP_SCAN=%r, event_has_skip=%s",
+        os.getenv("LOG_LEVEL"),
+        os.getenv("SKIP_DEEP_SCAN"),
+        isinstance(event, dict) and ("skip_deep_scan" in event),
+    )
     # 1) Scrape (internet OK, this lambda is NOT in a VPC)
     data = scraper.fetch_raw()  # uses MODELS, MARKET, PAGE_LIMIT envs
     log.info("scraped vehicles=%d", len(data))

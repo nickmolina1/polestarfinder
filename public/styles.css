@@ -8,8 +8,8 @@
     /* Runtime-updated offset for top spacing; JS sets this to the actual header height */
     --topbar-offset: calc(var(--topbar-height) + env(safe-area-inset-top));
     /* Thumbnail sizing: change these to control thumbnail dimensions centrally */
-    --thumbnail-size: 72px;
-    --thumbnail-min: 72px;
+    --thumbnail-size: 60px;
+    --thumbnail-min: 60px;
 }
 /* ================== TYPOGRAPHY ================== */
 body, h1, h2, h3, h4, h5, h6 {
@@ -76,7 +76,7 @@ body {
 
 .vehicle-card {
     background: #fff;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     padding: 20px 18px 16px 18px;
     display: flex;
@@ -390,6 +390,8 @@ a[data-wheel]:hover::after {
     max-height: 1850px;
 }
 
+
+    
 /* Filters toggle is mobile-only by default */
 .filters-toggle { display: none; }
 .my-main {
@@ -404,6 +406,12 @@ a[data-wheel]:hover::after {
     padding: 0 10px 10px 0;
     box-sizing: border-box;
 }
+@media (max-width: 700px) {
+    .inventory-cards {
+        padding: 0; /* full-width on mobile */
+    }
+}
+
 .inventory-header {
     display: flex;
     align-items: center;
@@ -453,10 +461,13 @@ a[data-wheel]:hover::after {
 
     .my-container {
         flex-direction: column;
-        align-items: stretch;
+        align-items: center;
+        justify-content: center;
         max-width: 100%;
     }
     .my-sidebar {
+        align-items: center;
+        justify-content: center;
         width: 100%;
         border-right: none;
         border-bottom: 1px solid #eee;
@@ -499,14 +510,16 @@ a[data-wheel]:hover::after {
     #filtersPanel {
         transition: height 0.2s ease, padding 0.2s ease, opacity 0.2s ease;
         /* Expanded by default on mobile; allow internal scrolling */
-        max-height: calc(100vh - 56px);
+
         overflow: auto;
         -webkit-overflow-scrolling: touch;
+        /* add comfortable white space at bottom when expanded */
+        padding-bottom: 1000px;
     }
     .filters-collapsed #filtersPanel {
         height: 0 !important;
         padding-top: 0;
-        padding-bottom: 0;
+        padding-bottom: 0; /* remove the bottom space when collapsed */
         opacity: 0;
         border-bottom: none;
         overflow: hidden;
@@ -521,6 +534,7 @@ a[data-wheel]:hover::after {
         grid-template-columns: 1fr 1fr;
         gap: 12px;
         align-items: start;
+        width: 100%;
     }
     /* Default: filter sections span full width */
     .filter-section {
@@ -618,7 +632,7 @@ a[data-wheel]:hover::after {
     display: inline-block;
     cursor: pointer;
     padding: 8px 12px;
-    border-radius: 6px;
+    /* border-radius: 6px; */
     border: 1px solid #ddd;
     background: #f7f7f8;
     color: #333;

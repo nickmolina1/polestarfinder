@@ -8,8 +8,14 @@
     /* Runtime-updated offset for top spacing; JS sets this to the actual header height */
     --topbar-offset: calc(var(--topbar-height) + env(safe-area-inset-top));
     /* Thumbnail sizing: change these to control thumbnail dimensions centrally */
+    --thumbnail-size: 72px;
+    --thumbnail-min: 72px;   
+}
+@media (max-width: 700px) {
+    :root {
     --thumbnail-size: 60px;
     --thumbnail-min: 60px;
+    }
 }
 /* ================== TYPOGRAPHY ================== */
 body, h1, h2, h3, h4, h5, h6 {
@@ -365,12 +371,22 @@ a[data-wheel]:hover::after {
 }
 /* Hover / focus affordance for thumbnails and swatches (subtle lift + shadow) */
 .thumbnail:hover {
-    outline: 3px solid var(--terra-light);
+    outline: 2px solid var(--terra-light);
 }
 .selected {
     /* Use an outline so the selected visual does not change element layout or size */
-    outline: 3px solid var(--terra);
+    outline: 2px solid var(--terra);
 }
+
+@media (max-width: 700px) {
+    .thumbnail:hover {
+        outline: 2px solid var(--terra-light);
+    }
+    .selected {
+        outline: 2px solid var(--terra);
+    }
+}
+
 /* ================== CONTAINERS & LAYOUT ================== */
 .my-container {
     display: flex;
@@ -464,6 +480,7 @@ a[data-wheel]:hover::after {
         align-items: center;
         justify-content: center;
         max-width: 100%;
+        padding: 0px 10px;
     }
     .my-sidebar {
         align-items: center;
@@ -479,6 +496,7 @@ a[data-wheel]:hover::after {
         z-index: 40;
 
     }
+
     /* Sticky filters toggle button */
     .filters-toggle {
         position: sticky;
@@ -497,6 +515,7 @@ a[data-wheel]:hover::after {
         font-weight: 700;
         text-align: left;
         font-size: 1rem;
+        margin: 0px;
     }
     .filters-toggle:after {
         content: '\25BC'; /* down chevron */
@@ -534,7 +553,7 @@ a[data-wheel]:hover::after {
         grid-template-columns: 1fr 1fr;
         gap: 12px;
         align-items: start;
-        width: 100%;
+        width: 90%;
     }
     /* Default: filter sections span full width */
     .filter-section {
@@ -586,11 +605,11 @@ a[data-wheel]:hover::after {
         font-weight: 700;
         margin: 0;
 }
-@media (max-width: 700px) {
+/* @media (max-width: 700px) {
     .statistics-panel {
         flex-direction: column;
     }
-}
+} */
 /* ================== FORMS ================== */
 .form-label {
     display: block;

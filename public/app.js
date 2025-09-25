@@ -10,7 +10,7 @@ const VEHICLE_KEYS = [
 let defaultSortApplied = false;  // Flag to apply default sort only once
 
 // Image angle to use when displaying vehicle images
-const ANGLE = 0;
+const ANGLE = 1;
 
 
 // --- Utility Functions ---
